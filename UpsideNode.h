@@ -2,7 +2,7 @@
 #ifndef UPSIDE_NODE
 #define UPSIDE_NODE
 #include <iostream>
-#include "Team.h"
+// #include "Team.h"
 
 // class Team;
 
@@ -10,7 +10,7 @@ template <class T>
 struct Upside_Node
 {
     Upside_Node<T> *father;
-    Team *team;
+    // Team *team;
     bool isRoot;
     int gamesPreviousTeamPlayed;
     int spiritOfNewTeam;
@@ -26,13 +26,22 @@ Upside_Node<T> *find(Upside_Node<T> *player_node)
     {
         return player_node;
     }
-    Upside_Node<T> *temp = player_node;
+    // find the root
+    Upside_Node<T> *root = player_node;
+    while (!root->isRoot)
+    {
+        root = root->father;
+    }
+
+    // shrink pathways
+    Upside_Node<T> *temp = player_node->father;
     while (!temp->isRoot)
     {
-        temp = temp->father;
+        player_node->father = root;
+        player_node = temp;
+        temp = player_node->father;
     }
-    player_node->father = temp;
-    return temp;
+    return root;
 };
 
 template <class T>
@@ -53,7 +62,7 @@ Upside_Node<T> *union_tree(Upside_Node<T> *destRoot, Upside_Node<T> *sourceRoot)
     sourceRoot->father = destRoot;
     // לעדכן את השדות בשביל משחקים ששוחקו והרוח
     sourceRoot->isRoot = false;
-    sourceRoot->team = nullptr;
+    // sourceRoot->team = nullptr;
     return destRoot;
 };
 
