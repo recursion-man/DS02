@@ -19,10 +19,6 @@ struct Upside_Node
     Upside_Node() : father(nullptr), isRoot(true), gamesPreviousTeamPlayed(0), spiritOfNewTeam(1){};
 };
 
-class UpsideForrest
-{
-};
-
 template <class T>
 Upside_Node<T> *find(Upside_Node<T> *player_node)
 {
