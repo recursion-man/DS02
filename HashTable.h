@@ -13,16 +13,16 @@ class HashTable
 {
 private:
     Upside_Node<Player>** arr;
-    int size, max_size, m, c;
+    int size, m;
     void expend();
     static const int EXPAND_RATE = 2;
+    static const int INITIAL_M = 15;
+    static const int C = 5;
     static const int INITIAL_SIZE = 10;
     static const int NOT_EXIST;
 
-
-
 public:
-    HashTable() : arr(new Upside_Node<Player>* [INITIAL_SIZE]), size(0), max_size(INITIAL_SIZE) {}
+    HashTable() : arr(new Upside_Node<Player>* [INITIAL_SIZE]), size(INITIAL_SIZE), m(INITIAL_M) {}
     ~HashTable();
     int hashFunction(int k, int id) const;
     void insert(const Player&);
