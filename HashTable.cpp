@@ -5,7 +5,7 @@
 #include "HashTable.h"
 
 
-void HashTable::m_expend()
+void HashTable::expend()
 {
 
 }
@@ -15,13 +15,31 @@ HashTable::~HashTable()
     delete[] arr;
 }
 
-void HashTable::insert(const Player&)
+void HashTable::insert(const Player& player)
 {
-
+    int index = NOT_EXIST;
+    try
+    {
+        index = find(player.getId());
+        if (index != NOT_EXIST)
+            throw std::invalid_argument("player exists");
+    }
+    catch (const Full&)
+    {
+        HashTable::expend();
+        index = find(player.getId());
+    }
+    catch (const NotExist& e)
+    {
+        index = e.index;
+    }
+    auto new_player = new Upside_Node<Player>(player);
+    *(arr+index) = new_player;
 }
 
-NodeUpside *HashTable::operator[](int id) {
-    return nullptr;
+Upside_Node<Player> *HashTable::operator[](int id) {
+    int index = find(id);
+
 }
 
 int HashTable::hashFunction(int k, int id) const
@@ -31,18 +49,16 @@ int HashTable::hashFunction(int k, int id) const
 
 int HashTable::find(int id)
 {
-    // h_0(id)
     int first_index = hashFunction(0,id);
-    // h_0 is empty
-    if (*(arr+first_index) == nullptr)
-    {
-        return NOT_FOUND;
-    }
-    for (int i = 1; i < max_size; i++)
+    for (int i = 0; i < max_size; i++)
     {
         int index = hashFunction(i, id);
+        if (i !=0 && index == first_index)
+            throw Full(); // full
         if (*(arr+index) == nullptr)
-            return NOT_FOUND;
-        if ((*(arr+index))->id )
+            throw NotExist(index); // not exist
+        if ((*(arr+index))->data.getId() == id)
+            return index;
     }
 }
+;
