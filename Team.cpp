@@ -7,7 +7,7 @@ bool Team::isEmpty() const
     return (this->num_of_players == 0);
 }
 
-int Team::getTeamSpirit() const
+permutation_t Team::getTeamSpirit() const
 {
     return team_spirit;
 }
@@ -47,6 +47,16 @@ Upside_Node<std::shared_ptr<Player>> *Team::getRootPlayerNode()
     return root_player_node;
 }
 
+int Team::getTeamStrength() const
+{
+    return this->team_spirit.strength();
+}
+
+int Team::getTeamAbility() const
+{
+    return this->sum_of_player_abilities;
+}
+
 //  setters
 
 void Team::setTeamId(int teamId)
@@ -74,19 +84,19 @@ bool Team::isValidTeam() const
     return (num_of_players >= MIN_PLAYERS_IN_TEAM && num_of_goal_keepers > 0);
 }
 
-void Team::playerAdded(bool isGoalKeeper, int player_spirit)
+void Team::handlePlayerAdded(std::shared_ptr<Player> player)
 {
     if (num_of_players == 0)
     {
-        team_spirit = player_spirit;
+        team_spirit = player->getPlayerSpirit();
     }
     else
     {
-        team_spirit *= player_spirit;
+        team_spirit = team_spirit * player->getPlayerSpirit();
     }
-
+    sum_of_player_abilities += player->getAbility();
     num_of_players++;
-    if (isGoalKeeper)
+    if (player->isGoalKeeper())
     {
         num_of_goal_keepers++;
     }
@@ -101,24 +111,20 @@ void Team::handleTeamBought(Team *source_team)
     this->points += source_team->getPoints();
     this->num_of_goal_keepers += source_team->getNumOfGoalKeepers();
     this->num_of_players += source_team->getNumOfPlayers();
+    this->sum_of_player_abilities += source_team->getTeamAbility();
+    this->team_spirit = this->team_spirit * source_team->getTeamSpirit();
     if (source_team->getRootPlayerNode() != nullptr)
         union_tree(this->root_player_node, source_team->root_player_node);
 }
 
-void Team::applyDrawInMatch()
+void Team::handleTeamRemoved()
 {
-    points++;
-    games_played++;
+    this->root_player_node->team = nullptr;
 }
 
-void Team::applyWinInMatch()
+void Team::applyMatch(int points_to_add)
 {
-    points += 3;
-    games_played++;
-}
-
-void Team::applyLostInMatch()
-{
+    points += points_to_add;
     games_played++;
 }
 

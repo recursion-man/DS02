@@ -2,7 +2,8 @@
 #ifndef UPSIDE_NODE
 #define UPSIDE_NODE
 #include <iostream>
-// #include "Team.h"
+#include "Team.h"
+#include "wet2util.h"
 
 // class Team;
 
@@ -10,13 +11,13 @@ template <class T>
 struct Upside_Node
 {
     Upside_Node<T> *father;
-    // Team *team;
+    Team *team;
     bool isRoot;
-    int gamesPreviousTeamPlayed;
-    int spiritOfNewTeam;
+    int games_to_add;
+    permutation_t spirit_to_calculate;
     T data;
-    Upside_Node(T data) : father(nullptr), isRoot(true), gamesPreviousTeamPlayed(0), spiritOfNewTeam(1), data(data){};
-    Upside_Node() : father(nullptr), isRoot(true), gamesPreviousTeamPlayed(0), spiritOfNewTeam(1){};
+    Upside_Node(T data) : father(nullptr), team(nullptr) isRoot(true), games_to_add(0), spirit_to_calculate(1), data(data){};
+    Upside_Node() : father(nullptr), isRoot(true), games_to_add(0), spirit_to_calculate(){};
 };
 
 template <class T>
@@ -62,7 +63,7 @@ Upside_Node<T> *union_tree(Upside_Node<T> *destRoot, Upside_Node<T> *sourceRoot)
     sourceRoot->father = destRoot;
     // לעדכן את השדות בשביל משחקים ששוחקו והרוח
     sourceRoot->isRoot = false;
-    // sourceRoot->team = nullptr;
+    sourceRoot->team = nullptr;
     return destRoot;
 };
 

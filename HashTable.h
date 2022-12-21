@@ -6,13 +6,12 @@
 #define WORLDCUP23A2_CPP_HASHTABLE_H
 #include "AVLTree.h"
 #include "UpsideNode.h"
-
-
+#include "Player.h"
 
 class HashTable
 {
 private:
-    Upside_Node<Player>** arr;
+    Upside_Node<Player> **arr;
     int size, m;
     void expend();
     static const int EXPAND_RATE = 2;
@@ -22,22 +21,23 @@ private:
     static const int NOT_EXIST;
 
 public:
-    HashTable() : arr(new Upside_Node<Player>* [INITIAL_SIZE]), size(INITIAL_SIZE), m(INITIAL_M) {}
+    HashTable() : arr(new Upside_Node<Player> *[INITIAL_SIZE]), size(INITIAL_SIZE), m(INITIAL_M) {}
     ~HashTable();
     int hashFunction(int k, int id) const;
-    void insert(const Player&);
-    int find (int id);
-    Upside_Node<Player>* operator[] (int id);
-    class Full{
-        public:
-            Full(){}
+    void insert(const Player &);
+    int find(int id);
+    Upside_Node<Player> *operator[](int id);
+    class Full
+    {
+    public:
+        Full() {}
     };
-    class   NotExist{
-        public:
-            NotExist(int index): index(index){}
-            int index;
+    class NotExist
+    {
+    public:
+        NotExist(int index) : index(index) {}
+        int index;
     };
 };
 
-
-#endif //WORLDCUP23A2_CPP_HASHTABLE_H
+#endif // WORLDCUP23A2_CPP_HASHTABLE_H
