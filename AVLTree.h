@@ -3,7 +3,6 @@
 #define AVL_TREE
 
 #include <memory>
-#include <math.h>
 #include <iostream>
 
 template <class T>
@@ -41,6 +40,18 @@ Node<T> *find(Node<T> *v, T target)
     }
 }
 
+template <class T>
+Node<T> * selectInSubTree(Node<T>* v, int k)
+{
+    if (v->left->nodes_in_sub_tree == k-1)
+        return v;
+    if (v->left->nodes_in_sub_tree > k-1)
+        return selectInSubTree(v->left, k);
+    else
+        return selectInSubTree(v->right, k - 1 - (v->left->nodes_in_sub_tree));
+}
+
+
 
 template <class T>
 class Tree
@@ -48,6 +59,15 @@ class Tree
 public:
     Tree() : root(nullptr){};
 
+    T findInTree(T target)
+    {
+        return find(root, target)->data;
+    }
+
+    T select(int k)
+    {
+        return selectInSubTree(root, k)->data;
+    }
 
     virtual void insertToTree(T new_data)
     {
@@ -87,12 +107,12 @@ protected:
 template <class T>
 void deleteNodes(Node<T> *v)
 {
-    if (v != nullptr && v != NULL)
+    if (v != nullptr)
     {
         deleteNodes(v->left);
         deleteNodes(v->right);
         delete v;
-    };
+    }
 }
 
 template <class T>
