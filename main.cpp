@@ -58,4 +58,19 @@ TEST_CASE("Find and union", "find")
         REQUIRE(node7.father->data == 8);
         REQUIRE(find(&node7)->data == 8);
     }
+    SECTION("shrink by size")
+    {
+
+        Upside_Node<int> node5(5);
+        Upside_Node<int> node6(6);
+        Upside_Node<int> node7(7);
+        Upside_Node<int> node8(8);
+        REQUIRE(union_tree(&node5, &node6)->data == 5);
+        REQUIRE(node5.size == 2);
+        REQUIRE(union_tree(&node5, &node7)->data == 5);
+        REQUIRE(find(&node7)->data == 5);
+        REQUIRE(union_tree(&node8, &node5)->data == 5);
+        REQUIRE(node8.father->data == 5);
+        REQUIRE(node7.father->data == 5);
+    }
 }

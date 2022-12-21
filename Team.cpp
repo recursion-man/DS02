@@ -119,7 +119,7 @@ void Team::handleTeamBought(Team *source_team)
 
 void Team::handleTeamRemoved()
 {
-    this->root_player_node->team = nullptr;
+    root_player_node->team = nullptr;
 }
 
 void Team::applyMatch(int points_to_add)

@@ -2,11 +2,12 @@
 #define TEAM
 
 #include "AVLTree.h"
+#include "UpsideNode.h"
 #include "Player.h"
 #include "wet2util.h"
-#include "UpsideNode.h"
 
 #define MIN_PLAYERS_IN_TEAM 11
+class Player;
 
 class Team
 {
