@@ -2,33 +2,35 @@
 #define TEAM
 
 #include "AVLTree.h"
-#include "Player.h"
 #include "UpsideNode.h"
+#include "Player.h"
+#include "wet2util.h"
 
 #define MIN_PLAYERS_IN_TEAM 11
-template <class T>
-class Upside_Node;
 class Player;
 
 class Team
 {
-    int teamId, points, team_spirit, num_of_players, num_of_goal_keepers, games_played;
+    int teamId, points, num_of_players, num_of_goal_keepers, games_played, sum_of_player_abilities;
+    permutation_t team_spirit;
     Upside_Node<std::shared_ptr<Player>> *root_player_node;
 
 public:
     //  C'tor
-    explicit Team(int teamId, int points = 0) : teamId{teamId}, points{points}, team_spirit{0}, num_of_players{0},
-                                                num_of_goal_keepers{0}, games_played{0}, root_player_node{
-                                                                                             nullptr} {};
+    explicit Team(int teamId, int points = 0) : teamId{teamId}, points{points}, num_of_players{0},
+                                                num_of_goal_keepers{0}, games_played{0}, sum_of_player_abilities{0}, team_spirit{}, root_player_node{
+                                                                                                                                        nullptr} {};
     ~Team(){};
     //  getters
     int getNumOfPlayers() const;
     int getPoints() const;
     int getNumOfGoalKeepers() const;
-    int getTeamSpirit() const;
+    permutation_t getTeamSpirit() const;
     int getTeamId() const;
     Upside_Node<std::shared_ptr<Player>> *getRootPlayerNode();
     int getGamesTeamPlayed() const;
+    int getTeamStrength() const;
+    int getTeamAbility() const;
 
     //  setters
     void setTeamId(int teamId);
@@ -39,12 +41,11 @@ public:
     bool isEmpty() const;
     bool isValidTeam() const;
 
-    void playerAdded(bool isGoalKeeper, int player_spirit);
+    void handlePlayerAdded(std::shared_ptr<Player> player);
     void handleTeamBought(Team *source_team);
+    void handleTeamRemoved();
 
-    void applyWinInMatch();
-    void applyDrawInMatch();
-    void applyLostInMatch();
+    void applyMatch(int point_to_add);
 };
 
 // operations

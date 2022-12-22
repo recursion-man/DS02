@@ -1,8 +1,84 @@
 #include "Player.h"
 #include <utility>
 
+//  getters
 
+// int Player::getGamesPlayed() const
+// {
+//     int games_played_total = this->team->getGamesTeamPlayed() -
+//                              this->games_team_played_when_added + this->gamesPlayed;
+//     return games_played_total;
+// }
+
+int Player::getCards() const
+{
+    return cards;
+}
 int Player::getId() const
 {
     return playerId;
+}
+
+int Player::getGamesTeamPlayedWhenAdded() const
+{
+    return games_team_played_when_added;
+}
+
+int Player::getAbility() const
+{
+    return ability;
+}
+permutation_t Player::getPlayerSpirit() const
+{
+    return player_spirit;
+}
+
+permutation_t Player::getPartialPlayerSpirit() const
+{
+    return this->team_spirit_when_added * player_spirit;
+}
+//  setters
+
+void Player::setGamesPlayed(int games_played)
+{
+    this->gamesPlayed = games_played;
+}
+
+void Player::setGamesTeamPlayed(int new_games_team_played)
+{
+    this->games_team_played_when_added = new_games_team_played;
+}
+
+// operators
+
+bool Player::operator<(const Player &other) const
+{
+    return playerId < other.playerId;
+}
+
+bool Player::operator>(const Player &other) const
+{
+    return playerId > other.playerId;
+    ;
+}
+
+bool operator<(const std::shared_ptr<Player> a, const std::shared_ptr<Player> b)
+{
+    return a->operator<(*b);
+}
+bool operator>(const std::shared_ptr<Player> a, const std::shared_ptr<Player> b)
+{
+    return a->operator>(*b);
+}
+
+//<---------------->
+
+bool Player::isGoalKeeper() const
+{
+    return goalKeeper;
+}
+
+void Player::addCard(int card_to_add)
+{
+    this->cards += card_to_add;
 }
