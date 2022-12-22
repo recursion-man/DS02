@@ -11,21 +11,33 @@
 
 class HashTable
 {
-private:
-    Upside_Node<Player>** arr;
+public:
+    class Cell
+    {
+        bool active;
+        Upside_Node<Player>* address;
+    public:
+        Cell(): active(false), address(nullptr){}
+        void activate(Upside_Node<Player>* new_address);
+        bool isActive() const;
+        Upside_Node<Player>* getAddress() const;
+        ~Cell();
+    };
+
+    Cell* arr;
     int size, m;
-    void expend();
-    static const int EXPAND_RATE = 2;
-    static const int INITIAL_M = 15;
+    void expend(bool, const Player&);
     static const int C = 5;
-    static const int INITIAL_SIZE = 10;
-    static const int NOT_EXIST;
+    static const int INITIAL_SIZE = 7;
+    static const int NOT_EXIST = -1;
 
 public:
-    HashTable() : arr(new Upside_Node<Player>* [INITIAL_SIZE]), size(INITIAL_SIZE), m(INITIAL_M) {}
+    HashTable() : arr(new Cell[INITIAL_SIZE]), size(INITIAL_SIZE), m(INITIAL_SIZE) {}
     ~HashTable();
     int hashFunction(int k, int id) const;
     void insert(const Player&);
+    void transfer(Upside_Node<Player>*);
+    int getIndex(const Player&);
     int find (int id);
     Upside_Node<Player>* operator[] (int id);
     class Full{
