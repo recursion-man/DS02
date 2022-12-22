@@ -6,6 +6,9 @@
 #include "UpsideNode.h"
 
 #define MIN_PLAYERS_IN_TEAM 11
+template <class T>
+class Upside_Node;
+class Player;
 
 class Team
 {

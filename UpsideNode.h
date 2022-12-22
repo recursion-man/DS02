@@ -4,7 +4,7 @@
 #include <iostream>
 #include "Team.h"
 
-// class Team;
+class Team;
 
 template <class T>
 struct Upside_Node

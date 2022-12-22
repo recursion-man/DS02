@@ -37,10 +37,10 @@ int Team::getGamesTeamPlayed() const
     return games_played;
 }
 
-int getNewTotalGames(std::shared_ptr<Player> player, int games_team_played)
-{
-    return player->getGamesPlayed() + games_team_played - player->getGamesTeamPlayedWhenAdded();
-}
+//int getNewTotalGames(std::shared_ptr<Player> player, int games_team_played)
+//{
+//    return player->getGamesPlayed() + games_team_played - player->getGamesTeamPlayedWhenAdded();
+//}
 
 Upside_Node<std::shared_ptr<Player>> *Team::getRootPlayerNode()
 {
