@@ -4,9 +4,9 @@
 
 #ifndef WORLDCUP23A2_CPP_HASHTABLE_H
 #define WORLDCUP23A2_CPP_HASHTABLE_H
-#include "AVLTree.h"
-#include "UpsideNode.h"
 
+#include "UpsideNode.h"
+#include "Player.h"
 
 
 class HashTable
