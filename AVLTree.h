@@ -11,12 +11,20 @@ struct Node
     Node *left, *right, *father;
     int height, nodes_in_sub_tree;
     T data;
-    explicit Node(T data) : left(nullptr), right(nullptr), father(nullptr), height(0), nodes_in_sub_tree(1), data(data){};
+    explicit Node(T data) : left(nullptr), right(nullptr), father(nullptr), height(0), nodes_in_sub_tree(0), data(data){};
     Node() : left(nullptr), right(nullptr), father(nullptr), height(0), nodes_in_sub_tree(1){};
 };
 
 
-
+template <class T>
+void printPostOrder(Node<T> *v)
+{
+    if (v== nullptr)
+        return;
+    printPostOrder(v->left);
+    printPostOrder(v->right);
+    std::cout<< v->data << " : " << v->nodes_in_sub_tree<<std::endl;
+}
 template <class T>
 Node<T> *find(Node<T> *v, T target)
 {
@@ -41,14 +49,26 @@ Node<T> *find(Node<T> *v, T target)
 }
 
 template <class T>
-Node<T> * selectInSubTree(Node<T>* v, int k)
+int rank(Node<T> *const node)
 {
-    if (v->left->nodes_in_sub_tree == k-1)
+    if (node == nullptr)
+        return 0;
+    return node->nodes_in_sub_tree;
+}
+
+template <class T>
+Node<T> * selectInSubTree(Node<T>* v, int k) {
+    if (rank(v->left) == k - 1)
         return v;
-    if (v->left->nodes_in_sub_tree > k-1)
+    if (rank(v->left) > k - 1) {
+        if (v->left == nullptr)
+            throw std::invalid_argument("caught in Select, index was too small");
         return selectInSubTree(v->left, k);
-    else
-        return selectInSubTree(v->right, k - 1 - (v->left->nodes_in_sub_tree));
+    } else {
+    if (v->right == nullptr)
+        throw std::invalid_argument("caught in Select, index was too big");
+    return selectInSubTree(v->right, k - 1 - rank(v->left));
+    }
 }
 
 
@@ -59,12 +79,13 @@ class Tree
 public:
     Tree() : root(nullptr){};
 
+    void printPost(){ printPostOrder(root);}
     T findInTree(T target)
     {
         return find(root, target)->data;
     }
 
-    T select(int k)
+    const T& select(int k)
     {
         return selectInSubTree(root, k)->data;
     }
@@ -136,6 +157,16 @@ int h(Node<T> *const node)
         return -1;
     return node->height;
 }
+
+
+
+template <class T>
+void updateRank(Node<T> *node)
+{
+    int result = rank(node->left) + rank(node->right) + 1;
+    node->nodes_in_sub_tree = result;
+}
+
 template <class T>
 int updateHeight(Node<T> *node)
 {
@@ -324,8 +355,8 @@ void LL(Node<T> *v, AVL_Tree<T> *tree)
     if (w_right != nullptr)
         w_right->father = v;
     w->right = v;
-    v->nodes_in_sub_tree = v->right->nodes_in_sub_tree + v->left->nodes_in_sub_tree + 1;
-    w->nodes_in_sub_tree = w->right->nodes_in_sub_tree + w->left->nodes_in_sub_tree + 1;
+    updateRank(v);
+    updateRank(w);
 
     while (v != nullptr)
     {
@@ -345,8 +376,8 @@ void RR(Node<T> *v, AVL_Tree<T> *tree)
     if (w_left != nullptr)
         w_left->father = v;
     w->left = v;
-    v->nodes_in_sub_tree = v->right->nodes_in_sub_tree + v->left->nodes_in_sub_tree + 1;
-    w->nodes_in_sub_tree = w->right->nodes_in_sub_tree + w->left->nodes_in_sub_tree + 1;
+    updateRank(v);
+    updateRank(w);
 
     while (v != nullptr)
     {
