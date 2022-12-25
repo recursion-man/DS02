@@ -48,7 +48,7 @@ HashTable::~HashTable()
     delete[] arr;
 }
 
-void HashTable::transfer(Upside_Node *address)
+void HashTable::transfer(std::shared_ptr<Upside_Node> address)
 {
     int index = getIndex(address->data);
     arr[index].activate(address);
@@ -84,7 +84,7 @@ void HashTable::insert(const Player &player)
         //        std::cout<<"got 2"<<std::endl;
         //        std::cout<<"got 3"<<std::endl;
     }
-    auto new_player = new Upside_Node(player);
+    std::shared_ptr<Upside_Node> new_player(new Upside_Node(player));
     arr[index].activate(new_player);
 }
 
@@ -103,7 +103,7 @@ Upside_Node *HashTable::operator[](int id)
     {
         throw std::invalid_argument("player doesn't exist");
     }
-    return arr[index].getAddress();
+    return arr[index].getAddress().get();
 }
 
 int HashTable::hashFunction(int k, int id) const
@@ -127,7 +127,7 @@ int HashTable::find(int id)
     throw Full();
 }
 
-void HashTable::Cell::activate(Upside_Node *new_address)
+void HashTable::Cell::activate(std::shared_ptr<Upside_Node> new_address)
 {
     active = true;
     address = new_address;
@@ -138,7 +138,7 @@ bool HashTable::Cell::isActive() const
     return active;
 }
 
-Upside_Node *HashTable::Cell::getAddress() const
+std::shared_ptr<Upside_Node> HashTable::Cell::getAddress() const
 {
     return address;
 }

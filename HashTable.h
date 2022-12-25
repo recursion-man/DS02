@@ -15,12 +15,12 @@ public:
     class Cell
     {
         bool active;
-        Upside_Node* address;
+        std::shared_ptr<Upside_Node> address;
     public:
         Cell(): active(false), address(nullptr){}
-        void activate(Upside_Node* new_address);
+        void activate(std::shared_ptr<Upside_Node> new_address);
         bool isActive() const;
-        Upside_Node* getAddress() const;
+        std::shared_ptr<Upside_Node> getAddress() const;
         ~Cell();
     };
 
@@ -36,7 +36,7 @@ public:
     ~HashTable();
     int hashFunction(int k, int id) const;
     void insert(const Player&);
-    void transfer(Upside_Node*);
+    void transfer(std::shared_ptr<Upside_Node>);
     int getIndex(const Player&);
     int find (int id);
     Upside_Node* operator[] (int id);

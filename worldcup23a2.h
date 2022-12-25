@@ -24,7 +24,7 @@ class world_cup_t {
 private:
     HashTable hash_table;
     AVL_Tree<std::shared_ptr<Team>> teams_by_id;
-    AVL_Tree<std::shared_ptr<Team>> teams_by_rank;
+    AVL_Tree<std::shared_ptr<TeamRank>> teams_by_rank;
 	
 public:
 	// <DO-NOT-MODIFY> {
