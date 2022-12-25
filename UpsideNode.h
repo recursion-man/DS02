@@ -7,7 +7,6 @@
 #include "Player.h"
 
 class Player;
-class Team;
 
 struct Upside_Node
 {
@@ -17,12 +16,13 @@ struct Upside_Node
     int games_to_add;
     permutation_t spirit_to_calculate;
     permutation_t team_updated_total_spirit; // this field needs to be updated by team in each added player
-    std::shared_ptr<Player> data;
-    Upside_Node(std::shared_ptr<Player> data, bool isRoot = true) : father(nullptr), isRoot(isRoot), size(1), games_to_add(0), spirit_to_calculate(permutation_t::neutral()), team_updated_total_spirit(permutation_t::neutral()), data(data){};
+    Player data;
+    Upside_Node(Player data, bool isRoot = true) : father(nullptr), isRoot(isRoot), size(1), games_to_add(0), spirit_to_calculate(permutation_t::neutral()), team_updated_total_spirit(permutation_t::neutral()), data(data){};
 };
 
 void linkNodes(Upside_Node *node1, Upside_Node *node2);
 void shrinkPaths(Upside_Node *node, Upside_Node *root);
+int getGamesToAdd(Upside_Node *node);
 void updateGamesForPath(Upside_Node *node);
 permutation_t getUpdatedSpiritUntilRoot(Upside_Node *node);
 int getUpdatedGamesUntilRoot(Upside_Node *node);

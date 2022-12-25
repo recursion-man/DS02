@@ -50,7 +50,7 @@ HashTable::~HashTable()
 
 void HashTable::transfer(Upside_Node *address)
 {
-    int index = getIndex(*(address->data.get()));
+    int index = getIndex(address->data);
     arr[index].activate(address);
 }
 
@@ -84,8 +84,7 @@ void HashTable::insert(const Player &player)
         //        std::cout<<"got 2"<<std::endl;
         //        std::cout<<"got 3"<<std::endl;
     }
-    std::shared_ptr<Player> p_player(new Player(player));
-    auto new_player = new Upside_Node(p_player);
+    auto new_player = new Upside_Node(player);
     arr[index].activate(new_player);
 }
 
@@ -122,7 +121,7 @@ int HashTable::find(int id)
             throw Full(); // full
         if (!arr[index].isActive())
             throw NotExist(index); // not exist
-        if (arr[index].getAddress()->data->getId() == id)
+        if (arr[index].getAddress()->data.getId() == id)
             return index;
     }
     throw Full();

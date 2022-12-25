@@ -2,10 +2,16 @@
 
 void linkNodes(Upside_Node *node1, Upside_Node *node2)
 {
-    if (node1 != nullptr && node2 != nullptr)
+    if (node1 != nullptr && node2 != nullptr && node1 != node2)
     {
         node2->father = node1;
         node1->size += node2->size;
+        while (!node1->isRoot)
+        {
+            node1 = node1->father;
+            node1->size += node2->size;
+        }
+
         node2->isRoot = false;
     }
 }
@@ -23,6 +29,17 @@ void shrinkPaths(Upside_Node *node, Upside_Node *root)
         // update the size for each node exept the first node (he keeps it's subtree)
         node->size = 1;
     }
+}
+
+int getGamesToAdd(Upside_Node *node)
+{
+    int games_to_add = node->games_to_add;
+    while (!node->isRoot)
+    {
+        node = node->father;
+        games_to_add += node->games_to_add;
+    }
+    return games_to_add;
 }
 
 int getUpdatedGamesUntilRoot(Upside_Node *node)
@@ -113,7 +130,7 @@ void handleUnion(Upside_Node *dest_root, Upside_Node *source_root, bool dest_roo
     {
         // b points to a
         // fix spirit
-        source_root->spirit_to_calculate = source_root->spirit_to_calculate * dest_root->data->getTeam()->getTeamSpirit();
+        source_root->spirit_to_calculate = source_root->spirit_to_calculate * dest_root->team_updated_total_spirit;
         // fix games
         source_root->games_to_add -= dest_root->games_to_add;
     }
