@@ -16,12 +16,15 @@
 #define WORLDCUP23A2_H_
 
 #include "wet2util.h"
+#include "HashTable.h"
+#include "UpsideNode.h"
+
 
 class world_cup_t {
 private:
-	//
-	// Here you may add anything you want
-	//
+    HashTable hash_table;
+    AVL_Tree<std::shared_ptr<Team>> teams_by_id;
+    AVL_Tree<std::shared_ptr<Team>> teams_by_rank;
 	
 public:
 	// <DO-NOT-MODIFY> {

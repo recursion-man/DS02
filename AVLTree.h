@@ -12,7 +12,6 @@ struct Node
     int height, nodes_in_sub_tree;
     T data;
     explicit Node(T data) : left(nullptr), right(nullptr), father(nullptr), height(0), nodes_in_sub_tree(0), data(data){};
-    Node() : left(nullptr), right(nullptr), father(nullptr), height(0), nodes_in_sub_tree(1){};
 };
 
 
