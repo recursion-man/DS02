@@ -15,12 +15,12 @@ public:
     class Cell
     {
         bool active;
-        Upside_Node<Player>* address;
+        Upside_Node* address;
     public:
         Cell(): active(false), address(nullptr){}
-        void activate(Upside_Node<Player>* new_address);
+        void activate(Upside_Node* new_address);
         bool isActive() const;
-        Upside_Node<Player>* getAddress() const;
+        Upside_Node* getAddress() const;
         ~Cell();
     };
 
@@ -36,10 +36,10 @@ public:
     ~HashTable();
     int hashFunction(int k, int id) const;
     void insert(const Player&);
-    void transfer(Upside_Node<Player>*);
+    void transfer(Upside_Node*);
     int getIndex(const Player&);
     int find (int id);
-    Upside_Node<Player>* operator[] (int id);
+    Upside_Node* operator[] (int id);
     class Full{
         public:
             Full(){}

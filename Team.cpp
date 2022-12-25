@@ -37,12 +37,12 @@ int Team::getGamesTeamPlayed() const
     return games_played;
 }
 
-//int getNewTotalGames(std::shared_ptr<Player> player, int games_team_played)
+// int getNewTotalGames(std::shared_ptr<Player> player, int games_team_played)
 //{
-//    return player->getGamesPlayed() + games_team_played - player->getGamesTeamPlayedWhenAdded();
-//}
+//     return player->getGamesPlayed() + games_team_played - player->getGamesTeamPlayedWhenAdded();
+// }
 
-Upside_Node<std::shared_ptr<Player>> *Team::getRootPlayerNode()
+Upside_Node *Team::getRootPlayerNode()
 {
     return root_player_node;
 }
@@ -119,7 +119,7 @@ void Team::handleTeamBought(Team *source_team)
 
 void Team::handleTeamRemoved()
 {
-    root_player_node->team = nullptr;
+    root_player_node->data->setTeam(nullptr);
 }
 
 void Team::applyMatch(int points_to_add)

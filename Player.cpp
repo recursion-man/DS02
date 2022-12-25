@@ -14,6 +14,12 @@ int Player::getCards() const
 {
     return cards;
 }
+
+Team *Player::getTeam() const
+{
+    return team;
+}
+
 int Player::getId() const
 {
     return playerId;
@@ -47,6 +53,11 @@ void Player::setGamesPlayed(int games_played)
 void Player::setGamesTeamPlayed(int new_games_team_played)
 {
     this->games_team_played_when_added = new_games_team_played;
+}
+
+void Player::setTeam(Team *team)
+{
+    this->team = team;
 }
 
 // operators

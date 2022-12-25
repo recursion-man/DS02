@@ -8,69 +8,89 @@ TEST_CASE("Find and union", "find")
 
     SECTION("simple find ")
     {
-        Upside_Node<int> node1(1);
-        Upside_Node<int> node2(2);
-        REQUIRE(find(&node1)->data == 1);
-        REQUIRE(find(&node2)->data == 2);
-        Upside_Node<int> node3(3);
-        Upside_Node<int> node4(4);
-        REQUIRE(find(&node3)->data == 3);
-        REQUIRE(find(&node4)->data == 4);
+        std::shared_ptr<Player> p1(new Player(1));
+        Upside_Node n1(p1);
+        Upside_Node n2(p1);
+        REQUIRE(find(&n1) == &n1);
+        REQUIRE(find(&n2) == &n2);
+        linkNodes(&n1, &n2);
+        REQUIRE(find(&n2) == &n1);
+        Upside_Node n3(p1);
+        Upside_Node n4(p1);
+        linkNodes(&n1, &n3);
+        linkNodes(&n1, &n4);
+        REQUIRE(find(&n3) == &n1);
+        REQUIRE(find(&n4) == &n1);
+        REQUIRE(n4.father == &n1);
+        REQUIRE(n3.father == &n1);
+        REQUIRE(n1.isRoot == true);
+        REQUIRE(n2.isRoot == false);
+        REQUIRE(n3.isRoot == false);
+        REQUIRE(n4.isRoot == false);
+
+        // Upside_Node<int> node1(1);
+        // Upside_Node<int> node2(2);
+        // REQUIRE(find(&node1)->data == 1);
+        // REQUIRE(find(&node2)->data == 2);
+        // Upside_Node<int> node3(3);
+        // Upside_Node<int> node4(4);
+        // REQUIRE(find(&node3)->data == 3);
+        // REQUIRE(find(&node4)->data == 4);
     }
 
     SECTION("simple find with union")
     {
-        Upside_Node<int> node1(1);
-        Upside_Node<int> node2(2);
-        REQUIRE(find(&node1)->data == 1);
-        REQUIRE(find(&node2)->data == 2);
-        REQUIRE(union_tree(&node1, &node2)->data == 1);
-        REQUIRE(node2.isRoot == false);
-        REQUIRE(find(&node2)->data == 1);
-        Upside_Node<int> node3(3);
-        Upside_Node<int> node4(4);
-        REQUIRE(find(&node3)->data == 3);
-        REQUIRE(find(&node4)->data == 4);
-        REQUIRE(union_tree(&node3, &node4)->data == 3);
-        REQUIRE(find(&node4)->data == 3);
-        REQUIRE(union_tree(&node3, &node1)->data == 3);
-        REQUIRE(node2.father->data == 1);
-        REQUIRE(find(&node2)->data == 3);
-        REQUIRE(node2.father->data == 3);
-        REQUIRE(node1.isRoot == false);
+        // Upside_Node<int> node1(1);
+        // Upside_Node<int> node2(2);
+        // REQUIRE(find(&node1)->data == 1);
+        // REQUIRE(find(&node2)->data == 2);
+        // REQUIRE(union_tree(&node1, &node2)->data == 1);
+        // REQUIRE(node2.isRoot == false);
+        // REQUIRE(find(&node2)->data == 1);
+        // Upside_Node<int> node3(3);
+        // Upside_Node<int> node4(4);
+        // REQUIRE(find(&node3)->data == 3);
+        // REQUIRE(find(&node4)->data == 4);
+        // REQUIRE(union_tree(&node3, &node4)->data == 3);
+        // REQUIRE(find(&node4)->data == 3);
+        // REQUIRE(union_tree(&node3, &node1)->data == 3);
+        // REQUIRE(node2.father->data == 1);
+        // REQUIRE(find(&node2)->data == 3);
+        // REQUIRE(node2.father->data == 3);
+        // REQUIRE(node1.isRoot == false);
     }
     SECTION("find shrink path")
     {
         // checking if 6 also points diractly to the root 8 after find(5)
-        Upside_Node<int> node5(5);
-        Upside_Node<int> node6(6);
-        Upside_Node<int> node7(7);
-        Upside_Node<int> node8(8);
-        node5.father = &node6;
-        node6.father = &node7;
-        node7.father = &node8;
-        node5.isRoot = false;
-        node6.isRoot = false;
-        node7.isRoot = false;
+        // Upside_Node<int> node5(5);
+        // Upside_Node<int> node6(6);
+        // Upside_Node<int> node7(7);
+        // Upside_Node<int> node8(8);
+        // node5.father = &node6;
+        // node6.father = &node7;
+        // node7.father = &node8;
+        // node5.isRoot = false;
+        // node6.isRoot = false;
+        // node7.isRoot = false;
 
-        REQUIRE(find(&node5)->data == 8);
-        REQUIRE(node6.father->data == 8);
-        REQUIRE(node7.father->data == 8);
-        REQUIRE(find(&node7)->data == 8);
+        // REQUIRE(find(&node5)->data == 8);
+        // REQUIRE(node6.father->data == 8);
+        // REQUIRE(node7.father->data == 8);
+        // REQUIRE(find(&node7)->data == 8);
     }
     SECTION("shrink by size")
     {
 
-        Upside_Node<int> node5(5);
-        Upside_Node<int> node6(6);
-        Upside_Node<int> node7(7);
-        Upside_Node<int> node8(8);
-        REQUIRE(union_tree(&node5, &node6)->data == 5);
-        REQUIRE(node5.size == 2);
-        REQUIRE(union_tree(&node5, &node7)->data == 5);
-        REQUIRE(find(&node7)->data == 5);
-        REQUIRE(union_tree(&node8, &node5)->data == 5);
-        REQUIRE(node8.father->data == 5);
-        REQUIRE(node7.father->data == 5);
+        // Upside_Node<int> node5(5);
+        // Upside_Node<int> node6(6);
+        // Upside_Node<int> node7(7);
+        // Upside_Node<int> node8(8);
+        // REQUIRE(union_tree(&node5, &node6)->data == 5);
+        // REQUIRE(node5.size == 2);
+        // REQUIRE(union_tree(&node5, &node7)->data == 5);
+        // REQUIRE(find(&node7)->data == 5);
+        // REQUIRE(union_tree(&node8, &node5)->data == 5);
+        // REQUIRE(node8.father->data == 5);
+        // REQUIRE(node7.father->data == 5);
     }
 }
