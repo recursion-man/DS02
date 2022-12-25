@@ -14,15 +14,14 @@ struct Node
     explicit Node(T data) : left(nullptr), right(nullptr), father(nullptr), height(0), nodes_in_sub_tree(0), data(data){};
 };
 
-
 template <class T>
 void printPostOrder(Node<T> *v)
 {
-    if (v== nullptr)
+    if (v == nullptr)
         return;
     printPostOrder(v->left);
     printPostOrder(v->right);
-    std::cout<< v->data << " : " << v->nodes_in_sub_tree<<std::endl;
+    std::cout << v->data << " : " << v->nodes_in_sub_tree << std::endl;
 }
 template <class T>
 Node<T> *find(Node<T> *v, T target)
@@ -56,21 +55,23 @@ int rank(Node<T> *const node)
 }
 
 template <class T>
-Node<T> * selectInSubTree(Node<T>* v, int k) {
+Node<T> *selectInSubTree(Node<T> *v, int k)
+{
     if (rank(v->left) == k - 1)
         return v;
-    if (rank(v->left) > k - 1) {
+    if (rank(v->left) > k - 1)
+    {
         if (v->left == nullptr)
             throw std::invalid_argument("caught in Select, index was too small");
         return selectInSubTree(v->left, k);
-    } else {
-    if (v->right == nullptr)
-        throw std::invalid_argument("caught in Select, index was too big");
-    return selectInSubTree(v->right, k - 1 - rank(v->left));
+    }
+    else
+    {
+        if (v->right == nullptr)
+            throw std::invalid_argument("caught in Select, index was too big");
+        return selectInSubTree(v->right, k - 1 - rank(v->left));
     }
 }
-
-
 
 template <class T>
 class Tree
@@ -78,13 +79,13 @@ class Tree
 public:
     Tree() : root(nullptr){};
 
-    void printPost(){ printPostOrder(root);}
+    void printPost() { printPostOrder(root); }
     T findInTree(T target)
     {
         return find(root, target)->data;
     }
 
-    const T& select(int k)
+    const T &select(int k)
     {
         return selectInSubTree(root, k)->data;
     }
@@ -156,8 +157,6 @@ int h(Node<T> *const node)
         return -1;
     return node->height;
 }
-
-
 
 template <class T>
 void updateRank(Node<T> *node)
@@ -260,7 +259,7 @@ int getBalance(Node<T> *const node)
 }
 
 template <class T>
-void increaseNumOfNodes(Node<T> * v)
+void increaseNumOfNodes(Node<T> *v)
 {
     while (v != nullptr)
     {
@@ -270,7 +269,7 @@ void increaseNumOfNodes(Node<T> * v)
 }
 
 template <class T>
-void decreaseNumOfNodes(Node<T> * v)
+void decreaseNumOfNodes(Node<T> *v)
 {
     while (v != nullptr)
     {
@@ -278,7 +277,6 @@ void decreaseNumOfNodes(Node<T> * v)
         v = v->father;
     }
 }
-
 
 template <class T>
 class AVL_Tree : public Tree<T>
@@ -425,7 +423,5 @@ void fix(Node<T> *node, AVL_Tree<T> *tree)
         }
     }
 }
-
-
 
 #endif // AVL_TREE
