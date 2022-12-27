@@ -18,10 +18,10 @@ class Team
 
 public:
     //  C'tor
-    explicit Team(int teamId, int points = 0) : teamId{teamId}, points{points}, num_of_players{0},
-                                                num_of_goal_keepers{0}, games_played{0}, sum_of_player_abilities{0}, team_spirit{}, root_player_node{
-                                                                                                                                        nullptr} {};
-    virtual ~Team(){};
+    explicit Team(int teamId) : teamId{teamId}, points{0}, num_of_players{0},
+                                                num_of_goal_keepers{0}, games_played{0}, sum_of_player_abilities{0},
+                                                team_spirit{}, root_player_node{nullptr} {};
+    virtual ~Team();
     //  getters
     int getNumOfPlayers() const;
     int getPoints() const;
@@ -49,7 +49,10 @@ public:
     void applyMatch(int point_to_add);
 };
 
-class TeamRank :public Team{};
+class TeamRank :public Team{
+public:
+    TeamRank(int teamId): Team(teamId){}
+};
 
 // operations
 bool operator<(std::shared_ptr<Team> a, std::shared_ptr<Team> b);

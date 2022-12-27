@@ -6,14 +6,52 @@ world_cup_t::~world_cup_t(){}
 
 StatusType world_cup_t::add_team(int teamId)
 {
-	// TODO: Your code goes here
-	return StatusType::SUCCESS;
+    if (teamId <= 0)
+    {
+        return StatusType::INVALID_INPUT;
+    }
+    try
+    {
+        std::shared_ptr<Team> new_team_id(new Team(teamId));
+        std::shared_ptr<TeamRank> new_team_rank(new TeamRank(teamId));
+        teams_by_id.insertToTree(new_team_id);
+        teams_by_rank.insertToTree(new_team_rank);
+    }
+    catch (std::bad_alloc &e)
+    {
+        return StatusType::ALLOCATION_ERROR;
+    }
+    catch (...)
+    {
+        return StatusType::FAILURE;
+    }
+    return StatusType::SUCCESS;
 }
 
 StatusType world_cup_t::remove_team(int teamId)
 {
-	// TODO: Your code goes here
-	return StatusType::FAILURE;
+    if (teamId <= 0)
+    {
+        return StatusType::INVALID_INPUT;
+    }
+    try
+    {
+        std::shared_ptr<Team> new_team_id(new Team(teamId));
+        std::shared_ptr<TeamRank> new_team_rank(new TeamRank(teamId));
+
+
+        teams_by_id.removeFromTree(new_team_id);
+        teams_by_rank.removeFromTree(new_team_rank);
+    }
+    catch (std::bad_alloc &e)
+    {
+        return StatusType::ALLOCATION_ERROR;
+    }
+    catch (...)
+    {
+        return StatusType::FAILURE;
+    }
+    return StatusType::SUCCESS;
 }
 
 StatusType world_cup_t::add_player(int playerId, int teamId,

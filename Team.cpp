@@ -128,6 +128,14 @@ void Team::applyMatch(int points_to_add)
     games_played++;
 }
 
+Team::~Team()
+{
+    if (root_player_node != nullptr)
+    {
+        root_player_node->data.setTeam(nullptr);
+    }
+}
+
 bool operator<(const std::shared_ptr<Team> a, const std::shared_ptr<Team> b)
 {
     return a->getTeamId() < b->getTeamId();
@@ -147,3 +155,4 @@ bool operator>(std::shared_ptr<TeamRank> a,  std::shared_ptr<TeamRank> b)
 {
     return a->getTeamAbility() > b->getTeamAbility();
 }
+
