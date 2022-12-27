@@ -2,7 +2,7 @@
 
 world_cup_t::world_cup_t() : hash_table(), teams_by_id(), teams_by_rank(){}
 
-world_cup_t::~world_cup_t(){}
+world_cup_t::~world_cup_t()= default;
 
 StatusType world_cup_t::add_team(int teamId)
 {
@@ -77,6 +77,15 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
         // match the player to the team
         team->addPlayer(new_player_node);
 
+        //find rank team
+        std::shared_ptr<TeamRank> rank_target(new TeamRank(teamId));
+        std::shared_ptr<TeamRank> rank_team = teams_by_rank.findInTree(rank_target);
+
+        // remove and insert the updated team-rank
+        teams_by_rank.removeFromTree(rank_team);
+        rank_team->addPlayer(new_player_node);
+        teams_by_rank.insertToTree(rank_team);
+
     }
     catch (std::bad_alloc &e)
     {
@@ -97,32 +106,109 @@ output_t<int> world_cup_t::play_match(int teamId1, int teamId2)
 
 output_t<int> world_cup_t::num_played_games_for_player(int playerId)
 {
-	// TODO: Your code goes here
-	return 22;
+    if (playerId <= 0)
+    {
+        return StatusType::INVALID_INPUT;
+    }
+    try
+    {
+        return getPlayerTotalGames(hash_table[playerId]);
+    }
+    catch (std::bad_alloc &e)
+    {
+        return StatusType::ALLOCATION_ERROR;
+    }
+    catch (...)
+    {
+        return StatusType::FAILURE;
+    }
 }
 
 StatusType world_cup_t::add_player_cards(int playerId, int cards)
 {
-	// TODO: Your code goes here
-	return StatusType::SUCCESS;
+    if (playerId <= 0)
+    {
+        return StatusType::INVALID_INPUT;
+    }
+    try
+    {
+        if (isTeamActive(hash_table[playerId]))
+        {
+            hash_table[playerId]->data->addCard(cards);
+            return StatusType::SUCCESS;
+        }
+        else
+        {
+            return StatusType::FAILURE;
+        }
+    }
+    catch (std::bad_alloc &e)
+    {
+        return StatusType::ALLOCATION_ERROR;
+    }
+    catch (...)
+    {
+        return StatusType::FAILURE;
+    }
 }
 
 output_t<int> world_cup_t::get_player_cards(int playerId)
 {
-	// TODO: Your code goes here
-	return StatusType::SUCCESS;
+    if (playerId <= 0)
+    {
+        return StatusType::INVALID_INPUT;
+    }
+    try
+    {
+        return hash_table[playerId]->data->getCards();
+    }
+    catch (std::bad_alloc &e)
+    {
+        return StatusType::ALLOCATION_ERROR;
+    }
+    catch (...)
+    {
+        return StatusType::FAILURE;
+    }
 }
 
 output_t<int> world_cup_t::get_team_points(int teamId)
 {
-	// TODO: Your code goes here
-	return 30003;
+    if (teamId <= 0)
+    {
+        return StatusType::INVALID_INPUT;
+    }
+    try
+    {
+        std::shared_ptr<Team> target(new Team(teamId));
+        std::shared_ptr<Team> team = teams_by_id.findInTree(target);
+        return team->getPoints();
+    }
+    catch (std::bad_alloc &e)
+    {
+        return StatusType::ALLOCATION_ERROR;
+    }
+    catch (...)
+    {
+        return StatusType::FAILURE;
+    }
 }
 
 output_t<int> world_cup_t::get_ith_pointless_ability(int i)
 {
-	// TODO: Your code goes here
-	return 12345;
+
+    try
+    {
+        return teams_by_rank.select(i)->getTeamAbility();
+    }
+    catch (std::bad_alloc &e)
+    {
+        return StatusType::ALLOCATION_ERROR;
+    }
+    catch (...)
+    {
+        return StatusType::FAILURE;
+    }
 }
 
 output_t<permutation_t> world_cup_t::get_partial_spirit(int playerId)

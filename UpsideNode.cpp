@@ -142,7 +142,12 @@ Upside_Node *find(Upside_Node *player_node)
     // shrink pathways
     shrinkPaths(player_node, root);
     return root;
-};
+}
+
+bool isTeamActive(Upside_Node *node)
+{
+    return find(node)->data->getTeam() != nullptr;
+}
 
 void handleUnion(Upside_Node *dest_root, Upside_Node *source_root, bool dest_root_is_buyer)
 {
