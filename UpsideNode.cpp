@@ -4,6 +4,15 @@ void linkNodes(Upside_Node *node1, Upside_Node *node2)
 {
     if (node1 != nullptr && node2 != nullptr && node1 != node2)
     {
+        Upside_Node *temp1 = node1;
+        Upside_Node *temp2 = node2;
+        while (temp1->father)
+            temp1 = temp1->father;
+        while (temp1->father)
+            temp2 = temp2->father;
+        if (temp1 == temp2)
+            return; // has the same father and we will make a circle if we link
+
         node2->father = node1;
         node1->size += node2->size;
         while (!node1->isRoot)
@@ -51,6 +60,11 @@ int getUpdatedGamesUntilRoot(Upside_Node *node)
         updated_games_to_add += node->games_to_add;
     }
     return updated_games_to_add;
+}
+
+int getPlayerTotalGames(Upside_Node *node)
+{
+    return node->data->getGamesPlayed() + node->data->getGamesTeamPlayedWhenAdded() + getGamesToAdd(node);
 }
 
 void updateGamesForPlayersOnPath(Upside_Node *node)
@@ -124,8 +138,7 @@ void handleUnion(Upside_Node *dest_root, Upside_Node *source_root, bool dest_roo
         return;
     }
 
-    source_root->father = dest_root;
-
+    linkNodes(dest_root, source_root);
     if (dest_root_is_buyer)
     {
         // b points to a
@@ -144,9 +157,6 @@ void handleUnion(Upside_Node *dest_root, Upside_Node *source_root, bool dest_roo
         // fix games
         source_root->games_to_add -= dest_root->games_to_add;
     }
-
-    source_root->isRoot = false;
-    dest_root->size += source_root->size;
 }
 
 Upside_Node *union_tree(Upside_Node *root1, Upside_Node *root2)

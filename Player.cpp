@@ -3,12 +3,10 @@
 
 //  getters
 
-// int Player::getGamesPlayed() const
-// {
-//     int games_played_total = this->team->getGamesTeamPlayed() -
-//                              this->games_team_played_when_added + this->gamesPlayed;
-//     return games_played_total;
-// }
+int Player::getGamesPlayed() const
+{
+    return this->gamesPlayed;
+}
 
 int Player::getCards() const
 {
