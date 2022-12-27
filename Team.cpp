@@ -117,10 +117,6 @@ void Team::handleTeamBought(Team *source_team)
         union_tree(this->root_player_node, source_team->root_player_node);
 }
 
-void Team::handleTeamRemoved()
-{
-    root_player_node->data.setTeam(nullptr);
-}
 
 void Team::applyMatch(int points_to_add)
 {
