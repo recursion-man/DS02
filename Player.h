@@ -9,7 +9,7 @@ class Team;
 class Player
 {
 protected:
-    int playerId, teamId, gamesPlayed, cards, ability, games_team_played_when_added;
+    int playerId, gamesPlayed, cards, ability, games_team_played_when_added;
     bool goalKeeper;
     permutation_t player_spirit, team_spirit_when_added;
     Team *team;
@@ -18,7 +18,12 @@ public:
     //  C'tor and D'tor
     Player(int playerId) : playerId(playerId){};
 
-    Player(int playerId, int teamId, int gamesPlayed, int cards, bool goalKeeper, int ability, const permutation_t &spirit, int games_team_played_when_added, permutation_t team_spirit_when_added, Team *team) : playerId(playerId), teamId(teamId), gamesPlayed(gamesPlayed), cards(cards), ability(ability), games_team_played_when_added(games_team_played_when_added), goalKeeper(goalKeeper), player_spirit(spirit), team_spirit_when_added(team_spirit_when_added), team(team){};
+    Player(int playerId, int gamesPlayed, int cards, bool goalKeeper, int ability,
+           const permutation_t &spirit, int games_team_played_when_added,
+           permutation_t team_spirit_when_added) : playerId(playerId), teamId(teamId),
+           gamesPlayed(gamesPlayed), cards(cards), ability(ability),
+           games_team_played_when_added(games_team_played_when_added), goalKeeper(goalKeeper),
+           player_spirit(spirit), team_spirit_when_added(team_spirit_when_added), team(nullptr){};
 
     ~Player() = default;
 

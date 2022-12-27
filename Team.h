@@ -38,11 +38,14 @@ public:
     void setNumOfPlayers(int new_num_of_players);
     void setNumOfGoalKeepers(int new_goalkeepers);
     void setPoints(int new_points);
+    void setRoot(Upside_Node*);
 
     bool isEmpty() const;
     bool isValidTeam() const;
 
-    void handlePlayerAdded(std::shared_ptr<Player> player);
+    void addPlayer(Upside_Node*);
+
+    void handlePlayerAdded(Player* player);
     void handleTeamBought(Team *source_team);
     void handleTeamRemoved();
 

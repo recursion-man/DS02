@@ -27,7 +27,7 @@ public:
     Cell* arr;
     int size, m;
     void expend(bool, const Player&);
-    static const int C = 5;
+    static const int C = 2;
     static const int INITIAL_SIZE = 7;
     static const int NOT_EXIST = -1;
 
@@ -35,7 +35,7 @@ public:
     HashTable() : arr(new Cell[INITIAL_SIZE]), size(INITIAL_SIZE), m(INITIAL_SIZE) {}
     ~HashTable();
     int hashFunction(int k, int id) const;
-    void insert(const Player&);
+    Upside_Node* insert(const Player&);
     void transfer(std::shared_ptr<Upside_Node>);
     int getIndex(const Player&);
     int find (int id);

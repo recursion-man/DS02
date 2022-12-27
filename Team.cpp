@@ -84,7 +84,7 @@ bool Team::isValidTeam() const
     return (num_of_players >= MIN_PLAYERS_IN_TEAM && num_of_goal_keepers > 0);
 }
 
-void Team::handlePlayerAdded(std::shared_ptr<Player> player)
+void Team::handlePlayerAdded(Player* player)
 {
     if (num_of_players == 0)
     {
@@ -132,8 +132,32 @@ Team::~Team()
 {
     if (root_player_node != nullptr)
     {
-        root_player_node->data.setTeam(nullptr);
+        root_player_node->data->setTeam(nullptr);
     }
+}
+
+void addPlayerToRoot(Upside_Node *root_player_node,Upside_Node* new_player_node)
+{
+    new_player_node->father = root_player_node;
+}
+
+void Team::addPlayer(Upside_Node * new_player_node)
+{
+    if (root_player_node == nullptr)
+    {
+        setRoot(new_player_node);
+    }
+    else
+    {
+        addPlayerToRoot(root_player_node, new_player_node);
+    }
+    handlePlayerAdded(new_player_node->data.get());
+}
+
+void Team::setRoot(Upside_Node* new_root)
+{
+    root_player_node = new_root;
+    new_root->data->setTeam(this);
 }
 
 bool operator<(const std::shared_ptr<Team> a, const std::shared_ptr<Team> b)

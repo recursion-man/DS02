@@ -50,7 +50,7 @@ HashTable::~HashTable()
 
 void HashTable::transfer(std::shared_ptr<Upside_Node> address)
 {
-    int index = getIndex(address->data);
+    int index = getIndex(*address->data);
     arr[index].activate(address);
 }
 
@@ -69,7 +69,7 @@ int HashTable::getIndex(const Player &player)
     }
 }
 
-void HashTable::insert(const Player &player)
+Upside_Node* HashTable::insert(const Player &player)
 {
     int index;
     try
@@ -84,8 +84,10 @@ void HashTable::insert(const Player &player)
         //        std::cout<<"got 2"<<std::endl;
         //        std::cout<<"got 3"<<std::endl;
     }
-    std::shared_ptr<Upside_Node> new_player(new Upside_Node(player));
-    arr[index].activate(new_player);
+    std::shared_ptr<Player> new_player(new Player(player));
+    std::shared_ptr<Upside_Node> new_player_node(new Upside_Node(new_player));
+    arr[index].activate(new_player_node);
+    return new_player_node.get();
 }
 
 Upside_Node *HashTable::operator[](int id)
@@ -121,7 +123,7 @@ int HashTable::find(int id)
             throw Full(); // full
         if (!arr[index].isActive())
             throw NotExist(index); // not exist
-        if (arr[index].getAddress()->data.getId() == id)
+        if (arr[index].getAddress()->data->getId() == id)
             return index;
     }
     throw Full();
