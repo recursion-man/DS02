@@ -6,6 +6,177 @@
 
 #include "catch.hpp"
 
+TEST_CASE("upside_node")
+{
+    SECTION("Size")
+    {
+        std::shared_ptr<Player> p1(new Player(1));
+        Upside_Node n1(p1);
+        Upside_Node n2(p1);
+        REQUIRE(n1.size == 1);
+        REQUIRE(n2.size == 1);
+        linkNodes(&n1, &n2);
+        REQUIRE(n1.size == 2);
+        REQUIRE(n2.size == 1);
+        Upside_Node n3(p1);
+        linkNodes(&n2, &n3);
+        REQUIRE(n1.size == 3);
+        REQUIRE(n2.size == 2);
+        REQUIRE(n3.size == 1);
+        Upside_Node n4(p1);
+        linkNodes(&n2, &n4);
+        REQUIRE(n1.size == 4);
+        REQUIRE(n2.size == 3);
+        REQUIRE(n3.size == 1);
+        REQUIRE(n4.size == 1);
+        Upside_Node n5(p1);
+        linkNodes(&n4, &n5);
+        Upside_Node n6(p1);
+        linkNodes(&n4, &n6);
+        REQUIRE(n1.size == 6);
+        REQUIRE(n2.size == 5);
+        REQUIRE(n3.size == 1);
+        REQUIRE(n4.size == 3);
+        REQUIRE(n5.size == 1);
+        REQUIRE(n6.size == 1);
+        Upside_Node n7(p1);
+        linkNodes(&n3, &n7);
+        REQUIRE(n1.size == 7);
+        REQUIRE(n2.size == 6);
+        REQUIRE(n3.size == 2);
+        REQUIRE(n4.size == 3);
+        REQUIRE(n5.size == 1);
+        REQUIRE(n6.size == 1);
+        REQUIRE(n7.size == 1);
+
+        REQUIRE(find(&n3) == &n1);
+        REQUIRE(n1.size == 7);
+        REQUIRE(n2.size == 4);
+        REQUIRE(n3.size == 2);
+        REQUIRE(n4.size == 3);
+        REQUIRE(n5.size == 1);
+        REQUIRE(n6.size == 1);
+        REQUIRE(n7.size == 1);
+
+        REQUIRE(find(&n7) == &n1);
+        REQUIRE(n1.size == 7);
+        REQUIRE(n2.size == 4);
+        REQUIRE(n3.size == 1);
+        REQUIRE(n4.size == 3);
+        REQUIRE(n5.size == 1);
+        REQUIRE(n6.size == 1);
+        REQUIRE(n7.size == 1);
+
+        REQUIRE(find(&n5) == &n1);
+        REQUIRE(n1.size == 7);
+        REQUIRE(n2.size == 1);
+        REQUIRE(n3.size == 1);
+        REQUIRE(n4.size == 2);
+        REQUIRE(n5.size == 1);
+        REQUIRE(n6.size == 1);
+        REQUIRE(n7.size == 1);
+
+        REQUIRE(find(&n6) == &n1);
+        REQUIRE(n1.size == 7);
+        REQUIRE(n2.size == 1);
+        REQUIRE(n3.size == 1);
+        REQUIRE(n4.size == 1);
+        REQUIRE(n5.size == 1);
+        REQUIRE(n6.size == 1);
+        REQUIRE(n7.size == 1);
+
+        Upside_Node node11(p1);
+        Upside_Node node12(p1);
+        Upside_Node node13(p1);
+        linkNodes(&node11, &node12);
+        linkNodes(&node11, &node13);
+        REQUIRE(node11.size == 3);
+        REQUIRE(node12.size == 1);
+        REQUIRE(node13.size == 1);
+
+        union_tree(&n1, &node11);
+        REQUIRE(n1.size == 10);
+        REQUIRE(n2.size == 1);
+        REQUIRE(n3.size == 1);
+        REQUIRE(n4.size == 1);
+        REQUIRE(n5.size == 1);
+        REQUIRE(n6.size == 1);
+        REQUIRE(n7.size == 1);
+        REQUIRE(node11.size == 3);
+        REQUIRE(node12.size == 1);
+        REQUIRE(node13.size == 1);
+    }
+
+    SECTION("Is Root")
+    {
+        std::shared_ptr<Player> p1(new Player(1));
+        Upside_Node n1(p1);
+        Upside_Node n2(p1);
+        REQUIRE(n1.isRoot == true);
+        REQUIRE(n2.isRoot == true);
+        linkNodes(&n1, &n2);
+        REQUIRE(n1.isRoot == true);
+        REQUIRE(n2.isRoot == false);
+        Upside_Node n3(p1);
+        linkNodes(&n2, &n3);
+        REQUIRE(n1.isRoot == true);
+        REQUIRE(n2.isRoot == false);
+        REQUIRE(n3.isRoot == false);
+        Upside_Node n4(p1);
+        linkNodes(&n2, &n4);
+        REQUIRE(n1.isRoot == true);
+        REQUIRE(n2.isRoot == false);
+        REQUIRE(n3.isRoot == false);
+        REQUIRE(n4.isRoot == false);
+        Upside_Node n5(p1);
+        linkNodes(&n4, &n5);
+        Upside_Node n6(p1);
+        linkNodes(&n4, &n6);
+        REQUIRE(n1.isRoot == true);
+        REQUIRE(n2.isRoot == false);
+        REQUIRE(n3.isRoot == false);
+        REQUIRE(n4.isRoot == false);
+        REQUIRE(n5.isRoot == false);
+        REQUIRE(n6.isRoot == false);
+
+        REQUIRE(find(&n3) == &n1);
+        REQUIRE(n1.isRoot == true);
+        REQUIRE(n2.isRoot == false);
+        REQUIRE(n3.isRoot == false);
+        REQUIRE(n4.isRoot == false);
+        REQUIRE(n5.isRoot == false);
+        REQUIRE(n6.isRoot == false);
+
+        REQUIRE(find(&n5) == &n1);
+        REQUIRE(n1.isRoot == true);
+        REQUIRE(n2.isRoot == false);
+        REQUIRE(n3.isRoot == false);
+        REQUIRE(n4.isRoot == false);
+        REQUIRE(n5.isRoot == false);
+        REQUIRE(n6.isRoot == false);
+
+        Upside_Node node11(p1);
+        Upside_Node node12(p1);
+        Upside_Node node13(p1);
+        linkNodes(&node11, &node12);
+        linkNodes(&node11, &node13);
+        REQUIRE(node11.isRoot == true);
+        REQUIRE(node12.isRoot == false);
+        REQUIRE(node13.isRoot == false);
+
+        union_tree(&n1, &node11);
+        REQUIRE(n1.isRoot == true);
+        REQUIRE(n2.isRoot == false);
+        REQUIRE(n3.isRoot == false);
+        REQUIRE(n4.isRoot == false);
+        REQUIRE(n5.isRoot == false);
+        REQUIRE(n6.isRoot == false);
+        REQUIRE(node11.isRoot == false);
+        REQUIRE(node12.isRoot == false);
+        REQUIRE(node13.isRoot == false);
+    }
+}
+
 TEST_CASE("Find and union", "find")
 {
 
@@ -291,11 +462,20 @@ TEST_CASE("Find and union", "find")
         REQUIRE(getPlayerTotalGames(&node12) == 1);
         REQUIRE(getPlayerTotalGames(&node13) == 2); // node13 reseted with 1 gamesPlayed
 
-        // unite when same size
+        REQUIRE(node1.size == 4);
+        REQUIRE(node2.size == 2);
+        REQUIRE(node3.size == 1);
+        REQUIRE(node11.size == 3);
+        REQUIRE(node12.size == 1);
+
+        // unite when first root is bigger than second size
         REQUIRE(union_tree(&node1, &node11) == &node1);
+        REQUIRE(node1.size == 7);
+        REQUIRE(node11.size == 3);
         REQUIRE(getPlayerTotalGames(&node1) == 1);
         REQUIRE(getPlayerTotalGames(&node2) == 1);
         REQUIRE(getPlayerTotalGames(&node3) == 1);
+        REQUIRE(getPlayerTotalGames(&node4) == 0);
         REQUIRE(getPlayerTotalGames(&node11) == 1);
         REQUIRE(getPlayerTotalGames(&node12) == 1);
         REQUIRE(getPlayerTotalGames(&node13) == 2);
@@ -305,17 +485,20 @@ TEST_CASE("Find and union", "find")
         REQUIRE(getPlayerTotalGames(&node1) == 1);
         REQUIRE(getPlayerTotalGames(&node2) == 1);
         REQUIRE(getPlayerTotalGames(&node3) == 1);
+        REQUIRE(getPlayerTotalGames(&node4) == 0);
         REQUIRE(getPlayerTotalGames(&node11) == 1);
         REQUIRE(getPlayerTotalGames(&node12) == 1);
         REQUIRE(getPlayerTotalGames(&node13) == 2);
-        REQUIRE(node1.size == 6);
-        REQUIRE(node11.size == 3);
+        REQUIRE(node12.father == &node11);
+        REQUIRE(node11.size == 2);
+        REQUIRE(node2.size == 1);
 
         // united team play 1 games
         node1.games_to_add++;
         REQUIRE(getPlayerTotalGames(&node1) == 2);
         REQUIRE(getPlayerTotalGames(&node2) == 2);
         REQUIRE(getPlayerTotalGames(&node3) == 2);
+        REQUIRE(getPlayerTotalGames(&node4) == 1);
         REQUIRE(getPlayerTotalGames(&node11) == 2);
         REQUIRE(getPlayerTotalGames(&node12) == 2);
         REQUIRE(getPlayerTotalGames(&node13) == 3);

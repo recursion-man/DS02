@@ -25,9 +25,33 @@ void linkNodes(Upside_Node *node1, Upside_Node *node2)
     }
 }
 
+void updateSizesForNodesOnPath(Upside_Node *node)
+{
+    if (node == nullptr || node->isRoot)
+    {
+        return;
+    }
+    int prev_size;
+    if (!node->father->isRoot)
+    {
+        prev_size = node->father->size;
+        node->father->size -= node->size;
+        node = node->father;
+    }
+
+    while (!node->father->isRoot)
+    {
+        int temp = node->father->size;
+        node->father->size -= prev_size;
+        prev_size = temp;
+        node = node->father;
+    }
+}
+
 void shrinkPaths(Upside_Node *node, Upside_Node *root)
 {
 
+    updateSizesForNodesOnPath(node);
     Upside_Node *temp = node->father;
     node->father = root;
     while (!temp->isRoot)
@@ -35,8 +59,6 @@ void shrinkPaths(Upside_Node *node, Upside_Node *root)
         node = temp;
         temp = node->father;
         node->father = root;
-        // update the size for each node exept the first node (he keeps it's subtree)
-        node->size = 1;
     }
 }
 
