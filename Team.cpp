@@ -114,7 +114,7 @@ void Team::handleTeamBought(Team *source_team)
     this->sum_of_player_abilities += source_team->getTeamAbility();
     this->team_spirit = this->team_spirit * source_team->getTeamSpirit();
     if (source_team->getRootPlayerNode() != nullptr)
-        union_tree(this->root_player_node, source_team->root_player_node);
+        union_tree(this->root_player_node, source_team->getRootPlayerNode());
 }
 
 
@@ -122,6 +122,10 @@ void Team::applyMatch(int points_to_add)
 {
     points += points_to_add;
     games_played++;
+    if (root_player_node != nullptr)
+    {
+        root_player_node->games_to_add++;
+    }
 }
 
 Team::~Team()
