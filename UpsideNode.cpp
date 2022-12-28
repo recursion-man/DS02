@@ -20,8 +20,19 @@ void linkNodes(Upside_Node *node1, Upside_Node *node2)
             node1 = node1->father;
             node1->size += node2->size;
         }
-
         node2->isRoot = false;
+    }
+}
+
+void linkNodeToRoot(Upside_Node *root, Upside_Node *new_node)
+{
+    if (root != nullptr && new_node != nullptr && root != new_node)
+    {
+        new_node->father = root;
+        new_node->isRoot = false;
+        root->size += new_node->size;
+        new_node->games_to_add = root->data->getTeam()->getGamesTeamPlayed() - root->games_to_add;
+        new_node->spirit_to_calculate = root->spirit_to_calculate.inv();
     }
 }
 
@@ -165,7 +176,9 @@ void handleUnion(Upside_Node *dest_root, Upside_Node *source_root, bool dest_roo
         return;
     }
 
-    linkNodes(dest_root, source_root);
+    source_root->father = dest_root;
+    dest_root->size += source_root->size;
+    source_root->isRoot = false;
     if (dest_root_is_buyer)
     {
         // b points to a
@@ -218,5 +231,6 @@ permutation_t getSpiritToMultiPly(Upside_Node *player_node)
 
 permutation_t getPlayerTotalSpirit(Upside_Node *player_node)
 {
-    return getSpiritToMultiPly(player_node) * player_node->data->getPlayerSpirit();
+    permutation_t res = getSpiritToMultiPly(player_node) * player_node->data->getTeamSpiritWhenAdded() * player_node->data->getPlayerSpirit();
+    return res;
 }

@@ -145,11 +145,6 @@ Team::~Team()
     }
 }
 
-void addPlayerToRoot(Upside_Node *root_player_node, Upside_Node *new_player_node)
-{
-    linkNodes(root_player_node, new_player_node);
-}
-
 void Team::addPlayer(Upside_Node *new_player_node)
 {
     if (root_player_node == nullptr)
@@ -158,7 +153,7 @@ void Team::addPlayer(Upside_Node *new_player_node)
     }
     else
     {
-        addPlayerToRoot(root_player_node, new_player_node);
+        linkNodeToRoot(root_player_node, new_player_node);
     }
     handlePlayerAdded(new_player_node->data.get());
 }
@@ -166,6 +161,7 @@ void Team::addPlayer(Upside_Node *new_player_node)
 void Team::setRoot(Upside_Node *new_root)
 {
     root_player_node = new_root;
+    root_player_node->isRoot = true;
     new_root->data->setTeam(this);
 }
 
@@ -181,10 +177,32 @@ bool operator>(const std::shared_ptr<Team> a, const std::shared_ptr<Team> b)
 
 bool operator<(std::shared_ptr<TeamRank> a, std::shared_ptr<TeamRank> b)
 {
-    return a->getTeamAbility() < b->getTeamAbility();
+    if (a->getTeamAbility() < b->getTeamAbility())
+    {
+        return true;
+    }
+    else if (a->getTeamAbility() > b->getTeamAbility())
+    {
+        return false;
+    }
+    else
+    {
+        return a->getTeamId() < b->getTeamId();
+    }
 }
 
 bool operator>(std::shared_ptr<TeamRank> a, std::shared_ptr<TeamRank> b)
 {
-    return a->getTeamAbility() > b->getTeamAbility();
+    if (a->getTeamAbility() > b->getTeamAbility())
+    {
+        return true;
+    }
+    else if (a->getTeamAbility() < b->getTeamAbility())
+    {
+        return false;
+    }
+    else
+    {
+        return a->getTeamId() > b->getTeamId();
+    }
 }

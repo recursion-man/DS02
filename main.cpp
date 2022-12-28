@@ -3,8 +3,62 @@
 #include "Player.h"
 #include "UpsideNode.h"
 #include "Team.h"
+#include "worldcup23a2.h"
 
 #include "catch.hpp"
+
+TEST_CASE("world_cup")
+{
+
+    SECTION("add_team")
+    {
+        world_cup_t *world_cup = new world_cup_t();
+
+        REQUIRE(world_cup->add_team(0) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->add_team(-3) == StatusType::INVALID_INPUT);
+
+        REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_team(1) == StatusType::FAILURE);
+        REQUIRE(world_cup->get_team_points(1).ans() == 0);
+
+        REQUIRE(world_cup->add_team(2) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_team_points(2).ans() == 0);
+
+        REQUIRE(world_cup->add_team(3) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_team_points(3).ans() == 0);
+        REQUIRE(world_cup->add_team(4) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_team_points(4).ans() == 0);
+        delete world_cup;
+    }
+
+    SECTION("add_player")
+    {
+        world_cup_t *world_cup = new world_cup_t();
+
+        int p1[5] = {4, 2, 3, 1, 0}, p2[5] = {0, 4, 2, 1, 3}, invalid_per[5]{1, 12, 4, 1, -100};
+        permutation_t per1(p1), per2(p2);
+        REQUIRE(world_cup->add_player(0, 1, per1, 0, 0, 0, true) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->add_player(-2, 1, per1, 0, 0, 0, true) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->add_player(1, -3, per1, 0, 0, 0, true) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->add_player(1, 0, per1, 0, 0, 0, true) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->add_player(1, 0, invalid_per, 0, 0, 0, true) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->add_player(1, 0, per1, -3, 0, 0, true) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->add_player(1, 0, per1, 0, 0, -2, true) == StatusType::INVALID_INPUT);
+
+        REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_team_points(1).ans() == 0);
+        REQUIRE(world_cup->add_player(1, 1, per1, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_player_cards(1).ans() == 0);
+        REQUIRE(world_cup->add_player(2, 1, per2, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_player_cards(2).ans() == 0);
+
+        REQUIRE(world_cup->get_partial_spirit(1).status() == StatusType::SUCCESS);
+        REQUIRE(isSame(world_cup->get_partial_spirit(1).ans(), per1));
+        REQUIRE(isSame(world_cup->get_partial_spirit(2).ans(), per1 * per2));
+
+        delete world_cup;
+    }
+}
 
 TEST_CASE("upside_node")
 {
@@ -177,9 +231,8 @@ TEST_CASE("upside_node")
     }
 }
 
-TEST_CASE("Find and union", "find")
+TEST_CASE("Find ")
 {
-
     SECTION("simple find ")
     {
         std::shared_ptr<Player> p1(new Player(1));
@@ -203,7 +256,7 @@ TEST_CASE("Find and union", "find")
         REQUIRE(n4.isRoot == false);
     }
 
-    SECTION("simple find with union")
+    SECTION(" find with union")
     {
 
         std::shared_ptr<Player> p1(new Player(1));
@@ -228,6 +281,7 @@ TEST_CASE("Find and union", "find")
         REQUIRE(node2.father == &node3);
         REQUIRE(node1.isRoot == false);
     }
+
     SECTION("find shrink path")
     {
         // checking if 6 and 5 also points diractly to the root 8 after find(5)
@@ -250,22 +304,6 @@ TEST_CASE("Find and union", "find")
         REQUIRE(node6.father == &node8);
         REQUIRE(node7.father == &node8);
         REQUIRE(find(&node7) == &node8);
-    }
-    SECTION("union by size")
-    {
-        std::shared_ptr<Player> p1(new Player(1));
-        Upside_Node node5(p1);
-        Upside_Node node6(p1);
-        Upside_Node node7(p1);
-        Upside_Node node8(p1);
-
-        REQUIRE(union_tree(&node5, &node6) == &node5);
-        REQUIRE(node5.size == 2);
-        REQUIRE(union_tree(&node5, &node7) == &node5);
-        REQUIRE(find(&node7) == &node5);
-        REQUIRE(union_tree(&node8, &node5) == &node5);
-        REQUIRE(node8.father == &node5);
-        REQUIRE(node7.father == &node5);
     }
 
     SECTION("Find update games")
@@ -417,6 +455,78 @@ TEST_CASE("Find and union", "find")
         REQUIRE(getPlayerTotalGames(&node9) == 0);
         REQUIRE(getPlayerTotalGames(&node10) == 1);
     }
+
+    // SECTION("Find - spirit updates")
+    // {
+    //     std::shared_ptr<Team> team1(new Team(1));
+    //     permutation_t per1, per2, per3;
+    //     std::shared_ptr<Player> p1(new Player(1, 0, 0, true, 0, per1, 0, team1->getTeamSpirit(), team1.get()));
+    //     team1->handlePlayerAdded(p1.get());
+    //     std::shared_ptr<Player> p2(new Player(2, 0, 0, true, 0, per2, 0, team1->getTeamSpirit(), team1.get()));
+    //     team1->handlePlayerAdded(p2.get());
+    //     std::shared_ptr<Player> p3(new Player(3, 0, 0, true, 0, per3, 0, team1->getTeamSpirit(), team1.get()));
+    //     Upside_Node node1(p1);
+    //     Upside_Node node2(p2);
+    //     Upside_Node node3(p3);
+    //     linkNodes(&node1, &node2);
+    //     linkNodes(&node2, &node3);
+    //     REQUIRE(isSame(per2, per2) == true);
+
+    //     REQUIRE(isSame(getPlayerTotalSpirit(&node1), per1) == true);
+    //     REQUIRE(isSame(getPlayerTotalSpirit(&node2), per1 * per2) == true);
+    //     REQUIRE(isSame(getPlayerTotalSpirit(&node3), per1 * per2 * per3) == true);
+    // }
+}
+
+TEST_CASE("Union")
+{
+
+    SECTION("union by size")
+    {
+        std::shared_ptr<Player> p1(new Player(1));
+        Upside_Node node5(p1);
+        Upside_Node node6(p1);
+        Upside_Node node7(p1);
+        Upside_Node node8(p1);
+
+        REQUIRE(union_tree(&node5, &node6) == &node5);
+        REQUIRE(node5.size == 2);
+        REQUIRE(node6.size == 1);
+        REQUIRE(union_tree(&node5, &node7) == &node5);
+        REQUIRE(node5.size == 3);
+        REQUIRE(node6.size == 1);
+        REQUIRE(node7.size == 1);
+
+        REQUIRE(find(&node7) == &node5);
+        REQUIRE(union_tree(&node8, &node5) == &node5);
+        REQUIRE(node8.father == &node5);
+        REQUIRE(node7.father == &node5);
+        REQUIRE(node5.size == 4);
+        REQUIRE(node8.size == 1);
+
+        Upside_Node node1(p1);
+        Upside_Node node2(p1);
+        Upside_Node node3(p1);
+        linkNodes(&node1, &node2);
+        linkNodes(&node1, &node3);
+        REQUIRE(union_tree(&node1, &node5) == &node5);
+        REQUIRE(node5.size == 7);
+        REQUIRE(node1.size == 3);
+        REQUIRE(node1.isRoot == false);
+        REQUIRE(node5.isRoot == true);
+
+        Upside_Node node11(p1);
+        Upside_Node node12(p1);
+        Upside_Node node13(p1);
+        linkNodes(&node11, &node12);
+        linkNodes(&node11, &node13);
+        REQUIRE(union_tree(&node5, &node11) == &node5);
+        REQUIRE(node5.size == 10);
+        REQUIRE(node11.size == 3);
+        REQUIRE(node11.isRoot == false);
+        REQUIRE(node5.isRoot == true);
+    }
+
     SECTION("union - Games Update")
     {
         std::shared_ptr<Team> team1(new Team(1));

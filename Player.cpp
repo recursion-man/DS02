@@ -37,9 +37,9 @@ permutation_t Player::getPlayerSpirit() const
     return player_spirit;
 }
 
-permutation_t Player::getPartialPlayerSpirit() const
+permutation_t Player::getTeamSpiritWhenAdded() const
 {
-    return this->team_spirit_when_added * player_spirit;
+    return this->team_spirit_when_added;
 }
 //  setters
 

@@ -16,7 +16,7 @@
 #define WET2_UTIL_H_
 
 #include <stdexcept>
-#include <ostream>
+#include <iostream>
 
 // StatusType
 enum struct StatusType
@@ -106,7 +106,6 @@ public:
 		}
 		return permutation_t(a);
 	}
-
 	bool isvalid() const
 	{
 		bool found[N];
@@ -244,6 +243,19 @@ public:
 
 		return res;
 	}
+	friend bool isSame(const permutation_t &p1, const permutation_t &p2)
+	{
+		for (int i = 0; i < 5; i++)
+		{
+			if (p1.a[i] != p2.a[i])
+			{
+				std::cout << "i: " << i << " p1: " << p1.a[i] << " p2: " << p2.a[i] << std::endl;
+
+				return false;
+			}
+		}
+		return true;
+	} // delete thisssssss
 };
 
 #endif // WET2_UTIL_H_

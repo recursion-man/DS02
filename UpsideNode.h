@@ -33,6 +33,7 @@ void handleUnion(Upside_Node *dest_root, Upside_Node *source_root, bool dest_roo
 Upside_Node *union_tree(Upside_Node *root1, Upside_Node *root2);
 int getPlayerTotalGames(Upside_Node *node);
 bool isTeamActive(Upside_Node *node);
+void linkNodeToRoot(Upside_Node *root, Upside_Node *new_node);
 permutation_t getSpiritToMultiPly(Upside_Node *player_node);
 permutation_t getPlayerTotalSpirit(Upside_Node *player_node);
 
