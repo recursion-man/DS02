@@ -97,7 +97,9 @@ int getUpdatedGamesUntilRoot(Upside_Node *node)
 
 int getPlayerTotalGames(Upside_Node *node)
 {
-    return node->data->getGamesPlayed() + node->data->getGamesTeamPlayedWhenAdded() + getGamesToAdd(node);
+    // if (node->data->getId() == 100)
+    //     std::cout << "games_stared: " << node->data->getGamesPlayed() << " games team w''a" << node->data->getGamesTeamPlayedWhenAdded() << "node_game_to_add" << node->games_to_add << " root_Games_to_add" << node->father->games_to_add << " total games to add: " << getGamesToAdd(node) << std::endl;
+    return node->data->getGamesPlayed() - node->data->getGamesTeamPlayedWhenAdded() + getGamesToAdd(node);
 }
 
 void updateGamesForPlayersOnPath(Upside_Node *node)

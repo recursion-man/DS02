@@ -12,6 +12,7 @@ class Upside_Node;
 
 class Team
 {
+protected:
     int teamId, points, num_of_players, num_of_goal_keepers, games_played, sum_of_player_abilities;
     permutation_t team_spirit;
     Upside_Node *root_player_node;
@@ -39,7 +40,8 @@ public:
     void setNumOfPlayers(int new_num_of_players);
     void setNumOfGoalKeepers(int new_goalkeepers);
     void setPoints(int new_points);
-    void setRoot(Upside_Node *);
+    virtual void setRoot(Upside_Node *);
+    void setTeamAbility(int new_ability);
 
     bool isEmpty() const;
     bool isValidTeam() const;
@@ -57,6 +59,7 @@ class TeamRank : public Team
 {
 public:
     TeamRank(int teamId) : Team(teamId) {}
+    void setRoot(Upside_Node *new_root) override;
 };
 
 // operations

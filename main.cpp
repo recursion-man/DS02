@@ -83,7 +83,7 @@ TEST_CASE("world_cup")
 
         int p1[5] = {4, 2, 3, 1, 0}, p2[5] = {0, 4, 2, 1, 3}, p3[5] = {4, 2, 3, 1, 0}, invalid_per[5]{1, 12, 4, 1, -100};
         permutation_t per1(p1), per2(p2), per3(p3);
-        REQUIRE(world_cup->add_player(0, 1, per1, 0, 0, 0, true) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->add_player(0, 1, per1, 4, 8, 2, true) == StatusType::INVALID_INPUT);
         REQUIRE(world_cup->add_player(-2, 1, per1, 0, 0, 0, true) == StatusType::INVALID_INPUT);
         REQUIRE(world_cup->add_player(1, -3, per1, 0, 0, 0, true) == StatusType::INVALID_INPUT);
         REQUIRE(world_cup->add_player(1, 0, per1, 0, 0, 0, true) == StatusType::INVALID_INPUT);
@@ -112,6 +112,21 @@ TEST_CASE("world_cup")
         REQUIRE(world_cup->num_played_games_for_player(2).ans() == 0);
         REQUIRE(world_cup->num_played_games_for_player(3).ans() == 0);
         REQUIRE(world_cup->num_played_games_for_player(4).ans() == 3);
+
+        REQUIRE(world_cup->add_team(2) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(1, 2, per1, 0, 0, 0, true) == StatusType::FAILURE);
+        REQUIRE(world_cup->add_player(5, 2, per3, 7, 2, 1, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(6, 2, per3, 5, 2, 5, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(7, 2, per3, 3, 0, 3, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(8, 2, per3, 6, -10, 4, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->num_played_games_for_player(5).ans() == 7);
+        REQUIRE(world_cup->num_played_games_for_player(6).ans() == 5);
+        REQUIRE(world_cup->num_played_games_for_player(7).ans() == 3);
+        REQUIRE(world_cup->num_played_games_for_player(8).ans() == 6);
+        REQUIRE(world_cup->get_player_cards(5).ans() == 1);
+        REQUIRE(world_cup->get_player_cards(6).ans() == 5);
+        REQUIRE(world_cup->get_player_cards(7).ans() == 3);
+        REQUIRE(world_cup->get_player_cards(8).ans() == 4);
 
         delete world_cup;
     }
@@ -145,7 +160,7 @@ TEST_CASE("world_cup")
 
         REQUIRE(world_cup->num_played_games_for_player(4).ans() == 2);
 
-        // team1 has -2 abiliy team 2 has 4 ability
+        // team1 has 0 abiliy team 2 has 4 ability
         output_t<int> match = world_cup->play_match(1, 2);
         REQUIRE(match.status() == StatusType::SUCCESS);
         REQUIRE(match.ans() == 3);
@@ -153,6 +168,46 @@ TEST_CASE("world_cup")
         REQUIRE(world_cup->num_played_games_for_player(2).ans() == 4);
         REQUIRE(world_cup->num_played_games_for_player(3).ans() == 1);
         REQUIRE(world_cup->num_played_games_for_player(4).ans() == 3);
+        REQUIRE(world_cup->get_team_points(1).ans() == 0);
+        REQUIRE(world_cup->get_team_points(2).ans() == 3);
+
+        REQUIRE(world_cup->add_player(5, 2, per4, 0, -7, 0, true) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->num_played_games_for_player(5).ans() == 0);
+        // both tean has same score
+        output_t<int> match2 = world_cup->play_match(1, 2);
+        REQUIRE(match2.status() == StatusType::SUCCESS);
+        REQUIRE(match2.ans() == 2);
+        REQUIRE(world_cup->num_played_games_for_player(1).ans() == 4);
+        REQUIRE(world_cup->num_played_games_for_player(2).ans() == 5);
+        REQUIRE(world_cup->num_played_games_for_player(3).ans() == 2);
+        REQUIRE(world_cup->num_played_games_for_player(4).ans() == 4);
+        REQUIRE(world_cup->num_played_games_for_player(5).ans() == 1);
+        REQUIRE(world_cup->get_team_points(1).ans() == 3);
+        REQUIRE(world_cup->get_team_points(2).ans() == 3);
+
+        REQUIRE(world_cup->add_player(6, 2, per2, 6, 3, 0, true) == StatusType::SUCCESS);
+        // both team has same score
+        REQUIRE(world_cup->add_player(7, 2, per2, 7, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(8, 2, per2, 8, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(9, 2, per2, 9, -1, 0, true) == StatusType::SUCCESS);
+
+        // team 1 has +1 score than team 2
+        output_t<int> match3 = world_cup->play_match(1, 2);
+        REQUIRE(match3.status() == StatusType::SUCCESS);
+        REQUIRE(match3.ans() == 1);
+        REQUIRE(world_cup->num_played_games_for_player(1).ans() == 5);
+        REQUIRE(world_cup->num_played_games_for_player(2).ans() == 6);
+        REQUIRE(world_cup->num_played_games_for_player(3).ans() == 3);
+        REQUIRE(world_cup->num_played_games_for_player(4).ans() == 5);
+        REQUIRE(world_cup->num_played_games_for_player(5).ans() == 2);
+        REQUIRE(world_cup->num_played_games_for_player(6).ans() == 7);
+        REQUIRE(world_cup->num_played_games_for_player(7).ans() == 8);
+        REQUIRE(world_cup->num_played_games_for_player(8).ans() == 9);
+        REQUIRE(world_cup->num_played_games_for_player(9).ans() == 10);
+
+        REQUIRE(world_cup->get_team_points(1).ans() == 6);
+        REQUIRE(world_cup->get_team_points(2).ans() == 3);
     }
 }
 
@@ -474,7 +529,7 @@ TEST_CASE("Find ")
         REQUIRE(getPlayerTotalGames(&node1) == 1);
         REQUIRE(getPlayerTotalGames(&node2) == 1);
         REQUIRE(getPlayerTotalGames(&node3) == 1);
-        std::shared_ptr<Player> p4(new Player(4, 0, 0, true, 0, demi_per, -1, team1->getTeamSpirit(), team1.get()));
+        std::shared_ptr<Player> p4(new Player(4, 0, 0, true, 0, demi_per, 1, team1->getTeamSpirit(), team1.get()));
         Upside_Node node4(p4);
         linkNodes(&node1, &node4);
         REQUIRE(getPlayerTotalGames(&node4) == 0);
@@ -486,7 +541,7 @@ TEST_CASE("Find ")
         REQUIRE(getPlayerTotalGames(&node3) == 2);
         REQUIRE(getPlayerTotalGames(&node4) == 1);
 
-        std::shared_ptr<Player> p5(new Player(5, 0, 0, true, 0, demi_per, -2, team1->getTeamSpirit(), team1.get()));
+        std::shared_ptr<Player> p5(new Player(5, 0, 0, true, 0, demi_per, 2, team1->getTeamSpirit(), team1.get()));
         Upside_Node node5(p5);
         linkNodes(&node1, &node5);
 
@@ -514,24 +569,24 @@ TEST_CASE("Find ")
         REQUIRE(getPlayerTotalGames(&node4) == 3);
         REQUIRE(getPlayerTotalGames(&node5) == 2);
 
-        std::shared_ptr<Player> p6(new Player(6, 0, 0, true, 0, demi_per, -4, team1->getTeamSpirit(), team1.get()));
+        std::shared_ptr<Player> p6(new Player(6, 0, 0, true, 0, demi_per, 4, team1->getTeamSpirit(), team1.get()));
         Upside_Node node6(p6);
         linkNodes(&node1, &node6);
         REQUIRE(getPlayerTotalGames(&node6) == 0);
 
         // team played 5 games
         node1.games_to_add++;
-        std::shared_ptr<Player> p7(new Player(7, 0, 0, true, 0, demi_per, -5, team1->getTeamSpirit(), team1.get()));
+        std::shared_ptr<Player> p7(new Player(7, 0, 0, true, 0, demi_per, 5, team1->getTeamSpirit(), team1.get()));
         Upside_Node node7(p7);
-        std::shared_ptr<Player> p8(new Player(8, 0, 0, true, 0, demi_per, -5, team1->getTeamSpirit(), team1.get()));
+        std::shared_ptr<Player> p8(new Player(8, 0, 0, true, 0, demi_per, 5, team1->getTeamSpirit(), team1.get()));
         Upside_Node node8(p8);
 
         // team played 6 games
         node1.games_to_add++;
 
-        std::shared_ptr<Player> p9(new Player(9, 0, 0, true, 0, demi_per, -6, team1->getTeamSpirit(), team1.get()));
+        std::shared_ptr<Player> p9(new Player(9, 0, 0, true, 0, demi_per, 6, team1->getTeamSpirit(), team1.get()));
         Upside_Node node9(p9);
-        std::shared_ptr<Player> p10(new Player(10, 1, 0, true, 0, demi_per, -6, team1->getTeamSpirit(), team1.get()));
+        std::shared_ptr<Player> p10(new Player(10, 1, 0, true, 0, demi_per, 6, team1->getTeamSpirit(), team1.get()));
         Upside_Node node10(p10);
 
         linkNodes(&node6, &node7);
@@ -646,7 +701,7 @@ TEST_CASE("Union")
         REQUIRE(getPlayerTotalGames(&node1) == 1);
         REQUIRE(getPlayerTotalGames(&node2) == 1);
         REQUIRE(getPlayerTotalGames(&node3) == 1);
-        std::shared_ptr<Player> p4(new Player(4, 0, 0, true, 0, demi_per, -1, team1->getTeamSpirit(), team1.get()));
+        std::shared_ptr<Player> p4(new Player(4, 0, 0, true, 0, demi_per, 1, team1->getTeamSpirit(), team1.get()));
         Upside_Node node4(p4);
         linkNodes(&node1, &node4);
         REQUIRE(getPlayerTotalGames(&node4) == 0);

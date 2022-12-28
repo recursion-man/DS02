@@ -81,6 +81,10 @@ void Team::setNumOfGoalKeepers(int new_goalkeepers)
 {
     this->num_of_goal_keepers = new_goalkeepers;
 }
+void Team::setTeamAbility(int new_ability)
+{
+    this->sum_of_player_abilities = new_ability;
+}
 
 //<---------->
 
@@ -147,6 +151,7 @@ Team::~Team()
 
 void Team::addPlayer(Upside_Node *new_player_node)
 {
+    // std::cout << "add player enterde" << std::endl;
     if (root_player_node == nullptr)
     {
         setRoot(new_player_node);
@@ -163,6 +168,12 @@ void Team::setRoot(Upside_Node *new_root)
     root_player_node = new_root;
     root_player_node->isRoot = true;
     new_root->data->setTeam(this);
+}
+
+void TeamRank::setRoot(Upside_Node *new_root)
+{
+    root_player_node = new_root;
+    root_player_node->isRoot = true;
 }
 
 bool operator<(const std::shared_ptr<Team> a, const std::shared_ptr<Team> b)

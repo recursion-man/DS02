@@ -66,6 +66,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
         // find the team
         std::shared_ptr<Team> target(new Team(teamId));
         std::shared_ptr<Team> team = teams_by_id.findInTree(target);
+        int team_prev_ability = team->getTeamAbility();
         permutation_t team_spirit_when_added = team->getTeamSpirit();
         int games_team_played_when_added = team->getGamesTeamPlayed();
 
@@ -77,10 +78,12 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
         team->addPlayer(new_player_node);
 
         // find rank team
-        std::shared_ptr<TeamRank> rank_target(new TeamRank(teamId));
-        std::shared_ptr<TeamRank> rank_team = teams_by_rank.findInTree(rank_target);
 
+        std::shared_ptr<TeamRank> rank_target(new TeamRank(teamId));
+        rank_target->setTeamAbility(team_prev_ability);
+        std::shared_ptr<TeamRank> rank_team = teams_by_rank.findInTree(rank_target);
         // remove and insert the updated team-rank
+
         teams_by_rank.removeFromTree(rank_team);
         rank_team->addPlayer(new_player_node);
         teams_by_rank.insertToTree(rank_team);
@@ -160,6 +163,7 @@ output_t<int> world_cup_t::play_match(int teamId1, int teamId2)
             return StatusType::FAILURE;
         }
         int match_result = getWinner(team1.get(), team2.get());
+
         handleMatchResult(match_result, team1.get(), team2.get());
 
         return match_result;
