@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "UpsideNode.h"
 #include "Team.h"
+#include "wet2util.h"
 #include "worldcup23a2.h"
 
 #include "catch.hpp"
@@ -31,12 +32,57 @@ TEST_CASE("world_cup")
         delete world_cup;
     }
 
+    SECTION("remove_team")
+    {
+        world_cup_t *world_cup = new world_cup_t();
+
+        REQUIRE(world_cup->remove_team(0) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->remove_team(-3) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->remove_team(1) == StatusType::FAILURE);
+
+        REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_team_points(1).ans() == 0);
+
+        REQUIRE(world_cup->remove_team(1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_team_points(1).status() == StatusType::FAILURE);
+
+        REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_team_points(1).ans() == 0);
+
+        int p1[5] = {4, 2, 3, 1, 0};
+        permutation_t per1(p1);
+        REQUIRE(world_cup->add_player(1, 1, per1, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->remove_team(1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player_cards(1, 3) == StatusType::FAILURE);
+
+        REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_team_points(1).ans() == 0);
+        REQUIRE(world_cup->add_player_cards(1, 3) == StatusType::FAILURE);
+        REQUIRE(world_cup->add_player(1, 1, per1, 0, 0, 0, true) == StatusType::FAILURE);
+
+        int p4[5] = {4, 2, 3, 1, 0}, p2[5] = {0, 4, 2, 1, 3}, p3[5] = {4, 2, 3, 1, 0};
+        permutation_t per4(p4), per2(p2), per3(p3);
+        REQUIRE(world_cup->add_player(2, 1, per2, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(3, 1, per3, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(4, 1, per4, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(isSame(world_cup->get_partial_spirit(2).ans(), per2));
+        REQUIRE(isSame(world_cup->get_partial_spirit(3).ans(), per2 * per3));
+        REQUIRE(isSame(world_cup->get_partial_spirit(4).ans(), per2 * per3 * per4));
+
+        REQUIRE(world_cup->remove_team(1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player_cards(2, 3) == StatusType::FAILURE);
+        REQUIRE(world_cup->add_player_cards(3, 3) == StatusType::FAILURE);
+        REQUIRE(world_cup->add_player_cards(4, 3) == StatusType::FAILURE);
+
+        delete world_cup;
+    }
+
     SECTION("add_player")
     {
         world_cup_t *world_cup = new world_cup_t();
 
-        int p1[5] = {4, 2, 3, 1, 0}, p2[5] = {0, 4, 2, 1, 3}, invalid_per[5]{1, 12, 4, 1, -100};
-        permutation_t per1(p1), per2(p2);
+        int p1[5] = {4, 2, 3, 1, 0}, p2[5] = {0, 4, 2, 1, 3}, p3[5] = {4, 2, 3, 1, 0}, invalid_per[5]{1, 12, 4, 1, -100};
+        permutation_t per1(p1), per2(p2), per3(p3);
         REQUIRE(world_cup->add_player(0, 1, per1, 0, 0, 0, true) == StatusType::INVALID_INPUT);
         REQUIRE(world_cup->add_player(-2, 1, per1, 0, 0, 0, true) == StatusType::INVALID_INPUT);
         REQUIRE(world_cup->add_player(1, -3, per1, 0, 0, 0, true) == StatusType::INVALID_INPUT);
@@ -56,7 +102,57 @@ TEST_CASE("world_cup")
         REQUIRE(isSame(world_cup->get_partial_spirit(1).ans(), per1));
         REQUIRE(isSame(world_cup->get_partial_spirit(2).ans(), per1 * per2));
 
+        REQUIRE(world_cup->add_player(3, 1, per3, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(isSame(world_cup->get_partial_spirit(3).ans(), per1 * per2 * per3));
+
+        REQUIRE(world_cup->add_player(4, 1, per1, 3, -2, 1, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_player_cards(4).ans() == 1);
+        REQUIRE(world_cup->get_player_cards(3).ans() == 0);
+        REQUIRE(world_cup->num_played_games_for_player(1).ans() == 0);
+        REQUIRE(world_cup->num_played_games_for_player(2).ans() == 0);
+        REQUIRE(world_cup->num_played_games_for_player(3).ans() == 0);
+        REQUIRE(world_cup->num_played_games_for_player(4).ans() == 3);
+
         delete world_cup;
+    }
+
+    SECTION("play_match")
+    {
+        world_cup_t *world_cup = new world_cup_t();
+
+        REQUIRE(world_cup->play_match(2, 0).status() == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->play_match(-3, 3).status() == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->play_match(1, 1).status() == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->play_match(1, 2).status() == StatusType::FAILURE);
+
+        int p1[5] = {4, 2, 3, 1, 0}, p2[5] = {0, 4, 2, 1, 3}, p3[5] = {4, 2, 3, 1, 0}, p4[5] = {2, 4, 3, 1, 0};
+        permutation_t per1(p1), per2(p2), per3(p3), per4(p4);
+
+        REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->add_player(1, 1, per1, 2, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(2, 1, per2, 3, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(3, 1, per3, 0, 0, 0, true) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->num_played_games_for_player(1).ans() == 2);
+        REQUIRE(world_cup->num_played_games_for_player(2).ans() == 3);
+        REQUIRE(world_cup->num_played_games_for_player(3).ans() == 0);
+
+        REQUIRE(world_cup->add_team(2) == StatusType::SUCCESS);
+        REQUIRE(world_cup->play_match(1, 2).status() == StatusType::FAILURE);
+
+        REQUIRE(world_cup->add_player(4, 2, per4, 2, 4, 0, true) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->num_played_games_for_player(4).ans() == 2);
+
+        // team1 has -2 abiliy team 2 has 4 ability
+        output_t<int> match = world_cup->play_match(1, 2);
+        REQUIRE(match.status() == StatusType::SUCCESS);
+        REQUIRE(match.ans() == 3);
+        REQUIRE(world_cup->num_played_games_for_player(1).ans() == 3);
+        REQUIRE(world_cup->num_played_games_for_player(2).ans() == 4);
+        REQUIRE(world_cup->num_played_games_for_player(3).ans() == 1);
+        REQUIRE(world_cup->num_played_games_for_player(4).ans() == 3);
     }
 }
 
