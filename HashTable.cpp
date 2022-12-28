@@ -67,9 +67,10 @@ int HashTable::getIndex(const Player &player)
     {
         return e.index;
     }
+    return -1;
 }
 
-Upside_Node* HashTable::insert(const Player &player)
+Upside_Node *HashTable::insert(const Player &player)
 {
     int index;
     try

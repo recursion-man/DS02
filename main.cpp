@@ -322,9 +322,9 @@ TEST_CASE("Find and union", "find")
     {
         std::shared_ptr<Team> team1(new Team(1));
         permutation_t demi_per;
-        std::shared_ptr<Player> p1(new Player(1, 1, 0, 0, true, 0, demi_per, 0, team1->getTeamSpirit(), team1.get()));
-        std::shared_ptr<Player> p2(new Player(2, 1, 0, 0, true, 0, demi_per, 0, team1->getTeamSpirit(), team1.get()));
-        std::shared_ptr<Player> p3(new Player(3, 1, 0, 0, true, 0, demi_per, 0, team1->getTeamSpirit(), team1.get()));
+        std::shared_ptr<Player> p1(new Player(1, 0, 0, true, 0, demi_per, 0, team1->getTeamSpirit(), team1.get()));
+        std::shared_ptr<Player> p2(new Player(2, 0, 0, true, 0, demi_per, 0, team1->getTeamSpirit(), team1.get()));
+        std::shared_ptr<Player> p3(new Player(3, 0, 0, true, 0, demi_per, 0, team1->getTeamSpirit(), team1.get()));
 
         Upside_Node node1(p1);
         Upside_Node node2(p2);
@@ -340,7 +340,7 @@ TEST_CASE("Find and union", "find")
         REQUIRE(getPlayerTotalGames(&node1) == 1);
         REQUIRE(getPlayerTotalGames(&node2) == 1);
         REQUIRE(getPlayerTotalGames(&node3) == 1);
-        std::shared_ptr<Player> p4(new Player(4, 1, 0, 0, true, 0, demi_per, -1, team1->getTeamSpirit(), team1.get()));
+        std::shared_ptr<Player> p4(new Player(4, 0, 0, true, 0, demi_per, -1, team1->getTeamSpirit(), team1.get()));
         Upside_Node node4(p4);
         linkNodes(&node1, &node4);
         REQUIRE(getPlayerTotalGames(&node4) == 0);
@@ -352,7 +352,7 @@ TEST_CASE("Find and union", "find")
         REQUIRE(getPlayerTotalGames(&node3) == 2);
         REQUIRE(getPlayerTotalGames(&node4) == 1);
 
-        std::shared_ptr<Player> p5(new Player(5, 1, 0, 0, true, 0, demi_per, -2, team1->getTeamSpirit(), team1.get()));
+        std::shared_ptr<Player> p5(new Player(5, 0, 0, true, 0, demi_per, -2, team1->getTeamSpirit(), team1.get()));
         Upside_Node node5(p5);
         linkNodes(&node1, &node5);
 
@@ -380,24 +380,24 @@ TEST_CASE("Find and union", "find")
         REQUIRE(getPlayerTotalGames(&node4) == 3);
         REQUIRE(getPlayerTotalGames(&node5) == 2);
 
-        std::shared_ptr<Player> p6(new Player(6, 1, 0, 0, true, 0, demi_per, -4, team1->getTeamSpirit(), team1.get()));
+        std::shared_ptr<Player> p6(new Player(6, 0, 0, true, 0, demi_per, -4, team1->getTeamSpirit(), team1.get()));
         Upside_Node node6(p6);
         linkNodes(&node1, &node6);
         REQUIRE(getPlayerTotalGames(&node6) == 0);
 
         // team played 5 games
         node1.games_to_add++;
-        std::shared_ptr<Player> p7(new Player(7, 1, 0, 0, true, 0, demi_per, -5, team1->getTeamSpirit(), team1.get()));
+        std::shared_ptr<Player> p7(new Player(7, 0, 0, true, 0, demi_per, -5, team1->getTeamSpirit(), team1.get()));
         Upside_Node node7(p7);
-        std::shared_ptr<Player> p8(new Player(8, 1, 0, 0, true, 0, demi_per, -5, team1->getTeamSpirit(), team1.get()));
+        std::shared_ptr<Player> p8(new Player(8, 0, 0, true, 0, demi_per, -5, team1->getTeamSpirit(), team1.get()));
         Upside_Node node8(p8);
 
         // team played 6 games
         node1.games_to_add++;
 
-        std::shared_ptr<Player> p9(new Player(9, 1, 0, 0, true, 0, demi_per, -6, team1->getTeamSpirit(), team1.get()));
+        std::shared_ptr<Player> p9(new Player(9, 0, 0, true, 0, demi_per, -6, team1->getTeamSpirit(), team1.get()));
         Upside_Node node9(p9);
-        std::shared_ptr<Player> p10(new Player(10, 1, 1, 0, true, 0, demi_per, -6, team1->getTeamSpirit(), team1.get()));
+        std::shared_ptr<Player> p10(new Player(10, 1, 0, true, 0, demi_per, -6, team1->getTeamSpirit(), team1.get()));
         Upside_Node node10(p10);
 
         linkNodes(&node6, &node7);
@@ -421,9 +421,9 @@ TEST_CASE("Find and union", "find")
     {
         std::shared_ptr<Team> team1(new Team(1));
         permutation_t demi_per;
-        std::shared_ptr<Player> p1(new Player(1, 1, 0, 0, true, 0, demi_per, 0, team1->getTeamSpirit(), team1.get()));
-        std::shared_ptr<Player> p2(new Player(2, 1, 0, 0, true, 0, demi_per, 0, team1->getTeamSpirit(), team1.get()));
-        std::shared_ptr<Player> p3(new Player(3, 1, 0, 0, true, 0, demi_per, 0, team1->getTeamSpirit(), team1.get()));
+        std::shared_ptr<Player> p1(new Player(1, 0, 0, true, 0, demi_per, 0, team1->getTeamSpirit(), team1.get()));
+        std::shared_ptr<Player> p2(new Player(2, 0, 0, true, 0, demi_per, 0, team1->getTeamSpirit(), team1.get()));
+        std::shared_ptr<Player> p3(new Player(3, 0, 0, true, 0, demi_per, 0, team1->getTeamSpirit(), team1.get()));
 
         Upside_Node node1(p1);
         Upside_Node node2(p2);
@@ -440,15 +440,15 @@ TEST_CASE("Find and union", "find")
         REQUIRE(getPlayerTotalGames(&node1) == 1);
         REQUIRE(getPlayerTotalGames(&node2) == 1);
         REQUIRE(getPlayerTotalGames(&node3) == 1);
-        std::shared_ptr<Player> p4(new Player(4, 1, 0, 0, true, 0, demi_per, -1, team1->getTeamSpirit(), team1.get()));
+        std::shared_ptr<Player> p4(new Player(4, 0, 0, true, 0, demi_per, -1, team1->getTeamSpirit(), team1.get()));
         Upside_Node node4(p4);
         linkNodes(&node1, &node4);
         REQUIRE(getPlayerTotalGames(&node4) == 0);
 
         std::shared_ptr<Team> team2(new Team(2));
-        std::shared_ptr<Player> p11(new Player(1, 2, 0, 0, true, 0, demi_per, 0, team2->getTeamSpirit(), team2.get()));
-        std::shared_ptr<Player> p12(new Player(2, 2, 0, 0, true, 0, demi_per, 0, team2->getTeamSpirit(), team2.get()));
-        std::shared_ptr<Player> p13(new Player(3, 2, 1, 0, true, 0, demi_per, 0, team2->getTeamSpirit(), team2.get()));
+        std::shared_ptr<Player> p11(new Player(1, 0, 0, true, 0, demi_per, 0, team2->getTeamSpirit(), team2.get()));
+        std::shared_ptr<Player> p12(new Player(2, 0, 0, true, 0, demi_per, 0, team2->getTeamSpirit(), team2.get()));
+        std::shared_ptr<Player> p13(new Player(3, 1, 0, true, 0, demi_per, 0, team2->getTeamSpirit(), team2.get()));
 
         Upside_Node node11(p11);
         Upside_Node node12(p12);

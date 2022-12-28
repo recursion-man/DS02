@@ -204,3 +204,19 @@ Upside_Node *union_tree(Upside_Node *root1, Upside_Node *root2)
         return root2;
     }
 };
+
+permutation_t getSpiritToMultiPly(Upside_Node *player_node)
+{
+    permutation_t spirit_to_multiply = player_node->spirit_to_calculate;
+    while (player_node->father != nullptr)
+    { // it's importent to put the fathers spirit on the left
+        spirit_to_multiply = player_node->father->spirit_to_calculate * spirit_to_multiply;
+        player_node = player_node->father;
+    }
+    return spirit_to_multiply;
+}
+
+permutation_t getPlayerTotalSpirit(Upside_Node *player_node)
+{
+    return getSpiritToMultiPly(player_node) * player_node->data->getPlayerSpirit();
+}

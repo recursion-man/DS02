@@ -37,6 +37,11 @@ int Team::getGamesTeamPlayed() const
     return games_played;
 }
 
+int Team::getTeamScoreForMatch() const
+{
+    return this->points + this->sum_of_player_abilities;
+}
+
 // int getNewTotalGames(std::shared_ptr<Player> player, int games_team_played)
 //{
 //     return player->getGamesPlayed() + games_team_played - player->getGamesTeamPlayedWhenAdded();
@@ -81,10 +86,10 @@ void Team::setNumOfGoalKeepers(int new_goalkeepers)
 
 bool Team::isValidTeam() const
 {
-    return (num_of_players >= MIN_PLAYERS_IN_TEAM && num_of_goal_keepers > 0);
+    return num_of_goal_keepers > 0;
 }
 
-void Team::handlePlayerAdded(Player* player)
+void Team::handlePlayerAdded(Player *player)
 {
     if (num_of_players == 0)
     {
@@ -104,7 +109,7 @@ void Team::handlePlayerAdded(Player* player)
 
 void Team::handleTeamBought(Team *source_team)
 {
-    if (source_team == this)
+    if (source_team == this || source_team == nullptr)
     {
         return;
     }
@@ -113,10 +118,14 @@ void Team::handleTeamBought(Team *source_team)
     this->num_of_players += source_team->getNumOfPlayers();
     this->sum_of_player_abilities += source_team->getTeamAbility();
     this->team_spirit = this->team_spirit * source_team->getTeamSpirit();
-    if (source_team->getRootPlayerNode() != nullptr)
-        union_tree(this->root_player_node, source_team->getRootPlayerNode());
-}
 
+    if (source_team->getRootPlayerNode() != nullptr)
+    {
+        source_team->getRootPlayerNode()->data->setTeam(nullptr);
+        Upside_Node *new_root = union_tree(this->root_player_node, source_team->getRootPlayerNode());
+        Team::setRoot(new_root);
+    }
+}
 
 void Team::applyMatch(int points_to_add)
 {
@@ -136,12 +145,12 @@ Team::~Team()
     }
 }
 
-void addPlayerToRoot(Upside_Node *root_player_node,Upside_Node* new_player_node)
+void addPlayerToRoot(Upside_Node *root_player_node, Upside_Node *new_player_node)
 {
-    new_player_node->father = root_player_node;
+    linkNodes(root_player_node, new_player_node);
 }
 
-void Team::addPlayer(Upside_Node * new_player_node)
+void Team::addPlayer(Upside_Node *new_player_node)
 {
     if (root_player_node == nullptr)
     {
@@ -154,7 +163,7 @@ void Team::addPlayer(Upside_Node * new_player_node)
     handlePlayerAdded(new_player_node->data.get());
 }
 
-void Team::setRoot(Upside_Node* new_root)
+void Team::setRoot(Upside_Node *new_root)
 {
     root_player_node = new_root;
     new_root->data->setTeam(this);
@@ -170,13 +179,12 @@ bool operator>(const std::shared_ptr<Team> a, const std::shared_ptr<Team> b)
     return a->getTeamId() > b->getTeamId();
 }
 
-bool operator<(std::shared_ptr<TeamRank> a,  std::shared_ptr<TeamRank> b)
+bool operator<(std::shared_ptr<TeamRank> a, std::shared_ptr<TeamRank> b)
 {
     return a->getTeamAbility() < b->getTeamAbility();
 }
 
-bool operator>(std::shared_ptr<TeamRank> a,  std::shared_ptr<TeamRank> b)
+bool operator>(std::shared_ptr<TeamRank> a, std::shared_ptr<TeamRank> b)
 {
     return a->getTeamAbility() > b->getTeamAbility();
 }
-
