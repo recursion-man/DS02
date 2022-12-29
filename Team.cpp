@@ -151,7 +151,6 @@ Team::~Team()
 
 void Team::addPlayer(Upside_Node *new_player_node)
 {
-    // std::cout << "add player enterde" << std::endl;
     if (root_player_node == nullptr)
     {
         setRoot(new_player_node);
