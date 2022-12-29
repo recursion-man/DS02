@@ -198,7 +198,7 @@ output_t<int> world_cup_t::num_played_games_for_player(int playerId)
 
 StatusType world_cup_t::add_player_cards(int playerId, int cards)
 {
-    if (playerId <= 0)
+    if (playerId <= 0 || cards <= 0)
     {
         return StatusType::INVALID_INPUT;
     }

@@ -234,5 +234,6 @@ permutation_t getSpiritToMultiPly(Upside_Node *player_node)
 permutation_t getPlayerTotalSpirit(Upside_Node *player_node)
 {
     permutation_t res = getSpiritToMultiPly(player_node) * player_node->data->getTeamSpiritWhenAdded() * player_node->data->getPlayerSpirit();
+    find(player_node);
     return res;
 }
