@@ -333,7 +333,7 @@ StatusType world_cup_t::buy_team(int teamId1, int teamId2)
         team1->getRootPlayerNode()->data->setTeam(team1.get());
 
         // find rank team
-        std::shared_ptr<TeamRank> rank_target(new TeamRank(teamId1));
+        std::shared_ptr<TeamRank> rank_target(new TeamRank(*team1));
         std::shared_ptr<TeamRank> rank_team = teams_by_rank.findInTree(rank_target);
 
         // remove and insert the updated team-rank
