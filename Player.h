@@ -35,7 +35,7 @@ public:
     int getId() const;
     int getAbility() const;
     permutation_t getPlayerSpirit() const;
-    permutation_t getPartialPlayerSpirit() const;
+    permutation_t getTeamSpiritWhenAdded() const;
 
     //  setters
     void setGamesPlayed(int gamesPlayed);

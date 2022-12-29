@@ -12,6 +12,7 @@ class Upside_Node;
 
 class Team
 {
+protected:
     int teamId, points, num_of_players, num_of_goal_keepers, games_played, sum_of_player_abilities;
     permutation_t team_spirit;
     Upside_Node *root_player_node;
@@ -32,28 +33,32 @@ public:
     int getGamesTeamPlayed() const;
     int getTeamStrength() const;
     int getTeamAbility() const;
+    int getTeamScoreForMatch() const;
 
     //  setters
     void setTeamId(int teamId);
     void setNumOfPlayers(int new_num_of_players);
     void setNumOfGoalKeepers(int new_goalkeepers);
     void setPoints(int new_points);
-    void setRoot(Upside_Node*);
+    virtual void setRoot(Upside_Node *);
+    void setTeamAbility(int new_ability);
 
     bool isEmpty() const;
     bool isValidTeam() const;
 
-    void addPlayer(Upside_Node*);
+    void addPlayer(Upside_Node *);
 
-    void handlePlayerAdded(Player* player);
+    void handlePlayerAdded(Player *player);
     void handleTeamBought(Team *source_team);
     void handleTeamRemoved();
 
     void applyMatch(int point_to_add);
 };
 
-class TeamRank :public Team{
+class TeamRank : public Team
+{
 public:
+    void setRoot(Upside_Node *new_root) override;
     TeamRank(const Team& team): Team(team){}
 };
 
@@ -61,7 +66,7 @@ public:
 bool operator<(std::shared_ptr<Team> a, std::shared_ptr<Team> b);
 bool operator>(std::shared_ptr<Team> a, std::shared_ptr<Team> b);
 
-bool operator<(std::shared_ptr<TeamRank> a,  std::shared_ptr<TeamRank> b);
-bool operator>(std::shared_ptr<TeamRank> a,  std::shared_ptr<TeamRank> b);
+bool operator<(std::shared_ptr<TeamRank> a, std::shared_ptr<TeamRank> b);
+bool operator>(std::shared_ptr<TeamRank> a, std::shared_ptr<TeamRank> b);
 
 #endif

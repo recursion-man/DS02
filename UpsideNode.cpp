@@ -20,8 +20,19 @@ void linkNodes(Upside_Node *node1, Upside_Node *node2)
             node1 = node1->father;
             node1->size += node2->size;
         }
-
         node2->isRoot = false;
+    }
+}
+
+void linkNodeToRoot(Upside_Node *root, Upside_Node *new_node)
+{
+    if (root != nullptr && new_node != nullptr && root != new_node)
+    {
+        new_node->father = root;
+        new_node->isRoot = false;
+        root->size += new_node->size;
+        new_node->games_to_add = root->data->getTeam()->getGamesTeamPlayed() - root->games_to_add;
+        new_node->spirit_to_calculate = root->spirit_to_calculate.inv();
     }
 }
 
@@ -86,7 +97,9 @@ int getUpdatedGamesUntilRoot(Upside_Node *node)
 
 int getPlayerTotalGames(Upside_Node *node)
 {
-    return node->data->getGamesPlayed() + node->data->getGamesTeamPlayedWhenAdded() + getGamesToAdd(node);
+    // if (node->data->getId() == 100)
+    //     std::cout << "games_stared: " << node->data->getGamesPlayed() << " games team w''a" << node->data->getGamesTeamPlayedWhenAdded() << "node_game_to_add" << node->games_to_add << " root_Games_to_add" << node->father->games_to_add << " total games to add: " << getGamesToAdd(node) << std::endl;
+    return node->data->getGamesPlayed() - node->data->getGamesTeamPlayedWhenAdded() + getGamesToAdd(node);
 }
 
 void updateGamesForPlayersOnPath(Upside_Node *node)
@@ -165,7 +178,9 @@ void handleUnion(Upside_Node *dest_root, Upside_Node *source_root, bool dest_roo
         return;
     }
 
-    linkNodes(dest_root, source_root);
+    source_root->father = dest_root;
+    dest_root->size += source_root->size;
+    source_root->isRoot = false;
     if (dest_root_is_buyer)
     {
         // b points to a
@@ -204,3 +219,20 @@ Upside_Node *union_tree(Upside_Node *root1, Upside_Node *root2)
         return root2;
     }
 };
+
+permutation_t getSpiritToMultiPly(Upside_Node *player_node)
+{
+    permutation_t spirit_to_multiply = player_node->spirit_to_calculate;
+    while (player_node->father != nullptr)
+    { // it's importent to put the fathers spirit on the left
+        spirit_to_multiply = player_node->father->spirit_to_calculate * spirit_to_multiply;
+        player_node = player_node->father;
+    }
+    return spirit_to_multiply;
+}
+
+permutation_t getPlayerTotalSpirit(Upside_Node *player_node)
+{
+    permutation_t res = getSpiritToMultiPly(player_node) * player_node->data->getTeamSpiritWhenAdded() * player_node->data->getPlayerSpirit();
+    return res;
+}
