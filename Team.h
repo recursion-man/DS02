@@ -21,7 +21,7 @@ public:
     //  C'tor
     explicit Team(int teamId) : teamId{teamId}, points{0}, num_of_players{0},
                                 num_of_goal_keepers{0}, games_played{0}, sum_of_player_abilities{0},
-                                team_spirit{}, root_player_node{nullptr} {};
+                                team_spirit{permutation_t::neutral()}, root_player_node{nullptr} {};
     virtual ~Team();
     //  getters
     int getNumOfPlayers() const;
@@ -53,13 +53,6 @@ public:
     void handleTeamRemoved();
 
     void applyMatch(int point_to_add);
-};
-
-class TeamRank : public Team
-{
-public:
-    void setRoot(Upside_Node *new_root) override;
-    TeamRank(const Team &team) : Team(team) {}
 };
 
 // operations

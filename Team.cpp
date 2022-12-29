@@ -151,6 +151,7 @@ Team::~Team()
 
 void Team::addPlayer(Upside_Node *new_player_node)
 {
+    // std::cout << "add player enterde" << std::endl;
     if (root_player_node == nullptr)
     {
         setRoot(new_player_node);
@@ -177,18 +178,4 @@ bool operator<(const std::shared_ptr<Team> a, const std::shared_ptr<Team> b)
 bool operator>(const std::shared_ptr<Team> a, const std::shared_ptr<Team> b)
 {
     return a->getTeamId() > b->getTeamId();
-}
-
-bool operator<(std::shared_ptr<TeamRank> a, std::shared_ptr<TeamRank> b)
-{
-    if (a->getTeamAbility() == b->getTeamAbility())
-        return a->getTeamId() < b->getTeamId();
-    return a->getTeamAbility() < b->getTeamAbility();
-}
-
-bool operator>(std::shared_ptr<TeamRank> a, std::shared_ptr<TeamRank> b)
-{
-    if (a->getTeamAbility() == b->getTeamAbility())
-        return a->getTeamId() > b->getTeamId();
-    return a->getTeamAbility() > b->getTeamAbility();
 }
