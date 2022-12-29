@@ -172,11 +172,15 @@ bool operator>(const std::shared_ptr<Team> a, const std::shared_ptr<Team> b)
 
 bool operator<(std::shared_ptr<TeamRank> a,  std::shared_ptr<TeamRank> b)
 {
+    if (a->getTeamAbility() == b->getTeamAbility())
+        return a->getTeamId() < b->getTeamId();
     return a->getTeamAbility() < b->getTeamAbility();
 }
 
 bool operator>(std::shared_ptr<TeamRank> a,  std::shared_ptr<TeamRank> b)
 {
+    if(a->getTeamAbility() == b->getTeamAbility())
+        return a->getTeamId() > b->getTeamId();
     return a->getTeamAbility() > b->getTeamAbility();
 }
 

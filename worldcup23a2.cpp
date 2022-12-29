@@ -13,7 +13,7 @@ StatusType world_cup_t::add_team(int teamId)
     try
     {
         std::shared_ptr<Team> new_team_id(new Team(teamId));
-        std::shared_ptr<TeamRank> new_team_rank(new TeamRank(teamId));
+        std::shared_ptr<TeamRank> new_team_rank(new TeamRank(*new_team_id));
         teams_by_id.insertToTree(new_team_id);
         teams_by_rank.insertToTree(new_team_rank);
     }
@@ -36,12 +36,12 @@ StatusType world_cup_t::remove_team(int teamId)
     }
     try
     {
-        std::shared_ptr<Team> new_team_id(new Team(teamId));
-        std::shared_ptr<TeamRank> new_team_rank(new TeamRank(teamId));
+        std::shared_ptr<Team> target(new Team(teamId));
+        std::shared_ptr<Team> team_id_to_remove = teams_by_id.findInTree(target);
+        std::shared_ptr<TeamRank> team_rank_to_remove(new TeamRank(*team_id_to_remove));
 
-
-        teams_by_id.removeFromTree(new_team_id);
-        teams_by_rank.removeFromTree(new_team_rank);
+        teams_by_id.removeFromTree(team_id_to_remove);
+        teams_by_rank.removeFromTree(team_rank_to_remove);
     }
     catch (std::bad_alloc &e)
     {
@@ -70,16 +70,16 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
         permutation_t team_spirit_when_added = team->getTeamSpirit();
         int games_team_played_when_added = team->getGamesTeamPlayed();
 
+        //find rank team
+        std::shared_ptr<TeamRank> rank_target(new TeamRank(*team));
+        std::shared_ptr<TeamRank> rank_team = teams_by_rank.findInTree(rank_target);
+
         // create the player
         Upside_Node* new_player_node = hash_table.insert(Player(playerId, gamesPlayed, cards, goalKeeper,
                                        ability, spirit, games_team_played_when_added, team_spirit_when_added));
 
         // match the player to the team
         team->addPlayer(new_player_node);
-
-        //find rank team
-        std::shared_ptr<TeamRank> rank_target(new TeamRank(teamId));
-        std::shared_ptr<TeamRank> rank_team = teams_by_rank.findInTree(rank_target);
 
         // remove and insert the updated team-rank
         teams_by_rank.removeFromTree(rank_team);
@@ -199,7 +199,7 @@ output_t<int> world_cup_t::get_ith_pointless_ability(int i)
 
     try
     {
-        return teams_by_rank.select(i)->getTeamAbility();
+        return teams_by_rank.select(i+1)->getTeamId();
     }
     catch (std::bad_alloc &e)
     {

@@ -54,7 +54,7 @@ public:
 
 class TeamRank :public Team{
 public:
-    TeamRank(int teamId): Team(teamId){}
+    TeamRank(const Team& team): Team(team){}
 };
 
 // operations
