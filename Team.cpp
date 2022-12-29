@@ -170,12 +170,6 @@ void Team::setRoot(Upside_Node *new_root)
     new_root->data->setTeam(this);
 }
 
-void TeamRank::setRoot(Upside_Node *new_root)
-{
-    root_player_node = new_root;
-    root_player_node->isRoot = true;
-}
-
 bool operator<(const std::shared_ptr<Team> a, const std::shared_ptr<Team> b)
 {
     return a->getTeamId() < b->getTeamId();
@@ -184,36 +178,4 @@ bool operator<(const std::shared_ptr<Team> a, const std::shared_ptr<Team> b)
 bool operator>(const std::shared_ptr<Team> a, const std::shared_ptr<Team> b)
 {
     return a->getTeamId() > b->getTeamId();
-}
-
-bool operator<(std::shared_ptr<TeamRank> a, std::shared_ptr<TeamRank> b)
-{
-    if (a->getTeamAbility() < b->getTeamAbility())
-    {
-        return true;
-    }
-    else if (a->getTeamAbility() > b->getTeamAbility())
-    {
-        return false;
-    }
-    else
-    {
-        return a->getTeamId() < b->getTeamId();
-    }
-}
-
-bool operator>(std::shared_ptr<TeamRank> a, std::shared_ptr<TeamRank> b)
-{
-    if (a->getTeamAbility() > b->getTeamAbility())
-    {
-        return true;
-    }
-    else if (a->getTeamAbility() < b->getTeamAbility())
-    {
-        return false;
-    }
-    else
-    {
-        return a->getTeamId() > b->getTeamId();
-    }
 }

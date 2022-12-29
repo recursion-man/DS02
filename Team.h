@@ -40,7 +40,7 @@ public:
     void setNumOfPlayers(int new_num_of_players);
     void setNumOfGoalKeepers(int new_goalkeepers);
     void setPoints(int new_points);
-    virtual void setRoot(Upside_Node *);
+    void setRoot(Upside_Node *);
     void setTeamAbility(int new_ability);
 
     bool isEmpty() const;
@@ -55,18 +55,8 @@ public:
     void applyMatch(int point_to_add);
 };
 
-class TeamRank : public Team
-{
-public:
-    TeamRank(int teamId) : Team(teamId) {}
-    void setRoot(Upside_Node *new_root) override;
-};
-
 // operations
 bool operator<(std::shared_ptr<Team> a, std::shared_ptr<Team> b);
 bool operator>(std::shared_ptr<Team> a, std::shared_ptr<Team> b);
-
-bool operator<(std::shared_ptr<TeamRank> a, std::shared_ptr<TeamRank> b);
-bool operator>(std::shared_ptr<TeamRank> a, std::shared_ptr<TeamRank> b);
 
 #endif
