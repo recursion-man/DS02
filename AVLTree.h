@@ -87,6 +87,8 @@ public:
 
     const T &select(int k)
     {
+        if (root == nullptr)
+            throw std::invalid_argument("tree is epmty");
         return selectInSubTree(root, k)->data;
     }
 

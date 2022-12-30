@@ -11,684 +11,701 @@
 TEST_CASE("world_cup")
 {
 
-    // SECTION("add_team")
-    // {
-    //     world_cup_t *world_cup = new world_cup_t();
-
-    //     REQUIRE(world_cup->add_team(0) == StatusType::INVALID_INPUT);
-    //     REQUIRE(world_cup->add_team(-3) == StatusType::INVALID_INPUT);
-
-    //     REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_team(1) == StatusType::FAILURE);
-    //     REQUIRE(world_cup->get_team_points(1).ans() == 0);
-
-    //     REQUIRE(world_cup->add_team(2) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->get_team_points(2).ans() == 0);
-
-    //     REQUIRE(world_cup->add_team(3) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->get_team_points(3).ans() == 0);
-    //     REQUIRE(world_cup->add_team(4) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->get_team_points(4).ans() == 0);
-    //     delete world_cup;
-    // }
-
-    // SECTION("remove_team")
-    // {
-    //     world_cup_t *world_cup = new world_cup_t();
-
-    //     REQUIRE(world_cup->remove_team(0) == StatusType::INVALID_INPUT);
-    //     REQUIRE(world_cup->remove_team(-3) == StatusType::INVALID_INPUT);
-    //     REQUIRE(world_cup->remove_team(1) == StatusType::FAILURE);
-
-    //     REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->get_team_points(1).ans() == 0);
-
-    //     REQUIRE(world_cup->remove_team(1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->get_team_points(1).status() == StatusType::FAILURE);
-
-    //     REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->get_team_points(1).ans() == 0);
-
-    //     int p1[5] = {4, 2, 3, 1, 0};
-    //     permutation_t per1(p1);
-    //     REQUIRE(world_cup->add_player(1, 1, per1, 0, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->remove_team(1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player_cards(1, 3) == StatusType::FAILURE);
-
-    //     REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->get_team_points(1).ans() == 0);
-    //     REQUIRE(world_cup->add_player_cards(1, 3) == StatusType::FAILURE);
-    //     REQUIRE(world_cup->add_player(1, 1, per1, 0, 0, 0, true) == StatusType::FAILURE);
-
-    //     int p4[5] = {4, 2, 3, 1, 0}, p2[5] = {0, 4, 2, 1, 3}, p3[5] = {4, 2, 3, 1, 0};
-    //     permutation_t per4(p4), per2(p2), per3(p3);
-    //     REQUIRE(world_cup->add_player(2, 1, per2, 0, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(3, 1, per3, 0, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(4, 1, per4, 0, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(2).ans(), per2));
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(3).ans(), per2 * per3));
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(4).ans(), per2 * per3 * per4));
-
-    //     REQUIRE(world_cup->remove_team(1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player_cards(2, 3) == StatusType::FAILURE);
-    //     REQUIRE(world_cup->add_player_cards(3, 3) == StatusType::FAILURE);
-    //     REQUIRE(world_cup->add_player_cards(4, 3) == StatusType::FAILURE);
-
-    //     delete world_cup;
-    // }
-
-    // SECTION("add_player")
-    // {
-    //     world_cup_t *world_cup = new world_cup_t();
-
-    //     int p1[5] = {4, 2, 3, 1, 0}, p2[5] = {0, 4, 2, 1, 3}, p3[5] = {4, 2, 3, 1, 0}, invalid_per[5]{1, 12, 4, 1, -100};
-    //     permutation_t per1(p1), per2(p2), per3(p3);
-    //     REQUIRE(world_cup->add_player(0, 1, per1, 4, 8, 2, true) == StatusType::INVALID_INPUT);
-    //     REQUIRE(world_cup->add_player(-2, 1, per1, 0, 0, 0, true) == StatusType::INVALID_INPUT);
-    //     REQUIRE(world_cup->add_player(1, -3, per1, 0, 0, 0, true) == StatusType::INVALID_INPUT);
-    //     REQUIRE(world_cup->add_player(1, 0, per1, 0, 0, 0, true) == StatusType::INVALID_INPUT);
-    //     REQUIRE(world_cup->add_player(1, 0, invalid_per, 0, 0, 0, true) == StatusType::INVALID_INPUT);
-    //     REQUIRE(world_cup->add_player(1, 0, per1, -3, 0, 0, true) == StatusType::INVALID_INPUT);
-    //     REQUIRE(world_cup->add_player(1, 0, per1, 0, 0, -2, true) == StatusType::INVALID_INPUT);
-
-    //     REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->get_team_points(1).ans() == 0);
-    //     REQUIRE(world_cup->add_player(1, 1, per1, 0, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->get_player_cards(1).ans() == 0);
-    //     REQUIRE(world_cup->add_player(2, 1, per2, 0, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->get_player_cards(2).ans() == 0);
-
-    //     REQUIRE(world_cup->get_partial_spirit(1).status() == StatusType::SUCCESS);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(1).ans(), per1));
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(2).ans(), per1 * per2));
-
-    //     REQUIRE(world_cup->add_player(3, 1, per3, 0, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(3).ans(), per1 * per2 * per3));
-
-    //     REQUIRE(world_cup->add_player(4, 1, per1, 3, -2, 1, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->get_player_cards(4).ans() == 1);
-    //     REQUIRE(world_cup->get_player_cards(3).ans() == 0);
-    //     REQUIRE(world_cup->num_played_games_for_player(1).ans() == 0);
-    //     REQUIRE(world_cup->num_played_games_for_player(2).ans() == 0);
-    //     REQUIRE(world_cup->num_played_games_for_player(3).ans() == 0);
-    //     REQUIRE(world_cup->num_played_games_for_player(4).ans() == 3);
-
-    //     REQUIRE(world_cup->add_team(2) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(1, 2, per1, 0, 0, 0, true) == StatusType::FAILURE);
-    //     REQUIRE(world_cup->add_player(5, 2, per3, 7, 2, 1, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(6, 2, per3, 5, 2, 5, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(7, 2, per3, 3, 0, 3, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(8, 2, per3, 6, -10, 4, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->num_played_games_for_player(5).ans() == 7);
-    //     REQUIRE(world_cup->num_played_games_for_player(6).ans() == 5);
-    //     REQUIRE(world_cup->num_played_games_for_player(7).ans() == 3);
-    //     REQUIRE(world_cup->num_played_games_for_player(8).ans() == 6);
-    //     REQUIRE(world_cup->get_player_cards(5).ans() == 1);
-    //     REQUIRE(world_cup->get_player_cards(6).ans() == 5);
-    //     REQUIRE(world_cup->get_player_cards(7).ans() == 3);
-    //     REQUIRE(world_cup->get_player_cards(8).ans() == 4);
-
-    //     delete world_cup;
-    // }
-
-    // SECTION("play_match")
-    // {
-    //     world_cup_t *world_cup = new world_cup_t();
-
-    //     REQUIRE(world_cup->play_match(2, 0).status() == StatusType::INVALID_INPUT);
-    //     REQUIRE(world_cup->play_match(-3, 3).status() == StatusType::INVALID_INPUT);
-    //     REQUIRE(world_cup->play_match(1, 1).status() == StatusType::INVALID_INPUT);
-    //     REQUIRE(world_cup->play_match(1, 2).status() == StatusType::FAILURE);
-
-    //     int p1[5] = {4, 2, 3, 1, 0}, p2[5] = {0, 4, 2, 1, 3}, p3[5] = {4, 2, 3, 1, 0}, p4[5] = {2, 4, 3, 1, 0};
-    //     permutation_t per1(p1), per2(p2), per3(p3), per4(p4);
-
-    //     REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->add_player(1, 1, per1, 2, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(2, 1, per2, 3, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(3, 1, per3, 0, 0, 0, true) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->num_played_games_for_player(1).ans() == 2);
-    //     REQUIRE(world_cup->num_played_games_for_player(2).ans() == 3);
-    //     REQUIRE(world_cup->num_played_games_for_player(3).ans() == 0);
-
-    //     REQUIRE(world_cup->add_team(2) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->play_match(1, 2).status() == StatusType::FAILURE);
-
-    //     REQUIRE(world_cup->add_player(4, 2, per4, 2, 4, 0, true) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->num_played_games_for_player(4).ans() == 2);
-
-    //     // team1 has 0 abiliy team 2 has 4 ability
-    //     output_t<int> match = world_cup->play_match(1, 2);
-    //     REQUIRE(match.status() == StatusType::SUCCESS);
-    //     REQUIRE(match.ans() == 3);
-    //     REQUIRE(world_cup->num_played_games_for_player(1).ans() == 3);
-    //     REQUIRE(world_cup->num_played_games_for_player(2).ans() == 4);
-    //     REQUIRE(world_cup->num_played_games_for_player(3).ans() == 1);
-    //     REQUIRE(world_cup->num_played_games_for_player(4).ans() == 3);
-    //     REQUIRE(world_cup->get_team_points(1).ans() == 0);
-    //     REQUIRE(world_cup->get_team_points(2).ans() == 3);
-
-    //     REQUIRE(world_cup->add_player(5, 2, per4, 0, -7, 0, true) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->num_played_games_for_player(5).ans() == 0);
-    //     // both tean has same score
-    //     output_t<int> match2 = world_cup->play_match(1, 2);
-    //     REQUIRE(match2.status() == StatusType::SUCCESS);
-    //     REQUIRE(match2.ans() == 2);
-    //     REQUIRE(world_cup->num_played_games_for_player(1).ans() == 4);
-    //     REQUIRE(world_cup->num_played_games_for_player(2).ans() == 5);
-    //     REQUIRE(world_cup->num_played_games_for_player(3).ans() == 2);
-    //     REQUIRE(world_cup->num_played_games_for_player(4).ans() == 4);
-    //     REQUIRE(world_cup->num_played_games_for_player(5).ans() == 1);
-    //     REQUIRE(world_cup->get_team_points(1).ans() == 3);
-    //     REQUIRE(world_cup->get_team_points(2).ans() == 3);
-
-    //     REQUIRE(world_cup->add_player(6, 2, per2, 6, 3, 0, true) == StatusType::SUCCESS);
-    //     // both team has same score
-    //     REQUIRE(world_cup->add_player(7, 2, per2, 7, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(8, 2, per2, 8, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(9, 2, per2, 9, -1, 0, true) == StatusType::SUCCESS);
-
-    //     // team 1 has +1 score than team 2
-    //     output_t<int> match3 = world_cup->play_match(1, 2);
-    //     REQUIRE(match3.status() == StatusType::SUCCESS);
-    //     REQUIRE(match3.ans() == 1);
-    //     REQUIRE(world_cup->num_played_games_for_player(1).ans() == 5);
-    //     REQUIRE(world_cup->num_played_games_for_player(2).ans() == 6);
-    //     REQUIRE(world_cup->num_played_games_for_player(3).ans() == 3);
-    //     REQUIRE(world_cup->num_played_games_for_player(4).ans() == 5);
-    //     REQUIRE(world_cup->num_played_games_for_player(5).ans() == 2);
-    //     REQUIRE(world_cup->num_played_games_for_player(6).ans() == 7);
-    //     REQUIRE(world_cup->num_played_games_for_player(7).ans() == 8);
-    //     REQUIRE(world_cup->num_played_games_for_player(8).ans() == 9);
-    //     REQUIRE(world_cup->num_played_games_for_player(9).ans() == 10);
-
-    //     REQUIRE(world_cup->get_team_points(1).ans() == 6);
-    //     REQUIRE(world_cup->get_team_points(2).ans() == 3);
-    //     delete world_cup;
-    // }
-
-    // SECTION("num_played_games_for_player")
-    // {
-    //     world_cup_t *world_cup = new world_cup_t();
-
-    //     REQUIRE(world_cup->num_played_games_for_player(-3).status() == StatusType::INVALID_INPUT);
-    //     REQUIRE(world_cup->num_played_games_for_player(0).status() == StatusType::INVALID_INPUT);
-    //     REQUIRE(world_cup->num_played_games_for_player(-102).status() == StatusType::INVALID_INPUT);
-    //     REQUIRE(world_cup->num_played_games_for_player(1).status() == StatusType::FAILURE);
-    //     REQUIRE(world_cup->num_played_games_for_player(17).status() == StatusType::FAILURE);
-
-    //     int p1[5] = {4, 2, 3, 1, 0}, p2[5] = {0, 4, 2, 1, 3}, p3[5] = {4, 2, 3, 1, 0};
-    //     int p4[5] = {2, 4, 3, 1, 0}, p5[5] = {0, 2, 1, 4, 3}, p6[5] = {1, 2, 3, 4, 0}, p7[5] = {1, 3, 2, 4, 0};
-    //     int p8[5] = {1, 4, 0, 2, 3}, p9[5] = {1, 0, 4, 2, 3}, p10[5] = {3, 2, 4, 1, 0}, p11[5] = {3, 1, 2, 4, 0};
-    //     int p12[5] = {3, 0, 2, 1, 4}, p13[5] = {3, 0, 1, 4, 2}, p14[5] = {1, 2, 0, 3, 4};
-    //     permutation_t per1(p1), per2(p2), per3(p3), per4(p4), per5(p5), per6(p6), per7(p7), per8(p8), per9(p9), per10(p10), per11(p11), per12(p12), per13(p13), per14(p14);
-
-    //     REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->add_player(1, 1, per1, 1, 1, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(2, 1, per2, 2, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(3, 1, per3, 3, 0, 0, true) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->num_played_games_for_player(1).ans() == 1);
-    //     REQUIRE(world_cup->num_played_games_for_player(2).ans() == 2);
-    //     REQUIRE(world_cup->num_played_games_for_player(3).ans() == 3);
-
-    //     REQUIRE(world_cup->add_team(2) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->add_player(4, 2, per4, 4, 2, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(5, 2, per5, 5, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(6, 2, per6, 6, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(7, 2, per7, 7, 0, 0, true) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->num_played_games_for_player(4).ans() == 4);
-    //     REQUIRE(world_cup->num_played_games_for_player(5).ans() == 5);
-    //     REQUIRE(world_cup->num_played_games_for_player(6).ans() == 6);
-    //     REQUIRE(world_cup->num_played_games_for_player(7).ans() == 7);
-
-    //     // match 1
-
-    //     REQUIRE(world_cup->play_match(1, 2).status() == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->num_played_games_for_player(1).ans() == 2);
-    //     REQUIRE(world_cup->num_played_games_for_player(2).ans() == 3);
-    //     REQUIRE(world_cup->num_played_games_for_player(3).ans() == 4);
-    //     REQUIRE(world_cup->num_played_games_for_player(4).ans() == 5);
-    //     REQUIRE(world_cup->num_played_games_for_player(5).ans() == 6);
-    //     REQUIRE(world_cup->num_played_games_for_player(6).ans() == 7);
-    //     REQUIRE(world_cup->num_played_games_for_player(7).ans() == 8);
-
-    //     REQUIRE(world_cup->add_player(8, 1, per8, 8, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->num_played_games_for_player(1).ans() == 2);
-    //     REQUIRE(world_cup->num_played_games_for_player(2).ans() == 3);
-    //     REQUIRE(world_cup->num_played_games_for_player(3).ans() == 4);
-    //     REQUIRE(world_cup->num_played_games_for_player(4).ans() == 5);
-    //     REQUIRE(world_cup->num_played_games_for_player(5).ans() == 6);
-    //     REQUIRE(world_cup->num_played_games_for_player(6).ans() == 7);
-    //     REQUIRE(world_cup->num_played_games_for_player(7).ans() == 8);
-    //     REQUIRE(world_cup->num_played_games_for_player(8).ans() == 8);
-
-    //     REQUIRE(world_cup->play_match(1, 2).status() == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->num_played_games_for_player(1).ans() == 3);
-    //     REQUIRE(world_cup->num_played_games_for_player(2).ans() == 4);
-    //     REQUIRE(world_cup->num_played_games_for_player(3).ans() == 5);
-    //     REQUIRE(world_cup->num_played_games_for_player(4).ans() == 6);
-    //     REQUIRE(world_cup->num_played_games_for_player(5).ans() == 7);
-    //     REQUIRE(world_cup->num_played_games_for_player(6).ans() == 8);
-    //     REQUIRE(world_cup->num_played_games_for_player(7).ans() == 9);
-    //     REQUIRE(world_cup->num_played_games_for_player(8).ans() == 9);
-
-    //     // team 2 buys team 1
-    //     REQUIRE(world_cup->buy_team(2, 1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->num_played_games_for_player(1).ans() == 3);
-    //     REQUIRE(world_cup->num_played_games_for_player(2).ans() == 4);
-    //     REQUIRE(world_cup->num_played_games_for_player(3).ans() == 5);
-    //     REQUIRE(world_cup->num_played_games_for_player(4).ans() == 6);
-    //     REQUIRE(world_cup->num_played_games_for_player(5).ans() == 7);
-    //     REQUIRE(world_cup->num_played_games_for_player(6).ans() == 8);
-    //     REQUIRE(world_cup->num_played_games_for_player(7).ans() == 9);
-    //     REQUIRE(world_cup->num_played_games_for_player(8).ans() == 9);
-
-    //     REQUIRE(world_cup->add_player(9, 2, per9, 9, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->num_played_games_for_player(9).ans() == 9);
-
-    //     REQUIRE(world_cup->add_team(3) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->add_player(10, 3, per10, 10, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(11, 3, per11, 11, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(12, 3, per12, 12, 0, 0, true) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->num_played_games_for_player(10).ans() == 10);
-    //     REQUIRE(world_cup->num_played_games_for_player(11).ans() == 11);
-    //     REQUIRE(world_cup->num_played_games_for_player(12).ans() == 12);
-
-    //     // third match for team 1 players, second match for team 2 players, first match for team 3
-    //     REQUIRE(world_cup->play_match(3, 2).status() == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->num_played_games_for_player(1).ans() == 4);
-    //     REQUIRE(world_cup->num_played_games_for_player(2).ans() == 5);
-    //     REQUIRE(world_cup->num_played_games_for_player(3).ans() == 6);
-    //     REQUIRE(world_cup->num_played_games_for_player(4).ans() == 7);
-    //     REQUIRE(world_cup->num_played_games_for_player(5).ans() == 8);
-    //     REQUIRE(world_cup->num_played_games_for_player(6).ans() == 9);
-    //     REQUIRE(world_cup->num_played_games_for_player(7).ans() == 10);
-    //     REQUIRE(world_cup->num_played_games_for_player(8).ans() == 10);
-    //     REQUIRE(world_cup->num_played_games_for_player(9).ans() == 10);
-    //     REQUIRE(world_cup->num_played_games_for_player(10).ans() == 11);
-    //     REQUIRE(world_cup->num_played_games_for_player(11).ans() == 12);
-    //     REQUIRE(world_cup->num_played_games_for_player(12).ans() == 13);
-
-    //     REQUIRE(world_cup->play_match(3, 2).status() == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->play_match(3, 2).status() == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->play_match(3, 2).status() == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->num_played_games_for_player(1).ans() == 7);
-    //     REQUIRE(world_cup->num_played_games_for_player(2).ans() == 8);
-    //     REQUIRE(world_cup->num_played_games_for_player(3).ans() == 9);
-    //     REQUIRE(world_cup->num_played_games_for_player(4).ans() == 10);
-    //     REQUIRE(world_cup->num_played_games_for_player(5).ans() == 11);
-    //     REQUIRE(world_cup->num_played_games_for_player(6).ans() == 12);
-    //     REQUIRE(world_cup->num_played_games_for_player(7).ans() == 13);
-    //     REQUIRE(world_cup->num_played_games_for_player(8).ans() == 13);
-    //     REQUIRE(world_cup->num_played_games_for_player(9).ans() == 13);
-    //     REQUIRE(world_cup->num_played_games_for_player(10).ans() == 14);
-    //     REQUIRE(world_cup->num_played_games_for_player(11).ans() == 15);
-    //     REQUIRE(world_cup->num_played_games_for_player(12).ans() == 16);
-
-    //     REQUIRE(world_cup->add_player(19, 2, per1, 19, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->num_played_games_for_player(19).ans() == 19);
-
-    //     // demi players for team 3 to be bigger than team 2
-    //     REQUIRE(world_cup->add_player(13, 3, per13, 13, 3, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(14, 3, per14, 14, 1, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(15, 3, per13, 15, 6, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(16, 3, per13, 16, 5, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(17, 3, per13, 17, 2, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(18, 3, per13, 18, 8, 0, true) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->num_played_games_for_player(13).ans() == 13);
-    //     REQUIRE(world_cup->num_played_games_for_player(14).ans() == 14);
-    //     REQUIRE(world_cup->num_played_games_for_player(15).ans() == 15);
-    //     REQUIRE(world_cup->num_played_games_for_player(16).ans() == 16);
-    //     REQUIRE(world_cup->num_played_games_for_player(17).ans() == 17);
-    //     REQUIRE(world_cup->num_played_games_for_player(18).ans() == 18);
-
-    //     // team 2 is the bigger one
-    //     REQUIRE(world_cup->buy_team(3, 2) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(20, 3, per1, 20, 1, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->num_played_games_for_player(1).ans() == 7);
-    //     REQUIRE(world_cup->num_played_games_for_player(2).ans() == 8);
-    //     REQUIRE(world_cup->num_played_games_for_player(3).ans() == 9);
-    //     REQUIRE(world_cup->num_played_games_for_player(4).ans() == 10);
-    //     REQUIRE(world_cup->num_played_games_for_player(5).ans() == 11);
-    //     REQUIRE(world_cup->num_played_games_for_player(6).ans() == 12);
-    //     REQUIRE(world_cup->num_played_games_for_player(7).ans() == 13);
-    //     REQUIRE(world_cup->num_played_games_for_player(8).ans() == 13);
-    //     REQUIRE(world_cup->num_played_games_for_player(9).ans() == 13);
-    //     REQUIRE(world_cup->num_played_games_for_player(10).ans() == 14);
-    //     REQUIRE(world_cup->num_played_games_for_player(11).ans() == 15);
-    //     REQUIRE(world_cup->num_played_games_for_player(12).ans() == 16);
-    //     REQUIRE(world_cup->num_played_games_for_player(13).ans() == 13);
-    //     REQUIRE(world_cup->num_played_games_for_player(14).ans() == 14);
-    //     REQUIRE(world_cup->num_played_games_for_player(15).ans() == 15);
-    //     REQUIRE(world_cup->num_played_games_for_player(16).ans() == 16);
-    //     REQUIRE(world_cup->num_played_games_for_player(17).ans() == 17);
-    //     REQUIRE(world_cup->num_played_games_for_player(18).ans() == 18);
-    //     REQUIRE(world_cup->num_played_games_for_player(19).ans() == 19);
-
-    //     // buying empty team
-    //     REQUIRE(world_cup->add_team(4) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->buy_team(3, 4) == StatusType::SUCCESS);
-    //     // REQUIRE(world_cup->add_player(21, 3, per1, 20, 1, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->num_played_games_for_player(1).ans() == 7);
-    //     REQUIRE(world_cup->num_played_games_for_player(2).ans() == 8);
-    //     REQUIRE(world_cup->num_played_games_for_player(3).ans() == 9);
-    //     REQUIRE(world_cup->num_played_games_for_player(4).ans() == 10);
-    //     REQUIRE(world_cup->num_played_games_for_player(5).ans() == 11);
-    //     REQUIRE(world_cup->num_played_games_for_player(6).ans() == 12);
-    //     REQUIRE(world_cup->num_played_games_for_player(7).ans() == 13);
-    //     REQUIRE(world_cup->num_played_games_for_player(8).ans() == 13);
-    //     REQUIRE(world_cup->num_played_games_for_player(9).ans() == 13);
-    //     REQUIRE(world_cup->num_played_games_for_player(10).ans() == 14);
-    //     REQUIRE(world_cup->num_played_games_for_player(11).ans() == 15);
-    //     REQUIRE(world_cup->num_played_games_for_player(12).ans() == 16);
-    //     REQUIRE(world_cup->num_played_games_for_player(13).ans() == 13);
-    //     REQUIRE(world_cup->num_played_games_for_player(14).ans() == 14);
-    //     REQUIRE(world_cup->num_played_games_for_player(15).ans() == 15);
-    //     REQUIRE(world_cup->num_played_games_for_player(16).ans() == 16);
-    //     REQUIRE(world_cup->num_played_games_for_player(17).ans() == 17);
-    //     REQUIRE(world_cup->num_played_games_for_player(18).ans() == 18);
-    //     REQUIRE(world_cup->num_played_games_for_player(19).ans() == 19);
-    //     REQUIRE(world_cup->num_played_games_for_player(20).ans() == 20);
-
-    //     //  empty team buyting full team
-    //     REQUIRE(world_cup->add_team(5) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->buy_team(5, 3) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(21, 5, per1, 21, 21, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->num_played_games_for_player(1).ans() == 7);
-    //     REQUIRE(world_cup->num_played_games_for_player(2).ans() == 8);
-    //     REQUIRE(world_cup->num_played_games_for_player(3).ans() == 9);
-    //     REQUIRE(world_cup->num_played_games_for_player(4).ans() == 10);
-    //     REQUIRE(world_cup->num_played_games_for_player(5).ans() == 11);
-    //     REQUIRE(world_cup->num_played_games_for_player(6).ans() == 12);
-    //     REQUIRE(world_cup->num_played_games_for_player(7).ans() == 13);
-    //     REQUIRE(world_cup->num_played_games_for_player(8).ans() == 13);
-    //     REQUIRE(world_cup->num_played_games_for_player(9).ans() == 13);
-    //     REQUIRE(world_cup->num_played_games_for_player(10).ans() == 14);
-    //     REQUIRE(world_cup->num_played_games_for_player(11).ans() == 15);
-    //     REQUIRE(world_cup->num_played_games_for_player(12).ans() == 16);
-    //     REQUIRE(world_cup->num_played_games_for_player(13).ans() == 13);
-    //     REQUIRE(world_cup->num_played_games_for_player(14).ans() == 14);
-    //     REQUIRE(world_cup->num_played_games_for_player(15).ans() == 15);
-    //     REQUIRE(world_cup->num_played_games_for_player(16).ans() == 16);
-    //     REQUIRE(world_cup->num_played_games_for_player(17).ans() == 17);
-    //     REQUIRE(world_cup->num_played_games_for_player(18).ans() == 18);
-    //     REQUIRE(world_cup->num_played_games_for_player(19).ans() == 19);
-    //     REQUIRE(world_cup->num_played_games_for_player(20).ans() == 20);
-    //     REQUIRE(world_cup->num_played_games_for_player(21).ans() == 21);
-
-    //     REQUIRE(world_cup->remove_team(5) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->num_played_games_for_player(1).ans() == 7);
-    //     REQUIRE(world_cup->num_played_games_for_player(2).ans() == 8);
-    //     REQUIRE(world_cup->num_played_games_for_player(3).ans() == 9);
-    //     REQUIRE(world_cup->num_played_games_for_player(4).ans() == 10);
-    //     REQUIRE(world_cup->num_played_games_for_player(5).ans() == 11);
-    //     REQUIRE(world_cup->num_played_games_for_player(6).ans() == 12);
-    //     REQUIRE(world_cup->num_played_games_for_player(7).ans() == 13);
-    //     REQUIRE(world_cup->num_played_games_for_player(8).ans() == 13);
-    //     REQUIRE(world_cup->num_played_games_for_player(9).ans() == 13);
-    //     REQUIRE(world_cup->num_played_games_for_player(10).ans() == 14);
-    //     REQUIRE(world_cup->num_played_games_for_player(11).ans() == 15);
-    //     REQUIRE(world_cup->num_played_games_for_player(12).ans() == 16);
-    //     REQUIRE(world_cup->num_played_games_for_player(13).ans() == 13);
-    //     REQUIRE(world_cup->num_played_games_for_player(14).ans() == 14);
-    //     REQUIRE(world_cup->num_played_games_for_player(15).ans() == 15);
-    //     REQUIRE(world_cup->num_played_games_for_player(16).ans() == 16);
-    //     REQUIRE(world_cup->num_played_games_for_player(17).ans() == 17);
-    //     REQUIRE(world_cup->num_played_games_for_player(18).ans() == 18);
-    //     REQUIRE(world_cup->num_played_games_for_player(19).ans() == 19);
-    //     REQUIRE(world_cup->num_played_games_for_player(20).ans() == 20);
-    //     REQUIRE(world_cup->num_played_games_for_player(21).ans() == 21);
-
-    //     delete world_cup;
-    // }
-
-    // SECTION("get_player_cards & add_player_cards")
-    // {
-    //     world_cup_t *world_cup = new world_cup_t();
-
-    //     REQUIRE(world_cup->add_player_cards(-2, 0) == StatusType::INVALID_INPUT);
-    //     REQUIRE(world_cup->add_player_cards(-3, 3) == StatusType::INVALID_INPUT);
-    //     REQUIRE(world_cup->add_player_cards(1, -1) == StatusType::INVALID_INPUT);
-    //     REQUIRE(world_cup->add_player_cards(1, 2) == StatusType::FAILURE);
-
-    //     int p1[5] = {4, 2, 3, 1, 0}, p2[5] = {0, 4, 2, 1, 3}, p3[5] = {4, 2, 3, 1, 0};
-    //     int p4[5] = {2, 4, 3, 1, 0}, p5[5] = {0, 2, 1, 4, 3}, p6[5] = {1, 2, 3, 4, 0}, p7[5] = {1, 3, 2, 4, 0};
-    //     int p8[5] = {1, 4, 0, 2, 3}, p9[5] = {1, 0, 4, 2, 3}, p10[5] = {3, 2, 4, 1, 0}, p11[5] = {3, 1, 2, 4, 0};
-    //     int p12[5] = {3, 0, 2, 1, 4}, p13[5] = {3, 0, 1, 4, 2}, p14[5] = {1, 2, 0, 3, 4};
-    //     permutation_t per1(p1), per2(p2), per3(p3), per4(p4), per5(p5), per6(p6), per7(p7), per8(p8), per9(p9), per10(p10), per11(p11), per12(p12), per13(p13), per14(p14);
-
-    //     REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->add_player(1, 1, per1, 0, 0, 1, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(2, 1, per2, 0, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(3, 1, per3, 0, 0, 0, true) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->get_player_cards(1).ans() == 1);
-    //     REQUIRE(world_cup->get_player_cards(2).ans() == 0);
-    //     REQUIRE(world_cup->get_player_cards(3).ans() == 0);
-
-    //     REQUIRE(world_cup->add_player_cards(1, 2) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player_cards(2, 2) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player_cards(3, 2) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->get_player_cards(1).ans() == 3);
-    //     REQUIRE(world_cup->get_player_cards(2).ans() == 2);
-    //     REQUIRE(world_cup->get_player_cards(3).ans() == 2);
-
-    //     REQUIRE(world_cup->num_played_games_for_player(3).ans() == 0);
-    //     REQUIRE(world_cup->get_player_cards(3).ans() == 2);
-
-    //     REQUIRE(world_cup->add_team(2) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->add_player(4, 2, per4, 0, 0, 4, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(5, 2, per5, 0, 0, 5, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(6, 2, per6, 0, 0, 6, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(7, 2, per7, 0, 0, 7, true) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->get_player_cards(4).ans() == 4);
-    //     REQUIRE(world_cup->get_player_cards(5).ans() == 5);
-    //     REQUIRE(world_cup->get_player_cards(6).ans() == 6);
-    //     REQUIRE(world_cup->get_player_cards(7).ans() == 7);
-
-    //     REQUIRE(world_cup->add_player_cards(4, 1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player_cards(5, 1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player_cards(6, 1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player_cards(7, 1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->get_player_cards(4).ans() == 5);
-    //     REQUIRE(world_cup->get_player_cards(5).ans() == 6);
-    //     REQUIRE(world_cup->get_player_cards(6).ans() == 7);
-    //     REQUIRE(world_cup->get_player_cards(7).ans() == 8);
-
-    //     REQUIRE(world_cup->play_match(1, 2).status() == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->get_player_cards(1).ans() == 3);
-    //     REQUIRE(world_cup->get_player_cards(2).ans() == 2);
-    //     REQUIRE(world_cup->get_player_cards(3).ans() == 2);
-    //     REQUIRE(world_cup->get_player_cards(4).ans() == 5);
-    //     REQUIRE(world_cup->get_player_cards(5).ans() == 6);
-    //     REQUIRE(world_cup->get_player_cards(6).ans() == 7);
-    //     REQUIRE(world_cup->get_player_cards(7).ans() == 8);
-
-    //     REQUIRE(world_cup->buy_team(1, 2) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->get_player_cards(1).ans() == 3);
-    //     REQUIRE(world_cup->get_player_cards(2).ans() == 2);
-    //     REQUIRE(world_cup->get_player_cards(3).ans() == 2);
-    //     REQUIRE(world_cup->get_player_cards(4).ans() == 5);
-    //     REQUIRE(world_cup->get_player_cards(5).ans() == 6);
-    //     REQUIRE(world_cup->get_player_cards(6).ans() == 7);
-    //     REQUIRE(world_cup->get_player_cards(7).ans() == 8);
-
-    //     REQUIRE(world_cup->add_player_cards(1, 1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player_cards(2, 1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player_cards(3, 1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player_cards(4, 1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player_cards(5, 1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player_cards(6, 1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player_cards(7, 1) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->get_player_cards(1).ans() == 4);
-    //     REQUIRE(world_cup->get_player_cards(2).ans() == 3);
-    //     REQUIRE(world_cup->get_player_cards(3).ans() == 3);
-    //     REQUIRE(world_cup->get_player_cards(4).ans() == 6);
-    //     REQUIRE(world_cup->get_player_cards(5).ans() == 7);
-    //     REQUIRE(world_cup->get_player_cards(6).ans() == 8);
-    //     REQUIRE(world_cup->get_player_cards(7).ans() == 9);
-
-    //     REQUIRE(world_cup->add_player(8, 1, per8, 0, 0, 8, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->get_player_cards(8).ans() == 8);
-    //     REQUIRE(world_cup->add_player_cards(8, 1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->get_player_cards(8).ans() == 9);
-
-    //     REQUIRE(world_cup->add_team(3) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(9, 3, per9, 0, 0, 9, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(10, 3, per10, 0, 0, 10, true) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->get_player_cards(9).ans() == 9);
-    //     REQUIRE(world_cup->get_player_cards(10).ans() == 10);
-    //     REQUIRE(world_cup->add_player_cards(9, 1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player_cards(10, 1) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->get_player_cards(9).ans() == 10);
-    //     REQUIRE(world_cup->get_player_cards(10).ans() == 11);
-
-    //     REQUIRE(world_cup->buy_team(1, 3) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->get_player_cards(1).ans() == 4);
-    //     REQUIRE(world_cup->get_player_cards(2).ans() == 3);
-    //     REQUIRE(world_cup->get_player_cards(3).ans() == 3);
-    //     REQUIRE(world_cup->get_player_cards(4).ans() == 6);
-    //     REQUIRE(world_cup->get_player_cards(5).ans() == 7);
-    //     REQUIRE(world_cup->get_player_cards(6).ans() == 8);
-    //     REQUIRE(world_cup->get_player_cards(7).ans() == 9);
-    //     REQUIRE(world_cup->get_player_cards(8).ans() == 9);
-    //     REQUIRE(world_cup->get_player_cards(9).ans() == 10);
-    //     REQUIRE(world_cup->get_player_cards(10).ans() == 11);
-
-    //     REQUIRE(world_cup->add_player_cards(1, 1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player_cards(2, 1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player_cards(3, 1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player_cards(4, 1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player_cards(5, 1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player_cards(6, 1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player_cards(7, 1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player_cards(8, 1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player_cards(9, 1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player_cards(10, 1) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->get_player_cards(1).ans() == 5);
-    //     REQUIRE(world_cup->get_player_cards(2).ans() == 4);
-    //     REQUIRE(world_cup->get_player_cards(3).ans() == 4);
-    //     REQUIRE(world_cup->get_player_cards(4).ans() == 7);
-    //     REQUIRE(world_cup->get_player_cards(5).ans() == 8);
-    //     REQUIRE(world_cup->get_player_cards(6).ans() == 9);
-    //     REQUIRE(world_cup->get_player_cards(7).ans() == 10);
-    //     REQUIRE(world_cup->get_player_cards(8).ans() == 10);
-    //     REQUIRE(world_cup->get_player_cards(9).ans() == 11);
-    //     REQUIRE(world_cup->get_player_cards(10).ans() == 12);
-
-    //     delete world_cup;
-    // }
-
-    // SECTION("get_team_points")
-    // {
-    //     world_cup_t *world_cup = new world_cup_t();
-
-    //     REQUIRE(world_cup->add_player_cards(-2, 0) == StatusType::INVALID_INPUT);
-    //     REQUIRE(world_cup->add_player_cards(-3, 3) == StatusType::INVALID_INPUT);
-    //     REQUIRE(world_cup->add_player_cards(1, -1) == StatusType::INVALID_INPUT);
-    //     REQUIRE(world_cup->add_player_cards(1, 2) == StatusType::FAILURE);
-
-    //     int p1[5] = {4, 2, 3, 1, 0}, p2[5] = {0, 4, 2, 1, 3}, p3[5] = {4, 2, 3, 1, 0};
-    //     int p4[5] = {2, 4, 3, 1, 0}, p5[5] = {0, 2, 1, 4, 3}, p6[5] = {1, 2, 3, 4, 0}, p7[5] = {1, 3, 2, 4, 0};
-    //     int p8[5] = {1, 4, 0, 2, 3}, p9[5] = {1, 0, 4, 2, 3}, p10[5] = {3, 2, 4, 1, 0}, p11[5] = {3, 1, 2, 4, 0};
-    //     int p12[5] = {3, 0, 2, 1, 4}, p13[5] = {3, 0, 1, 4, 2}, p14[5] = {1, 2, 0, 3, 4};
-    //     permutation_t per1(p1), per2(p2), per3(p3), per4(p4), per5(p5), per6(p6), per7(p7), per8(p8), per9(p9), per10(p10), per11(p11), per12(p12), per13(p13), per14(p14);
-
-    //     REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->add_player(1, 1, per1, 0, 0, 1, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(2, 1, per2, 0, 1, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(3, 1, per3, 1, 0, 0, true) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->get_team_points(1).ans() == 0);
-
-    //     REQUIRE(world_cup->add_team(2) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->add_player(4, 2, per4, 0, 0, 4, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(5, 2, per5, 0, 2, 5, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(6, 2, per6, 1, -4, 6, true) == StatusType::SUCCESS);
-
-    //     // team 1 wins
-    //     REQUIRE(world_cup->play_match(1, 2).status() == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->get_team_points(1).ans() == 3);
-    //     REQUIRE(world_cup->get_team_points(2).ans() == 0);
-
-    //     REQUIRE(world_cup->add_player(7, 2, per7, 0, 10, 7, true) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->get_team_points(1).ans() == 3);
-    //     REQUIRE(world_cup->get_team_points(2).ans() == 0);
-
-    //     // team 2 wins
-    //     REQUIRE(world_cup->play_match(1, 2).status() == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->get_team_points(1).ans() == 3);
-    //     REQUIRE(world_cup->get_team_points(2).ans() == 3);
-
-    //     REQUIRE(world_cup->play_match(1, 2).status() == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->play_match(1, 2).status() == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->play_match(1, 2).status() == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->get_team_points(1).ans() == 3);
-    //     REQUIRE(world_cup->get_team_points(2).ans() == 12);
-
-    //     REQUIRE(world_cup->buy_team(2, 1) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->get_team_points(1).status() == StatusType::FAILURE);
-    //     REQUIRE(world_cup->get_team_points(2).ans() == 15);
-
-    //     REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(9, 1, per9, 0, 0, 9, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(10, 1, per10, 0, -3, 10, true) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->get_team_points(1).ans() == 0);
-
-    //     REQUIRE(world_cup->buy_team(2, 1) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->get_team_points(2).ans() == 15);
-    //     REQUIRE(world_cup->get_team_points(1).status() == StatusType::FAILURE);
-
-    //     REQUIRE(world_cup->add_team(3) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(11, 3, per11, 0, 100, 9, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(12, 3, per12, 0, 100, 10, true) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->get_team_points(3).ans() == 0);
-
-    //     // team 3 wins
-    //     REQUIRE(world_cup->play_match(2, 3).status() == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->get_team_points(2).ans() == 15);
-    //     REQUIRE(world_cup->get_team_points(3).ans() == 3);
-
-    //     REQUIRE(world_cup->buy_team(3, 2) == StatusType::SUCCESS);
-
-    //     REQUIRE(world_cup->get_team_points(2).status() == StatusType::FAILURE);
-    //     REQUIRE(world_cup->get_team_points(3).ans() == 18);
-
-    //     delete world_cup;
-    // }
+    SECTION("Test memory")
+    {
+        world_cup_t *world_cup = new world_cup_t();
+        REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
+        int p1[5] = {4, 2, 3, 1, 0};
+        permutation_t demi_per(p1);
+
+        for (int i = 1; i <= 100; i++)
+        {
+            REQUIRE(world_cup->add_player(i, 1, demi_per, 0, 0, 0, true) == StatusType::SUCCESS);
+        }
+
+        delete world_cup;
+    }
+
+    SECTION("add_team")
+    {
+        world_cup_t *world_cup = new world_cup_t();
+
+        REQUIRE(world_cup->add_team(0) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->add_team(-3) == StatusType::INVALID_INPUT);
+
+        REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_team(1) == StatusType::FAILURE);
+        REQUIRE(world_cup->get_team_points(1).ans() == 0);
+
+        REQUIRE(world_cup->add_team(2) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_team_points(2).ans() == 0);
+
+        REQUIRE(world_cup->add_team(3) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_team_points(3).ans() == 0);
+        REQUIRE(world_cup->add_team(4) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_team_points(4).ans() == 0);
+        delete world_cup;
+    }
+
+    SECTION("remove_team")
+    {
+        world_cup_t *world_cup = new world_cup_t();
+
+        REQUIRE(world_cup->remove_team(0) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->remove_team(-3) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->remove_team(1) == StatusType::FAILURE);
+
+        REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_team_points(1).ans() == 0);
+
+        REQUIRE(world_cup->remove_team(1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_team_points(1).status() == StatusType::FAILURE);
+
+        REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_team_points(1).ans() == 0);
+
+        int p1[5] = {4, 2, 3, 1, 0};
+        permutation_t per1(p1);
+        REQUIRE(world_cup->add_player(1, 1, per1, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->remove_team(1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player_cards(1, 3) == StatusType::FAILURE);
+
+        REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_team_points(1).ans() == 0);
+        REQUIRE(world_cup->add_player_cards(1, 3) == StatusType::FAILURE);
+        REQUIRE(world_cup->add_player(1, 1, per1, 0, 0, 0, true) == StatusType::FAILURE);
+
+        int p4[5] = {4, 2, 3, 1, 0}, p2[5] = {0, 4, 2, 1, 3}, p3[5] = {4, 2, 3, 1, 0};
+        permutation_t per4(p4), per2(p2), per3(p3);
+        REQUIRE(world_cup->add_player(2, 1, per2, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(3, 1, per3, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(4, 1, per4, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(isSame(world_cup->get_partial_spirit(2).ans(), per2));
+        REQUIRE(isSame(world_cup->get_partial_spirit(3).ans(), per2 * per3));
+        REQUIRE(isSame(world_cup->get_partial_spirit(4).ans(), per2 * per3 * per4));
+
+        REQUIRE(world_cup->remove_team(1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player_cards(2, 3) == StatusType::FAILURE);
+        REQUIRE(world_cup->add_player_cards(3, 3) == StatusType::FAILURE);
+        REQUIRE(world_cup->add_player_cards(4, 3) == StatusType::FAILURE);
+
+        delete world_cup;
+    }
+
+    SECTION("add_player")
+    {
+        world_cup_t *world_cup = new world_cup_t();
+
+        int p1[5] = {4, 2, 3, 1, 0}, p2[5] = {0, 4, 2, 1, 3}, p3[5] = {4, 2, 3, 1, 0}, invalid_per[5]{1, 12, 4, 1, -100};
+        permutation_t per1(p1), per2(p2), per3(p3);
+        REQUIRE(world_cup->add_player(0, 1, per1, 4, 8, 2, true) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->add_player(-2, 1, per1, 0, 0, 0, true) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->add_player(1, -3, per1, 0, 0, 0, true) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->add_player(1, 0, per1, 0, 0, 0, true) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->add_player(1, 0, invalid_per, 0, 0, 0, true) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->add_player(1, 0, per1, -3, 0, 0, true) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->add_player(1, 0, per1, 0, 0, -2, true) == StatusType::INVALID_INPUT);
+
+        REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_team_points(1).ans() == 0);
+        REQUIRE(world_cup->add_player(1, 1, per1, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_player_cards(1).ans() == 0);
+        REQUIRE(world_cup->add_player(2, 1, per2, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_player_cards(2).ans() == 0);
+
+        REQUIRE(world_cup->get_partial_spirit(1).status() == StatusType::SUCCESS);
+        REQUIRE(isSame(world_cup->get_partial_spirit(1).ans(), per1));
+        REQUIRE(isSame(world_cup->get_partial_spirit(2).ans(), per1 * per2));
+
+        REQUIRE(world_cup->add_player(3, 1, per3, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(isSame(world_cup->get_partial_spirit(3).ans(), per1 * per2 * per3));
+
+        REQUIRE(world_cup->add_player(4, 1, per1, 3, -2, 1, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_player_cards(4).ans() == 1);
+        REQUIRE(world_cup->get_player_cards(3).ans() == 0);
+        REQUIRE(world_cup->num_played_games_for_player(1).ans() == 0);
+        REQUIRE(world_cup->num_played_games_for_player(2).ans() == 0);
+        REQUIRE(world_cup->num_played_games_for_player(3).ans() == 0);
+        REQUIRE(world_cup->num_played_games_for_player(4).ans() == 3);
+
+        REQUIRE(world_cup->add_team(2) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(1, 2, per1, 0, 0, 0, true) == StatusType::FAILURE);
+        REQUIRE(world_cup->add_player(5, 2, per3, 7, 2, 1, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(6, 2, per3, 5, 2, 5, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(7, 2, per3, 3, 0, 3, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(8, 2, per3, 6, -10, 4, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->num_played_games_for_player(5).ans() == 7);
+        REQUIRE(world_cup->num_played_games_for_player(6).ans() == 5);
+        REQUIRE(world_cup->num_played_games_for_player(7).ans() == 3);
+        REQUIRE(world_cup->num_played_games_for_player(8).ans() == 6);
+        REQUIRE(world_cup->get_player_cards(5).ans() == 1);
+        REQUIRE(world_cup->get_player_cards(6).ans() == 5);
+        REQUIRE(world_cup->get_player_cards(7).ans() == 3);
+        REQUIRE(world_cup->get_player_cards(8).ans() == 4);
+
+        delete world_cup;
+    }
+
+    SECTION("play_match")
+    {
+        world_cup_t *world_cup = new world_cup_t();
+
+        REQUIRE(world_cup->play_match(2, 0).status() == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->play_match(-3, 3).status() == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->play_match(1, 1).status() == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->play_match(1, 2).status() == StatusType::FAILURE);
+
+        int p1[5] = {4, 2, 3, 1, 0}, p2[5] = {0, 4, 2, 1, 3}, p3[5] = {4, 2, 3, 1, 0}, p4[5] = {2, 4, 3, 1, 0};
+        permutation_t per1(p1), per2(p2), per3(p3), per4(p4);
+
+        REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->add_player(1, 1, per1, 2, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(2, 1, per2, 3, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(3, 1, per3, 0, 0, 0, true) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->num_played_games_for_player(1).ans() == 2);
+        REQUIRE(world_cup->num_played_games_for_player(2).ans() == 3);
+        REQUIRE(world_cup->num_played_games_for_player(3).ans() == 0);
+
+        REQUIRE(world_cup->add_team(2) == StatusType::SUCCESS);
+        REQUIRE(world_cup->play_match(1, 2).status() == StatusType::FAILURE);
+
+        REQUIRE(world_cup->add_player(4, 2, per4, 2, 4, 0, true) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->num_played_games_for_player(4).ans() == 2);
+
+        // team1 has 0 abiliy team 2 has 4 ability
+        output_t<int> match = world_cup->play_match(1, 2);
+        REQUIRE(match.status() == StatusType::SUCCESS);
+        REQUIRE(match.ans() == 3);
+        REQUIRE(world_cup->num_played_games_for_player(1).ans() == 3);
+        REQUIRE(world_cup->num_played_games_for_player(2).ans() == 4);
+        REQUIRE(world_cup->num_played_games_for_player(3).ans() == 1);
+        REQUIRE(world_cup->num_played_games_for_player(4).ans() == 3);
+        REQUIRE(world_cup->get_team_points(1).ans() == 0);
+        REQUIRE(world_cup->get_team_points(2).ans() == 3);
+
+        REQUIRE(world_cup->add_player(5, 2, per4, 0, -7, 0, true) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->num_played_games_for_player(5).ans() == 0);
+
+        // both team has same score
+        output_t<int> match2 = world_cup->play_match(1, 2);
+        REQUIRE(match2.status() == StatusType::SUCCESS);
+        REQUIRE(match2.ans() == 2);
+        REQUIRE(world_cup->num_played_games_for_player(1).ans() == 4);
+        REQUIRE(world_cup->num_played_games_for_player(2).ans() == 5);
+        REQUIRE(world_cup->num_played_games_for_player(3).ans() == 2);
+        REQUIRE(world_cup->num_played_games_for_player(4).ans() == 4);
+        REQUIRE(world_cup->num_played_games_for_player(5).ans() == 1);
+        REQUIRE(world_cup->get_team_points(1).ans() == 3);
+        REQUIRE(world_cup->get_team_points(2).ans() == 3);
+
+        REQUIRE(world_cup->add_player(6, 2, per2, 6, 3, 0, true) == StatusType::SUCCESS);
+        // both team has same score
+        REQUIRE(world_cup->add_player(7, 2, per2, 7, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(8, 2, per2, 8, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(9, 2, per2, 9, -1, 0, true) == StatusType::SUCCESS);
+
+        // team 1 has +1 score than team 2
+        output_t<int> match3 = world_cup->play_match(1, 2);
+        REQUIRE(match3.status() == StatusType::SUCCESS);
+        REQUIRE(match3.ans() == 1);
+        REQUIRE(world_cup->num_played_games_for_player(1).ans() == 5);
+        REQUIRE(world_cup->num_played_games_for_player(2).ans() == 6);
+        REQUIRE(world_cup->num_played_games_for_player(3).ans() == 3);
+        REQUIRE(world_cup->num_played_games_for_player(4).ans() == 5);
+        REQUIRE(world_cup->num_played_games_for_player(5).ans() == 2);
+        REQUIRE(world_cup->num_played_games_for_player(6).ans() == 7);
+        REQUIRE(world_cup->num_played_games_for_player(7).ans() == 8);
+        REQUIRE(world_cup->num_played_games_for_player(8).ans() == 9);
+        REQUIRE(world_cup->num_played_games_for_player(9).ans() == 10);
+
+        REQUIRE(world_cup->get_team_points(1).ans() == 6);
+        REQUIRE(world_cup->get_team_points(2).ans() == 3);
+
+        delete world_cup;
+    }
+
+    SECTION("num_played_games_for_player")
+    {
+        world_cup_t *world_cup = new world_cup_t();
+
+        REQUIRE(world_cup->num_played_games_for_player(-3).status() == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->num_played_games_for_player(0).status() == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->num_played_games_for_player(-102).status() == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->num_played_games_for_player(1).status() == StatusType::FAILURE);
+        REQUIRE(world_cup->num_played_games_for_player(17).status() == StatusType::FAILURE);
+
+        int p1[5] = {4, 2, 3, 1, 0}, p2[5] = {0, 4, 2, 1, 3}, p3[5] = {4, 2, 3, 1, 0};
+        int p4[5] = {2, 4, 3, 1, 0}, p5[5] = {0, 2, 1, 4, 3}, p6[5] = {1, 2, 3, 4, 0}, p7[5] = {1, 3, 2, 4, 0};
+        int p8[5] = {1, 4, 0, 2, 3}, p9[5] = {1, 0, 4, 2, 3}, p10[5] = {3, 2, 4, 1, 0}, p11[5] = {3, 1, 2, 4, 0};
+        int p12[5] = {3, 0, 2, 1, 4}, p13[5] = {3, 0, 1, 4, 2}, p14[5] = {1, 2, 0, 3, 4};
+        permutation_t per1(p1), per2(p2), per3(p3), per4(p4), per5(p5), per6(p6), per7(p7), per8(p8), per9(p9), per10(p10), per11(p11), per12(p12), per13(p13), per14(p14);
+
+        REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->add_player(1, 1, per1, 1, 1, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(2, 1, per2, 2, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(3, 1, per3, 3, 0, 0, true) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->num_played_games_for_player(1).ans() == 1);
+        REQUIRE(world_cup->num_played_games_for_player(2).ans() == 2);
+        REQUIRE(world_cup->num_played_games_for_player(3).ans() == 3);
+
+        REQUIRE(world_cup->add_team(2) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->add_player(4, 2, per4, 4, 2, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(5, 2, per5, 5, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(6, 2, per6, 6, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(7, 2, per7, 7, 0, 0, true) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->num_played_games_for_player(4).ans() == 4);
+        REQUIRE(world_cup->num_played_games_for_player(5).ans() == 5);
+        REQUIRE(world_cup->num_played_games_for_player(6).ans() == 6);
+        REQUIRE(world_cup->num_played_games_for_player(7).ans() == 7);
+
+        // match 1
+
+        REQUIRE(world_cup->play_match(1, 2).status() == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->num_played_games_for_player(1).ans() == 2);
+        REQUIRE(world_cup->num_played_games_for_player(2).ans() == 3);
+        REQUIRE(world_cup->num_played_games_for_player(3).ans() == 4);
+        REQUIRE(world_cup->num_played_games_for_player(4).ans() == 5);
+        REQUIRE(world_cup->num_played_games_for_player(5).ans() == 6);
+        REQUIRE(world_cup->num_played_games_for_player(6).ans() == 7);
+        REQUIRE(world_cup->num_played_games_for_player(7).ans() == 8);
+
+        REQUIRE(world_cup->add_player(8, 1, per8, 8, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->num_played_games_for_player(1).ans() == 2);
+        REQUIRE(world_cup->num_played_games_for_player(2).ans() == 3);
+        REQUIRE(world_cup->num_played_games_for_player(3).ans() == 4);
+        REQUIRE(world_cup->num_played_games_for_player(4).ans() == 5);
+        REQUIRE(world_cup->num_played_games_for_player(5).ans() == 6);
+        REQUIRE(world_cup->num_played_games_for_player(6).ans() == 7);
+        REQUIRE(world_cup->num_played_games_for_player(7).ans() == 8);
+        REQUIRE(world_cup->num_played_games_for_player(8).ans() == 8);
+
+        REQUIRE(world_cup->play_match(1, 2).status() == StatusType::SUCCESS);
+        REQUIRE(world_cup->num_played_games_for_player(1).ans() == 3);
+        REQUIRE(world_cup->num_played_games_for_player(2).ans() == 4);
+        REQUIRE(world_cup->num_played_games_for_player(3).ans() == 5);
+        REQUIRE(world_cup->num_played_games_for_player(4).ans() == 6);
+        REQUIRE(world_cup->num_played_games_for_player(5).ans() == 7);
+        REQUIRE(world_cup->num_played_games_for_player(6).ans() == 8);
+        REQUIRE(world_cup->num_played_games_for_player(7).ans() == 9);
+        REQUIRE(world_cup->num_played_games_for_player(8).ans() == 9);
+
+        // team 2 buys team 1
+        REQUIRE(world_cup->buy_team(2, 1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->num_played_games_for_player(1).ans() == 3);
+        REQUIRE(world_cup->num_played_games_for_player(2).ans() == 4);
+        REQUIRE(world_cup->num_played_games_for_player(3).ans() == 5);
+        REQUIRE(world_cup->num_played_games_for_player(4).ans() == 6);
+        REQUIRE(world_cup->num_played_games_for_player(5).ans() == 7);
+        REQUIRE(world_cup->num_played_games_for_player(6).ans() == 8);
+        REQUIRE(world_cup->num_played_games_for_player(7).ans() == 9);
+        REQUIRE(world_cup->num_played_games_for_player(8).ans() == 9);
+
+        REQUIRE(world_cup->add_player(9, 2, per9, 9, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->num_played_games_for_player(9).ans() == 9);
+
+        REQUIRE(world_cup->add_team(3) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->add_player(10, 3, per10, 10, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(11, 3, per11, 11, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(12, 3, per12, 12, 0, 0, true) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->num_played_games_for_player(10).ans() == 10);
+        REQUIRE(world_cup->num_played_games_for_player(11).ans() == 11);
+        REQUIRE(world_cup->num_played_games_for_player(12).ans() == 12);
+
+        // third match for team 1 players, second match for team 2 players, first match for team 3
+        REQUIRE(world_cup->play_match(3, 2).status() == StatusType::SUCCESS);
+        REQUIRE(world_cup->num_played_games_for_player(1).ans() == 4);
+        REQUIRE(world_cup->num_played_games_for_player(2).ans() == 5);
+        REQUIRE(world_cup->num_played_games_for_player(3).ans() == 6);
+        REQUIRE(world_cup->num_played_games_for_player(4).ans() == 7);
+        REQUIRE(world_cup->num_played_games_for_player(5).ans() == 8);
+        REQUIRE(world_cup->num_played_games_for_player(6).ans() == 9);
+        REQUIRE(world_cup->num_played_games_for_player(7).ans() == 10);
+        REQUIRE(world_cup->num_played_games_for_player(8).ans() == 10);
+        REQUIRE(world_cup->num_played_games_for_player(9).ans() == 10);
+        REQUIRE(world_cup->num_played_games_for_player(10).ans() == 11);
+        REQUIRE(world_cup->num_played_games_for_player(11).ans() == 12);
+        REQUIRE(world_cup->num_played_games_for_player(12).ans() == 13);
+
+        REQUIRE(world_cup->play_match(3, 2).status() == StatusType::SUCCESS);
+        REQUIRE(world_cup->play_match(3, 2).status() == StatusType::SUCCESS);
+        REQUIRE(world_cup->play_match(3, 2).status() == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->num_played_games_for_player(1).ans() == 7);
+        REQUIRE(world_cup->num_played_games_for_player(2).ans() == 8);
+        REQUIRE(world_cup->num_played_games_for_player(3).ans() == 9);
+        REQUIRE(world_cup->num_played_games_for_player(4).ans() == 10);
+        REQUIRE(world_cup->num_played_games_for_player(5).ans() == 11);
+        REQUIRE(world_cup->num_played_games_for_player(6).ans() == 12);
+        REQUIRE(world_cup->num_played_games_for_player(7).ans() == 13);
+        REQUIRE(world_cup->num_played_games_for_player(8).ans() == 13);
+        REQUIRE(world_cup->num_played_games_for_player(9).ans() == 13);
+        REQUIRE(world_cup->num_played_games_for_player(10).ans() == 14);
+        REQUIRE(world_cup->num_played_games_for_player(11).ans() == 15);
+        REQUIRE(world_cup->num_played_games_for_player(12).ans() == 16);
+
+        REQUIRE(world_cup->add_player(19, 2, per1, 19, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->num_played_games_for_player(19).ans() == 19);
+
+        // demi players for team 3 to be bigger than team 2
+        REQUIRE(world_cup->add_player(13, 3, per13, 13, 3, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(14, 3, per14, 14, 1, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(15, 3, per13, 15, 6, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(16, 3, per13, 16, 5, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(17, 3, per13, 17, 2, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(18, 3, per13, 18, 8, 0, true) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->num_played_games_for_player(13).ans() == 13);
+        REQUIRE(world_cup->num_played_games_for_player(14).ans() == 14);
+        REQUIRE(world_cup->num_played_games_for_player(15).ans() == 15);
+        REQUIRE(world_cup->num_played_games_for_player(16).ans() == 16);
+        REQUIRE(world_cup->num_played_games_for_player(17).ans() == 17);
+        REQUIRE(world_cup->num_played_games_for_player(18).ans() == 18);
+
+        // team 2 is the bigger one
+        REQUIRE(world_cup->buy_team(3, 2) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(20, 3, per1, 20, 1, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->num_played_games_for_player(1).ans() == 7);
+        REQUIRE(world_cup->num_played_games_for_player(2).ans() == 8);
+        REQUIRE(world_cup->num_played_games_for_player(3).ans() == 9);
+        REQUIRE(world_cup->num_played_games_for_player(4).ans() == 10);
+        REQUIRE(world_cup->num_played_games_for_player(5).ans() == 11);
+        REQUIRE(world_cup->num_played_games_for_player(6).ans() == 12);
+        REQUIRE(world_cup->num_played_games_for_player(7).ans() == 13);
+        REQUIRE(world_cup->num_played_games_for_player(8).ans() == 13);
+        REQUIRE(world_cup->num_played_games_for_player(9).ans() == 13);
+        REQUIRE(world_cup->num_played_games_for_player(10).ans() == 14);
+        REQUIRE(world_cup->num_played_games_for_player(11).ans() == 15);
+        REQUIRE(world_cup->num_played_games_for_player(12).ans() == 16);
+        REQUIRE(world_cup->num_played_games_for_player(13).ans() == 13);
+        REQUIRE(world_cup->num_played_games_for_player(14).ans() == 14);
+        REQUIRE(world_cup->num_played_games_for_player(15).ans() == 15);
+        REQUIRE(world_cup->num_played_games_for_player(16).ans() == 16);
+        REQUIRE(world_cup->num_played_games_for_player(17).ans() == 17);
+        REQUIRE(world_cup->num_played_games_for_player(18).ans() == 18);
+        REQUIRE(world_cup->num_played_games_for_player(19).ans() == 19);
+
+        // buying empty team
+        REQUIRE(world_cup->add_team(4) == StatusType::SUCCESS);
+        REQUIRE(world_cup->buy_team(3, 4) == StatusType::SUCCESS);
+        // REQUIRE(world_cup->add_player(21, 3, per1, 20, 1, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->num_played_games_for_player(1).ans() == 7);
+        REQUIRE(world_cup->num_played_games_for_player(2).ans() == 8);
+        REQUIRE(world_cup->num_played_games_for_player(3).ans() == 9);
+        REQUIRE(world_cup->num_played_games_for_player(4).ans() == 10);
+        REQUIRE(world_cup->num_played_games_for_player(5).ans() == 11);
+        REQUIRE(world_cup->num_played_games_for_player(6).ans() == 12);
+        REQUIRE(world_cup->num_played_games_for_player(7).ans() == 13);
+        REQUIRE(world_cup->num_played_games_for_player(8).ans() == 13);
+        REQUIRE(world_cup->num_played_games_for_player(9).ans() == 13);
+        REQUIRE(world_cup->num_played_games_for_player(10).ans() == 14);
+        REQUIRE(world_cup->num_played_games_for_player(11).ans() == 15);
+        REQUIRE(world_cup->num_played_games_for_player(12).ans() == 16);
+        REQUIRE(world_cup->num_played_games_for_player(13).ans() == 13);
+        REQUIRE(world_cup->num_played_games_for_player(14).ans() == 14);
+        REQUIRE(world_cup->num_played_games_for_player(15).ans() == 15);
+        REQUIRE(world_cup->num_played_games_for_player(16).ans() == 16);
+        REQUIRE(world_cup->num_played_games_for_player(17).ans() == 17);
+        REQUIRE(world_cup->num_played_games_for_player(18).ans() == 18);
+        REQUIRE(world_cup->num_played_games_for_player(19).ans() == 19);
+        REQUIRE(world_cup->num_played_games_for_player(20).ans() == 20);
+
+        //  empty team buyting full team
+        REQUIRE(world_cup->add_team(5) == StatusType::SUCCESS);
+        REQUIRE(world_cup->buy_team(5, 3) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(21, 5, per1, 21, 21, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->num_played_games_for_player(1).ans() == 7);
+        REQUIRE(world_cup->num_played_games_for_player(2).ans() == 8);
+        REQUIRE(world_cup->num_played_games_for_player(3).ans() == 9);
+        REQUIRE(world_cup->num_played_games_for_player(4).ans() == 10);
+        REQUIRE(world_cup->num_played_games_for_player(5).ans() == 11);
+        REQUIRE(world_cup->num_played_games_for_player(6).ans() == 12);
+        REQUIRE(world_cup->num_played_games_for_player(7).ans() == 13);
+        REQUIRE(world_cup->num_played_games_for_player(8).ans() == 13);
+        REQUIRE(world_cup->num_played_games_for_player(9).ans() == 13);
+        REQUIRE(world_cup->num_played_games_for_player(10).ans() == 14);
+        REQUIRE(world_cup->num_played_games_for_player(11).ans() == 15);
+        REQUIRE(world_cup->num_played_games_for_player(12).ans() == 16);
+        REQUIRE(world_cup->num_played_games_for_player(13).ans() == 13);
+        REQUIRE(world_cup->num_played_games_for_player(14).ans() == 14);
+        REQUIRE(world_cup->num_played_games_for_player(15).ans() == 15);
+        REQUIRE(world_cup->num_played_games_for_player(16).ans() == 16);
+        REQUIRE(world_cup->num_played_games_for_player(17).ans() == 17);
+        REQUIRE(world_cup->num_played_games_for_player(18).ans() == 18);
+        REQUIRE(world_cup->num_played_games_for_player(19).ans() == 19);
+        REQUIRE(world_cup->num_played_games_for_player(20).ans() == 20);
+        REQUIRE(world_cup->num_played_games_for_player(21).ans() == 21);
+
+        REQUIRE(world_cup->remove_team(5) == StatusType::SUCCESS);
+        REQUIRE(world_cup->num_played_games_for_player(1).ans() == 7);
+        REQUIRE(world_cup->num_played_games_for_player(2).ans() == 8);
+        REQUIRE(world_cup->num_played_games_for_player(3).ans() == 9);
+        REQUIRE(world_cup->num_played_games_for_player(4).ans() == 10);
+        REQUIRE(world_cup->num_played_games_for_player(5).ans() == 11);
+        REQUIRE(world_cup->num_played_games_for_player(6).ans() == 12);
+        REQUIRE(world_cup->num_played_games_for_player(7).ans() == 13);
+        REQUIRE(world_cup->num_played_games_for_player(8).ans() == 13);
+        REQUIRE(world_cup->num_played_games_for_player(9).ans() == 13);
+        REQUIRE(world_cup->num_played_games_for_player(10).ans() == 14);
+        REQUIRE(world_cup->num_played_games_for_player(11).ans() == 15);
+        REQUIRE(world_cup->num_played_games_for_player(12).ans() == 16);
+        REQUIRE(world_cup->num_played_games_for_player(13).ans() == 13);
+        REQUIRE(world_cup->num_played_games_for_player(14).ans() == 14);
+        REQUIRE(world_cup->num_played_games_for_player(15).ans() == 15);
+        REQUIRE(world_cup->num_played_games_for_player(16).ans() == 16);
+        REQUIRE(world_cup->num_played_games_for_player(17).ans() == 17);
+        REQUIRE(world_cup->num_played_games_for_player(18).ans() == 18);
+        REQUIRE(world_cup->num_played_games_for_player(19).ans() == 19);
+        REQUIRE(world_cup->num_played_games_for_player(20).ans() == 20);
+        REQUIRE(world_cup->num_played_games_for_player(21).ans() == 21);
+
+        delete world_cup;
+    }
+
+    SECTION("get_player_cards & add_player_cards")
+    {
+        world_cup_t *world_cup = new world_cup_t();
+
+        REQUIRE(world_cup->add_player_cards(-2, 0) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->add_player_cards(-3, 3) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->add_player_cards(1, -1) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->add_player_cards(1, 2) == StatusType::FAILURE);
+
+        int p1[5] = {4, 2, 3, 1, 0}, p2[5] = {0, 4, 2, 1, 3}, p3[5] = {4, 2, 3, 1, 0};
+        int p4[5] = {2, 4, 3, 1, 0}, p5[5] = {0, 2, 1, 4, 3}, p6[5] = {1, 2, 3, 4, 0}, p7[5] = {1, 3, 2, 4, 0};
+        int p8[5] = {1, 4, 0, 2, 3}, p9[5] = {1, 0, 4, 2, 3}, p10[5] = {3, 2, 4, 1, 0}, p11[5] = {3, 1, 2, 4, 0};
+        int p12[5] = {3, 0, 2, 1, 4}, p13[5] = {3, 0, 1, 4, 2}, p14[5] = {1, 2, 0, 3, 4};
+        permutation_t per1(p1), per2(p2), per3(p3), per4(p4), per5(p5), per6(p6), per7(p7), per8(p8), per9(p9), per10(p10), per11(p11), per12(p12), per13(p13), per14(p14);
+
+        REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->add_player(1, 1, per1, 0, 0, 1, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(2, 1, per2, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(3, 1, per3, 0, 0, 0, true) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->get_player_cards(1).ans() == 1);
+        REQUIRE(world_cup->get_player_cards(2).ans() == 0);
+        REQUIRE(world_cup->get_player_cards(3).ans() == 0);
+
+        REQUIRE(world_cup->add_player_cards(1, 2) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player_cards(2, 2) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player_cards(3, 2) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_player_cards(1).ans() == 3);
+        REQUIRE(world_cup->get_player_cards(2).ans() == 2);
+        REQUIRE(world_cup->get_player_cards(3).ans() == 2);
+
+        REQUIRE(world_cup->num_played_games_for_player(3).ans() == 0);
+        REQUIRE(world_cup->get_player_cards(3).ans() == 2);
+
+        REQUIRE(world_cup->add_team(2) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->add_player(4, 2, per4, 0, 0, 4, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(5, 2, per5, 0, 0, 5, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(6, 2, per6, 0, 0, 6, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(7, 2, per7, 0, 0, 7, true) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->get_player_cards(4).ans() == 4);
+        REQUIRE(world_cup->get_player_cards(5).ans() == 5);
+        REQUIRE(world_cup->get_player_cards(6).ans() == 6);
+        REQUIRE(world_cup->get_player_cards(7).ans() == 7);
+
+        REQUIRE(world_cup->add_player_cards(4, 1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player_cards(5, 1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player_cards(6, 1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player_cards(7, 1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_player_cards(4).ans() == 5);
+        REQUIRE(world_cup->get_player_cards(5).ans() == 6);
+        REQUIRE(world_cup->get_player_cards(6).ans() == 7);
+        REQUIRE(world_cup->get_player_cards(7).ans() == 8);
+
+        REQUIRE(world_cup->play_match(1, 2).status() == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->get_player_cards(1).ans() == 3);
+        REQUIRE(world_cup->get_player_cards(2).ans() == 2);
+        REQUIRE(world_cup->get_player_cards(3).ans() == 2);
+        REQUIRE(world_cup->get_player_cards(4).ans() == 5);
+        REQUIRE(world_cup->get_player_cards(5).ans() == 6);
+        REQUIRE(world_cup->get_player_cards(6).ans() == 7);
+        REQUIRE(world_cup->get_player_cards(7).ans() == 8);
+
+        REQUIRE(world_cup->buy_team(1, 2) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->get_player_cards(1).ans() == 3);
+        REQUIRE(world_cup->get_player_cards(2).ans() == 2);
+        REQUIRE(world_cup->get_player_cards(3).ans() == 2);
+        REQUIRE(world_cup->get_player_cards(4).ans() == 5);
+        REQUIRE(world_cup->get_player_cards(5).ans() == 6);
+        REQUIRE(world_cup->get_player_cards(6).ans() == 7);
+        REQUIRE(world_cup->get_player_cards(7).ans() == 8);
+
+        REQUIRE(world_cup->add_player_cards(1, 1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player_cards(2, 1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player_cards(3, 1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player_cards(4, 1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player_cards(5, 1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player_cards(6, 1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player_cards(7, 1) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->get_player_cards(1).ans() == 4);
+        REQUIRE(world_cup->get_player_cards(2).ans() == 3);
+        REQUIRE(world_cup->get_player_cards(3).ans() == 3);
+        REQUIRE(world_cup->get_player_cards(4).ans() == 6);
+        REQUIRE(world_cup->get_player_cards(5).ans() == 7);
+        REQUIRE(world_cup->get_player_cards(6).ans() == 8);
+        REQUIRE(world_cup->get_player_cards(7).ans() == 9);
+
+        REQUIRE(world_cup->add_player(8, 1, per8, 0, 0, 8, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_player_cards(8).ans() == 8);
+        REQUIRE(world_cup->add_player_cards(8, 1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_player_cards(8).ans() == 9);
+
+        REQUIRE(world_cup->add_team(3) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(9, 3, per9, 0, 0, 9, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(10, 3, per10, 0, 0, 10, true) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->get_player_cards(9).ans() == 9);
+        REQUIRE(world_cup->get_player_cards(10).ans() == 10);
+        REQUIRE(world_cup->add_player_cards(9, 1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player_cards(10, 1) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->get_player_cards(9).ans() == 10);
+        REQUIRE(world_cup->get_player_cards(10).ans() == 11);
+
+        REQUIRE(world_cup->buy_team(1, 3) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->get_player_cards(1).ans() == 4);
+        REQUIRE(world_cup->get_player_cards(2).ans() == 3);
+        REQUIRE(world_cup->get_player_cards(3).ans() == 3);
+        REQUIRE(world_cup->get_player_cards(4).ans() == 6);
+        REQUIRE(world_cup->get_player_cards(5).ans() == 7);
+        REQUIRE(world_cup->get_player_cards(6).ans() == 8);
+        REQUIRE(world_cup->get_player_cards(7).ans() == 9);
+        REQUIRE(world_cup->get_player_cards(8).ans() == 9);
+        REQUIRE(world_cup->get_player_cards(9).ans() == 10);
+        REQUIRE(world_cup->get_player_cards(10).ans() == 11);
+
+        REQUIRE(world_cup->add_player_cards(1, 1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player_cards(2, 1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player_cards(3, 1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player_cards(4, 1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player_cards(5, 1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player_cards(6, 1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player_cards(7, 1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player_cards(8, 1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player_cards(9, 1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player_cards(10, 1) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->get_player_cards(1).ans() == 5);
+        REQUIRE(world_cup->get_player_cards(2).ans() == 4);
+        REQUIRE(world_cup->get_player_cards(3).ans() == 4);
+        REQUIRE(world_cup->get_player_cards(4).ans() == 7);
+        REQUIRE(world_cup->get_player_cards(5).ans() == 8);
+        REQUIRE(world_cup->get_player_cards(6).ans() == 9);
+        REQUIRE(world_cup->get_player_cards(7).ans() == 10);
+        REQUIRE(world_cup->get_player_cards(8).ans() == 10);
+        REQUIRE(world_cup->get_player_cards(9).ans() == 11);
+        REQUIRE(world_cup->get_player_cards(10).ans() == 12);
+
+        delete world_cup;
+    }
+
+    SECTION("get_team_points")
+    {
+        world_cup_t *world_cup = new world_cup_t();
+
+        REQUIRE(world_cup->add_player_cards(-2, 0) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->add_player_cards(-3, 3) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->add_player_cards(1, -1) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->add_player_cards(1, 2) == StatusType::FAILURE);
+
+        int p1[5] = {4, 2, 3, 1, 0}, p2[5] = {0, 4, 2, 1, 3}, p3[5] = {4, 2, 3, 1, 0};
+        int p4[5] = {2, 4, 3, 1, 0}, p5[5] = {0, 2, 1, 4, 3}, p6[5] = {1, 2, 3, 4, 0}, p7[5] = {1, 3, 2, 4, 0};
+        int p8[5] = {1, 4, 0, 2, 3}, p9[5] = {1, 0, 4, 2, 3}, p10[5] = {3, 2, 4, 1, 0}, p11[5] = {3, 1, 2, 4, 0};
+        int p12[5] = {3, 0, 2, 1, 4}, p13[5] = {3, 0, 1, 4, 2}, p14[5] = {1, 2, 0, 3, 4};
+        permutation_t per1(p1), per2(p2), per3(p3), per4(p4), per5(p5), per6(p6), per7(p7), per8(p8), per9(p9), per10(p10), per11(p11), per12(p12), per13(p13), per14(p14);
+
+        REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->add_player(1, 1, per1, 0, 0, 1, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(2, 1, per2, 0, 1, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(3, 1, per3, 1, 0, 0, true) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->get_team_points(1).ans() == 0);
+
+        REQUIRE(world_cup->add_team(2) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->add_player(4, 2, per4, 0, 0, 4, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(5, 2, per5, 0, 2, 5, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(6, 2, per6, 1, -4, 6, true) == StatusType::SUCCESS);
+
+        // team 1 wins
+        REQUIRE(world_cup->play_match(1, 2).status() == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->get_team_points(1).ans() == 3);
+        REQUIRE(world_cup->get_team_points(2).ans() == 0);
+
+        REQUIRE(world_cup->add_player(7, 2, per7, 0, 10, 7, true) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->get_team_points(1).ans() == 3);
+        REQUIRE(world_cup->get_team_points(2).ans() == 0);
+
+        // team 2 wins
+        REQUIRE(world_cup->play_match(1, 2).status() == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->get_team_points(1).ans() == 3);
+        REQUIRE(world_cup->get_team_points(2).ans() == 3);
+
+        REQUIRE(world_cup->play_match(1, 2).status() == StatusType::SUCCESS);
+        REQUIRE(world_cup->play_match(1, 2).status() == StatusType::SUCCESS);
+        REQUIRE(world_cup->play_match(1, 2).status() == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->get_team_points(1).ans() == 3);
+        REQUIRE(world_cup->get_team_points(2).ans() == 12);
+
+        REQUIRE(world_cup->buy_team(2, 1) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->get_team_points(1).status() == StatusType::FAILURE);
+        REQUIRE(world_cup->get_team_points(2).ans() == 15);
+
+        REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(9, 1, per9, 0, 0, 9, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(10, 1, per10, 0, -3, 10, true) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->get_team_points(1).ans() == 0);
+
+        REQUIRE(world_cup->buy_team(2, 1) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->get_team_points(2).ans() == 15);
+        REQUIRE(world_cup->get_team_points(1).status() == StatusType::FAILURE);
+
+        REQUIRE(world_cup->add_team(3) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(11, 3, per11, 0, 100, 9, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(12, 3, per12, 0, 100, 10, true) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->get_team_points(3).ans() == 0);
+
+        // team 3 wins
+        REQUIRE(world_cup->play_match(2, 3).status() == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_team_points(2).ans() == 15);
+        REQUIRE(world_cup->get_team_points(3).ans() == 3);
+
+        REQUIRE(world_cup->buy_team(3, 2) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->get_team_points(2).status() == StatusType::FAILURE);
+        REQUIRE(world_cup->get_team_points(3).ans() == 18);
+
+        delete world_cup;
+    }
 
     SECTION("get_ith_pointless_ability")
     {
@@ -697,279 +714,304 @@ TEST_CASE("world_cup")
         int demi_p[5] = {4, 2, 3, 1, 0};
         permutation_t demi_per(demi_p);
         REQUIRE(world_cup->get_ith_pointless_ability(3).status() == StatusType::FAILURE);
-        // REQUIRE(world_cup->get_ith_pointless_ability(-3).status() == StatusType::FAILURE);
-        // REQUIRE(world_cup->get_ith_pointless_ability(0).status() == StatusType::FAILURE);
+        REQUIRE(world_cup->get_ith_pointless_ability(-3).status() == StatusType::FAILURE);
+        REQUIRE(world_cup->get_ith_pointless_ability(0).status() == StatusType::FAILURE);
 
-        // REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
-        // REQUIRE(world_cup->get_ith_pointless_ability(1).status() == StatusType::FAILURE);
+        REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_ith_pointless_ability(1).status() == StatusType::FAILURE);
 
-        // REQUIRE(world_cup->get_ith_pointless_ability(0).status() == StatusType::SUCCESS);
-        // REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 1);
+        REQUIRE(world_cup->get_ith_pointless_ability(0).status() == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 1);
 
-        // REQUIRE(world_cup->add_player(1, 1, demi_per, 0, 1, 0, true) == StatusType::SUCCESS);
-        // REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 1);
+        REQUIRE(world_cup->add_player(1, 1, demi_per, 0, 1, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 1);
 
-        // REQUIRE(world_cup->add_player(2, 1, demi_per, 0, 1, 0, true) == StatusType::SUCCESS);
-        // REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 1);
+        REQUIRE(world_cup->add_player(2, 1, demi_per, 0, 1, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 1);
 
-        // REQUIRE(world_cup->add_player(3, 1, demi_per, 3, -1, 1, true) == StatusType::SUCCESS);
-        // REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 1);
+        REQUIRE(world_cup->add_player(3, 1, demi_per, 3, -1, 1, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 1);
 
-        // // team1 has 1 ability
-        // REQUIRE(world_cup->add_team(2) == StatusType::SUCCESS);
-        // REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 2);
-        // REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 1);
+        // team1 has 1 ability
+        REQUIRE(world_cup->add_team(2) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 2);
+        REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 1);
 
-        // REQUIRE(world_cup->add_player(1, 2, demi_per, 0, 7, 0, true) == StatusType::FAILURE);
-        // REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 1);
-        // REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 2);
+        REQUIRE(world_cup->add_player(1, 2, demi_per, 0, 0, 0, true) == StatusType::FAILURE);
 
-        // REQUIRE(world_cup->add_player(5, 2, demi_per, 0, -8, 0, true) == StatusType::SUCCESS);
-        // // team1 has 1 ability, team 2 has -1
-        // REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 2);
-        // REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 1);
+        REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 2);
+        REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 1);
 
-        // REQUIRE(world_cup->add_player(6, 2, demi_per, 0, 2, 0, true) == StatusType::SUCCESS);
-        // // a tie in ability
+        REQUIRE(world_cup->add_player(5, 2, demi_per, 0, -1, 0, true) == StatusType::SUCCESS);
+        // team1 has 1 ability, team 2 has -1
+        REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 2);
+        REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 1);
 
-        // REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 1);
-        // REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 2);
+        REQUIRE(world_cup->add_player(6, 2, demi_per, 0, 2, 0, true) == StatusType::SUCCESS);
+        // a tie in ability
 
-        // // both teams has 1
+        REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 1);
+        REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 2);
 
-        // REQUIRE(world_cup->add_team(3) == StatusType::SUCCESS);
+        // both teams has 1
 
-        // REQUIRE(world_cup->add_player(7, 3, demi_per, 0, 1, 0, true) == StatusType::SUCCESS);
-        // REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 1);
-        // REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 2);
-        // REQUIRE(world_cup->get_ith_pointless_ability(2).ans() == 3);
+        REQUIRE(world_cup->add_team(3) == StatusType::SUCCESS);
 
-        // REQUIRE(world_cup->add_player(8, 3, demi_per, 0, -10, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(7, 3, demi_per, 0, 1, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 1);
+        REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 2);
+        REQUIRE(world_cup->get_ith_pointless_ability(2).ans() == 3);
 
-        // REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 3);
-        // REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 1);
-        // REQUIRE(world_cup->get_ith_pointless_ability(2).ans() == 2);
+        REQUIRE(world_cup->add_player(8, 3, demi_per, 0, -10, 0, true) == StatusType::SUCCESS);
 
-        // REQUIRE(world_cup->add_player(9, 1, demi_per, 0, 2, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 3);
+        REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 1);
+        REQUIRE(world_cup->get_ith_pointless_ability(2).ans() == 2);
 
-        // REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 3);
-        // REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 2);
-        // REQUIRE(world_cup->get_ith_pointless_ability(2).ans() == 1);
+        REQUIRE(world_cup->add_player(9, 1, demi_per, 0, 2, 0, true) == StatusType::SUCCESS);
 
-        // // team1 has 3, team2 has 1, team3 has -9
-        // REQUIRE(world_cup->add_team(4) == StatusType::SUCCESS);
-        // REQUIRE(world_cup->add_player(9, 4, demi_per, 0, 2, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 3);
+        REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 2);
+        REQUIRE(world_cup->get_ith_pointless_ability(2).ans() == 1);
 
-        // REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 3);
-        // REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 2);
-        // REQUIRE(world_cup->get_ith_pointless_ability(2).ans() == 4);
-        // REQUIRE(world_cup->get_ith_pointless_ability(3).ans() == 1);
+        // team1 has 3, team2 has 1, team3 has -9
+        REQUIRE(world_cup->add_team(4) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(10, 4, demi_per, 0, 2, 0, true) == StatusType::SUCCESS);
 
-        // REQUIRE(world_cup->add_player(9, 4, demi_per, 0, 1, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 3);
+        REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 2);
+        REQUIRE(world_cup->get_ith_pointless_ability(2).ans() == 4);
+        REQUIRE(world_cup->get_ith_pointless_ability(3).ans() == 1);
 
-        // REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 3);
-        // REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 2);
-        // REQUIRE(world_cup->get_ith_pointless_ability(2).ans() == 1);
-        // REQUIRE(world_cup->get_ith_pointless_ability(3).ans() == 4);
+        REQUIRE(world_cup->add_player(11, 4, demi_per, 0, 1, 0, true) == StatusType::SUCCESS);
 
-        // REQUIRE(world_cup->remove_team(1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 3);
+        REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 2);
+        REQUIRE(world_cup->get_ith_pointless_ability(2).ans() == 1);
+        REQUIRE(world_cup->get_ith_pointless_ability(3).ans() == 4);
 
-        // REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 3);
-        // REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 2);
-        // REQUIRE(world_cup->get_ith_pointless_ability(2).ans() == 4);
+        REQUIRE(world_cup->remove_team(1) == StatusType::SUCCESS);
 
-        // // team 2 has 1 ,team3 has -9, team4 has 3
+        REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 3);
+        REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 2);
+        REQUIRE(world_cup->get_ith_pointless_ability(2).ans() == 4);
 
-        // REQUIRE(world_cup->buy_team(4, 3) == StatusType::SUCCESS);
+        // team 2 has 1 ,team3 has -9, team4 has 3
 
-        // REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 4);
-        // REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 2);
+        REQUIRE(world_cup->buy_team(4, 3) == StatusType::SUCCESS);
 
-        // REQUIRE(world_cup->add_player(10, 2, demi_per, 0, 3, 0, true) == StatusType::SUCCESS);
-        // REQUIRE(world_cup->add_player(11, 4, demi_per, 0, 8, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 4);
+        REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 2);
 
-        // REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 4);
-        // REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 2);
+        REQUIRE(world_cup->add_player(12, 2, demi_per, 0, 3, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(13, 4, demi_per, 0, 8, 0, true) == StatusType::SUCCESS);
 
-        // // team2 - 4, team4 -2
+        REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 4);
+        REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 2);
 
-        // REQUIRE(world_cup->add_player(11, 4, demi_per, 0, 2, 0, true) == StatusType::SUCCESS);
-        // REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 2);
-        // REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 4);
+        // team2 - 4, team4 -2
+
+        REQUIRE(world_cup->add_player(14, 4, demi_per, 0, 2, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 2);
+        REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 4);
+
+        // team2 - 4, team4 -4
+
+        for (int i = 6; i < 10; i++)
+        {
+            REQUIRE(world_cup->add_team(i) == StatusType::SUCCESS);
+            REQUIRE(world_cup->add_player(11 + i, i, demi_per, 0, i, 0, true) == StatusType::SUCCESS);
+        }
+
+        REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 2);
+        REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 4);
+        REQUIRE(world_cup->get_ith_pointless_ability(2).ans() == 6);
+        REQUIRE(world_cup->get_ith_pointless_ability(3).ans() == 7);
+        REQUIRE(world_cup->get_ith_pointless_ability(4).ans() == 8);
+        REQUIRE(world_cup->get_ith_pointless_ability(5).ans() == 9);
+
+        REQUIRE(world_cup->remove_team(8) == StatusType::SUCCESS);
+        REQUIRE(world_cup->get_ith_pointless_ability(0).ans() == 2);
+        REQUIRE(world_cup->get_ith_pointless_ability(1).ans() == 4);
+        REQUIRE(world_cup->get_ith_pointless_ability(2).ans() == 6);
+        REQUIRE(world_cup->get_ith_pointless_ability(3).ans() == 7);
+        REQUIRE(world_cup->get_ith_pointless_ability(4).ans() == 9);
 
         delete world_cup;
     }
 
-    // SECTION("get_partial_spirit")
-    // {
-    //     world_cup_t *world_cup = new world_cup_t();
+    SECTION("get_partial_spirit")
+    {
+        world_cup_t *world_cup = new world_cup_t();
 
-    //     REQUIRE(world_cup->get_partial_spirit(-2).status() == StatusType::INVALID_INPUT);
-    //     REQUIRE(world_cup->get_partial_spirit(-3).status() == StatusType::INVALID_INPUT);
-    //     REQUIRE(world_cup->get_partial_spirit(1).status() == StatusType::FAILURE);
+        REQUIRE(world_cup->get_partial_spirit(-2).status() == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->get_partial_spirit(-3).status() == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->get_partial_spirit(1).status() == StatusType::FAILURE);
 
-    //     int p1[5] = {4, 2, 3, 1, 0}, p2[5] = {0, 4, 2, 1, 3}, p3[5] = {4, 2, 3, 1, 0};
-    //     int p4[5] = {2, 4, 3, 1, 0}, p5[5] = {0, 2, 1, 4, 3}, p6[5] = {1, 2, 3, 4, 0}, p7[5] = {1, 3, 2, 4, 0};
-    //     int p8[5] = {1, 4, 0, 2, 3}, p9[5] = {1, 0, 4, 2, 3}, p10[5] = {3, 2, 4, 1, 0}, p11[5] = {3, 1, 2, 4, 0};
-    //     int p12[5] = {3, 0, 2, 1, 4}, p13[5] = {3, 0, 1, 4, 2}, p14[5] = {1, 2, 0, 3, 4};
-    //     int p15[5] = {2, 0, 3, 1, 4}, p16[5] = {2, 0, 1, 4, 3}, p17[5] = {2, 1, 0, 3, 4};
-    //     permutation_t per1(p1), per2(p2), per3(p3), per4(p4), per5(p5), per6(p6), per7(p7), per8(p8), per9(p9), per10(p10), per11(p11), per12(p12), per13(p13), per14(p14), per15(p15), per16(p16), per17(p17);
+        int p1[5] = {4, 2, 3, 1, 0}, p2[5] = {0, 4, 2, 1, 3}, p3[5] = {4, 2, 3, 1, 0};
+        int p4[5] = {2, 4, 3, 1, 0}, p5[5] = {0, 2, 1, 4, 3}, p6[5] = {1, 2, 3, 4, 0}, p7[5] = {1, 3, 2, 4, 0};
+        int p8[5] = {1, 4, 0, 2, 3}, p9[5] = {1, 0, 4, 2, 3}, p10[5] = {3, 2, 4, 1, 0}, p11[5] = {3, 1, 2, 4, 0};
+        int p12[5] = {3, 0, 2, 1, 4}, p13[5] = {3, 0, 1, 4, 2}, p14[5] = {1, 2, 0, 3, 4};
+        int p15[5] = {2, 0, 3, 1, 4}, p16[5] = {2, 0, 1, 4, 3}, p17[5] = {2, 1, 0, 3, 4};
+        permutation_t per1(p1), per2(p2), per3(p3), per4(p4), per5(p5), per6(p6), per7(p7), per8(p8), per9(p9), per10(p10), per11(p11), per12(p12), per13(p13), per14(p14), per15(p15), per16(p16), per17(p17);
 
-    //     REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_team(1) == StatusType::SUCCESS);
 
-    //     REQUIRE(world_cup->add_player(1, 1, per1, 0, 0, 1, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(2, 1, per2, 0, 1, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(3, 1, per3, 1, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(1, 1, per1, 0, 0, 1, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(2, 1, per2, 0, 1, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(3, 1, per3, 1, 0, 0, true) == StatusType::SUCCESS);
 
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(1).ans(), per1) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(2).ans(), per1 * per2) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(3).ans(), per1 * per2 * per3) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(1).ans(), per1) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(2).ans(), per1 * per2) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(3).ans(), per1 * per2 * per3) == true);
 
-    //     REQUIRE(world_cup->add_team(2) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_team(2) == StatusType::SUCCESS);
 
-    //     REQUIRE(world_cup->add_player(4, 2, per4, 0, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(5, 2, per5, 0, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(6, 2, per6, 0, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(7, 2, per7, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(4, 2, per4, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(5, 2, per5, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(6, 2, per6, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(7, 2, per7, 0, 0, 0, true) == StatusType::SUCCESS);
 
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(4).ans(), per4) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(5).ans(), per4 * per5) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(6).ans(), per4 * per5 * per6) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(7).ans(), per4 * per5 * per6 * per7) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(4).ans(), per4) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(5).ans(), per4 * per5) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(6).ans(), per4 * per5 * per6) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(7).ans(), per4 * per5 * per6 * per7) == true);
 
-    //     permutation_t team1_spirit = per1 * per2 * per3, team2_spirit = per4 * per5 * per6 * per7;
-    //     permutation_t team3_spirit = per9 * per10 * per11;
+        permutation_t team1_spirit = per1 * per2 * per3, team2_spirit = per4 * per5 * per6 * per7;
+        permutation_t team3_spirit = per9 * per10 * per11;
 
-    //     // team2 is bigger
-    //     REQUIRE(world_cup->buy_team(1, 2) == StatusType::SUCCESS);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(1).ans(), per1) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(2).ans(), per1 * per2) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(3).ans(), per1 * per2 * per3) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(4).ans(), per1 * per2 * per3 * per4) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(5).ans(), team1_spirit * per4 * per5) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(6).ans(), team1_spirit * per4 * per5 * per6) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(7).ans(), team1_spirit * per4 * per5 * per6 * per7) == true);
+        // team2 is bigger
+        REQUIRE(world_cup->buy_team(1, 2) == StatusType::SUCCESS);
+        REQUIRE(isSame(world_cup->get_partial_spirit(1).ans(), per1) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(2).ans(), per1 * per2) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(3).ans(), per1 * per2 * per3) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(4).ans(), per1 * per2 * per3 * per4) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(5).ans(), team1_spirit * per4 * per5) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(6).ans(), team1_spirit * per4 * per5 * per6) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(7).ans(), team1_spirit * per4 * per5 * per6 * per7) == true);
 
-    //     REQUIRE(world_cup->add_player(8, 1, per8, 0, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(8).ans(), team1_spirit * team2_spirit * per8) == true);
+        REQUIRE(world_cup->add_player(8, 1, per8, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(isSame(world_cup->get_partial_spirit(8).ans(), team1_spirit * team2_spirit * per8) == true);
 
-    //     team2_spirit = team2_spirit * per8;
+        team2_spirit = team2_spirit * per8;
 
-    //     REQUIRE(world_cup->add_team(3) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_team(3) == StatusType::SUCCESS);
 
-    //     REQUIRE(world_cup->add_player(9, 3, per9, 0, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(10, 3, per10, 0, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(11, 3, per11, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(9, 3, per9, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(10, 3, per10, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(11, 3, per11, 0, 0, 0, true) == StatusType::SUCCESS);
 
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(9).ans(), per9) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(10).ans(), per9 * per10) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(11).ans(), per9 * per10 * per11) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(9).ans(), per9) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(10).ans(), per9 * per10) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(11).ans(), per9 * per10 * per11) == true);
 
-    //     // team1 is bigger
-    //     REQUIRE(world_cup->buy_team(1, 3) == StatusType::SUCCESS);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(1).ans(), per1) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(2).ans(), per1 * per2) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(3).ans(), per1 * per2 * per3) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(4).ans(), per1 * per2 * per3 * per4) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(5).ans(), team1_spirit * per4 * per5) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(6).ans(), team1_spirit * per4 * per5 * per6) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(7).ans(), team1_spirit * per4 * per5 * per6 * per7) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(8).ans(), team1_spirit * team2_spirit) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(9).ans(), team1_spirit * team2_spirit * per9) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(10).ans(), team1_spirit * team2_spirit * per9 * per10) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(11).ans(), team1_spirit * team2_spirit * per9 * per10 * per11) == true);
+        // team1 is bigger
+        REQUIRE(world_cup->buy_team(1, 3) == StatusType::SUCCESS);
+        REQUIRE(isSame(world_cup->get_partial_spirit(1).ans(), per1) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(2).ans(), per1 * per2) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(3).ans(), per1 * per2 * per3) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(4).ans(), per1 * per2 * per3 * per4) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(5).ans(), team1_spirit * per4 * per5) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(6).ans(), team1_spirit * per4 * per5 * per6) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(7).ans(), team1_spirit * per4 * per5 * per6 * per7) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(8).ans(), team1_spirit * team2_spirit) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(9).ans(), team1_spirit * team2_spirit * per9) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(10).ans(), team1_spirit * team2_spirit * per9 * per10) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(11).ans(), team1_spirit * team2_spirit * per9 * per10 * per11) == true);
 
-    //     // buying empty team
-    //     REQUIRE(world_cup->add_team(4) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->buy_team(1, 4) == StatusType::SUCCESS);
+        // buying empty team
+        REQUIRE(world_cup->add_team(4) == StatusType::SUCCESS);
+        REQUIRE(world_cup->buy_team(1, 4) == StatusType::SUCCESS);
 
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(1).ans(), per1) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(2).ans(), per1 * per2) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(3).ans(), per1 * per2 * per3) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(4).ans(), per1 * per2 * per3 * per4) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(5).ans(), team1_spirit * per4 * per5) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(6).ans(), team1_spirit * per4 * per5 * per6) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(7).ans(), team1_spirit * per4 * per5 * per6 * per7) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(8).ans(), team1_spirit * team2_spirit) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(9).ans(), team1_spirit * team2_spirit * per9) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(10).ans(), team1_spirit * team2_spirit * per9 * per10) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(11).ans(), team1_spirit * team2_spirit * per9 * per10 * per11) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(1).ans(), per1) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(2).ans(), per1 * per2) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(3).ans(), per1 * per2 * per3) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(4).ans(), per1 * per2 * per3 * per4) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(5).ans(), team1_spirit * per4 * per5) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(6).ans(), team1_spirit * per4 * per5 * per6) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(7).ans(), team1_spirit * per4 * per5 * per6 * per7) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(8).ans(), team1_spirit * team2_spirit) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(9).ans(), team1_spirit * team2_spirit * per9) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(10).ans(), team1_spirit * team2_spirit * per9 * per10) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(11).ans(), team1_spirit * team2_spirit * per9 * per10 * per11) == true);
 
-    //     REQUIRE(world_cup->add_team(5) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->buy_team(5, 1) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_team(5) == StatusType::SUCCESS);
+        REQUIRE(world_cup->buy_team(5, 1) == StatusType::SUCCESS);
 
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(1).ans(), per1) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(2).ans(), per1 * per2) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(3).ans(), per1 * per2 * per3) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(4).ans(), per1 * per2 * per3 * per4) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(5).ans(), team1_spirit * per4 * per5) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(6).ans(), team1_spirit * per4 * per5 * per6) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(7).ans(), team1_spirit * per4 * per5 * per6 * per7) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(8).ans(), team1_spirit * team2_spirit) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(9).ans(), team1_spirit * team2_spirit * per9) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(10).ans(), team1_spirit * team2_spirit * per9 * per10) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(11).ans(), team1_spirit * team2_spirit * per9 * per10 * per11) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(1).ans(), per1) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(2).ans(), per1 * per2) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(3).ans(), per1 * per2 * per3) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(4).ans(), per1 * per2 * per3 * per4) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(5).ans(), team1_spirit * per4 * per5) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(6).ans(), team1_spirit * per4 * per5 * per6) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(7).ans(), team1_spirit * per4 * per5 * per6 * per7) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(8).ans(), team1_spirit * team2_spirit) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(9).ans(), team1_spirit * team2_spirit * per9) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(10).ans(), team1_spirit * team2_spirit * per9 * per10) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(11).ans(), team1_spirit * team2_spirit * per9 * per10 * per11) == true);
 
-    //     permutation_t team5_spirit = team1_spirit * team2_spirit * team3_spirit;
+        permutation_t team5_spirit = team1_spirit * team2_spirit * team3_spirit;
 
-    //     REQUIRE(world_cup->add_player(12, 5, per12, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(12, 5, per12, 0, 0, 0, true) == StatusType::SUCCESS);
 
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(12).ans(), team5_spirit * per12) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(12).ans(), team5_spirit * per12) == true);
 
-    //     REQUIRE(world_cup->add_team(6) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(13, 6, per13, 0, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(14, 6, per14, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_team(6) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(13, 6, per13, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(14, 6, per14, 0, 0, 0, true) == StatusType::SUCCESS);
 
-    //     REQUIRE(world_cup->buy_team(6, 5) == StatusType::SUCCESS);
+        REQUIRE(world_cup->buy_team(6, 5) == StatusType::SUCCESS);
 
-    //     permutation_t team6_spirit = per13 * per14;
+        permutation_t team6_spirit = per13 * per14;
 
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(1).ans(), team6_spirit * per1) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(2).ans(), team6_spirit * per1 * per2) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(3).ans(), team6_spirit * per1 * per2 * per3) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(4).ans(), team6_spirit * per1 * per2 * per3 * per4) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(5).ans(), team6_spirit * team1_spirit * per4 * per5) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(6).ans(), team6_spirit * team1_spirit * per4 * per5 * per6) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(7).ans(), team6_spirit * team1_spirit * per4 * per5 * per6 * per7) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(8).ans(), team6_spirit * team1_spirit * team2_spirit) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(9).ans(), team6_spirit * team1_spirit * team2_spirit * per9) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(10).ans(), team6_spirit * team1_spirit * team2_spirit * per9 * per10) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(11).ans(), team6_spirit * team1_spirit * team2_spirit * per9 * per10 * per11) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(12).ans(), team6_spirit * team5_spirit * per12) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(13).ans(), per13) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(14).ans(), per13 * per14) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(1).ans(), team6_spirit * per1) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(2).ans(), team6_spirit * per1 * per2) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(3).ans(), team6_spirit * per1 * per2 * per3) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(4).ans(), team6_spirit * per1 * per2 * per3 * per4) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(5).ans(), team6_spirit * team1_spirit * per4 * per5) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(6).ans(), team6_spirit * team1_spirit * per4 * per5 * per6) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(7).ans(), team6_spirit * team1_spirit * per4 * per5 * per6 * per7) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(8).ans(), team6_spirit * team1_spirit * team2_spirit) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(9).ans(), team6_spirit * team1_spirit * team2_spirit * per9) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(10).ans(), team6_spirit * team1_spirit * team2_spirit * per9 * per10) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(11).ans(), team6_spirit * team1_spirit * team2_spirit * per9 * per10 * per11) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(12).ans(), team6_spirit * team5_spirit * per12) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(13).ans(), per13) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(14).ans(), per13 * per14) == true);
 
-    //     REQUIRE(world_cup->add_team(7) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(15, 7, per15, 0, 0, 0, true) == StatusType::SUCCESS);
-    //     REQUIRE(world_cup->add_player(16, 7, per16, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_team(7) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(15, 7, per15, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(16, 7, per16, 0, 0, 0, true) == StatusType::SUCCESS);
 
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(15).ans(), per15) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(16).ans(), per15 * per16) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(15).ans(), per15) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(16).ans(), per15 * per16) == true);
 
-    //     REQUIRE(world_cup->buy_team(6, 7) == StatusType::SUCCESS);
+        REQUIRE(world_cup->buy_team(6, 7) == StatusType::SUCCESS);
 
-    //     // root 4
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(1).ans(), team6_spirit * per1) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(2).ans(), team6_spirit * per1 * per2) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(3).ans(), team6_spirit * per1 * per2 * per3) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(4).ans(), team6_spirit * per1 * per2 * per3 * per4) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(5).ans(), team6_spirit * team1_spirit * per4 * per5) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(6).ans(), team6_spirit * team1_spirit * per4 * per5 * per6) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(7).ans(), team6_spirit * team1_spirit * per4 * per5 * per6 * per7) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(8).ans(), team6_spirit * team1_spirit * team2_spirit) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(9).ans(), team6_spirit * team1_spirit * team2_spirit * per9) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(10).ans(), team6_spirit * team1_spirit * team2_spirit * per9 * per10) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(11).ans(), team6_spirit * team1_spirit * team2_spirit * per9 * per10 * per11) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(12).ans(), team6_spirit * team5_spirit * per12) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(13).ans(), per13) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(14).ans(), per13 * per14) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(15).ans(), per13 * per14 * per1 * per2 * per3 * per4 * per5 * per6 * per7 * per8 * per9 * per10 * per11 * per12 * per15) == true);
-    //     REQUIRE(isSame(world_cup->get_partial_spirit(16).ans(), team6_spirit * team5_spirit * per12 * per15 * per16) == true);
+        // root 4
+        REQUIRE(isSame(world_cup->get_partial_spirit(1).ans(), team6_spirit * per1) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(2).ans(), team6_spirit * per1 * per2) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(3).ans(), team6_spirit * per1 * per2 * per3) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(4).ans(), team6_spirit * per1 * per2 * per3 * per4) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(5).ans(), team6_spirit * team1_spirit * per4 * per5) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(6).ans(), team6_spirit * team1_spirit * per4 * per5 * per6) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(7).ans(), team6_spirit * team1_spirit * per4 * per5 * per6 * per7) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(8).ans(), team6_spirit * team1_spirit * team2_spirit) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(9).ans(), team6_spirit * team1_spirit * team2_spirit * per9) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(10).ans(), team6_spirit * team1_spirit * team2_spirit * per9 * per10) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(11).ans(), team6_spirit * team1_spirit * team2_spirit * per9 * per10 * per11) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(12).ans(), team6_spirit * team5_spirit * per12) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(13).ans(), per13) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(14).ans(), per13 * per14) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(15).ans(), per13 * per14 * per1 * per2 * per3 * per4 * per5 * per6 * per7 * per8 * per9 * per10 * per11 * per12 * per15) == true);
+        REQUIRE(isSame(world_cup->get_partial_spirit(16).ans(), team6_spirit * team5_spirit * per12 * per15 * per16) == true);
 
-    //     REQUIRE(world_cup->add_player(17, 6, per17, 0, 0, 0, true) == StatusType::SUCCESS);
+        REQUIRE(world_cup->add_player(17, 6, per17, 0, 0, 0, true) == StatusType::SUCCESS);
 
-    //     // REQUIRE(isSame(world_cup->get_partial_spirit(17).ans(), team6_spirit * per15 * per16 * per17) == true);
-    // }
+        REQUIRE(isSame(world_cup->get_partial_spirit(17).ans(), team6_spirit * team5_spirit * per12 * per15 * per16 * per17) == true);
+
+        delete world_cup;
+    }
 
     SECTION("buy_team")
     {
