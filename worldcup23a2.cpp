@@ -271,7 +271,7 @@ output_t<int> world_cup_t::get_ith_pointless_ability(int i)
 
     try
     {
-        return teams_by_rank.select(i + 1).getTeamAbility();
+        return teams_by_rank.select(i + 1).getTeamId();
     }
     catch (std::bad_alloc &e)
     {
@@ -325,6 +325,8 @@ StatusType world_cup_t::buy_team(int teamId1, int teamId2)
 
         // remove team2
         world_cup_t::remove_team(teamId2);
+        std::shared_ptr<Team> temp(new Team(0));
+        team2 = temp;
         team2.~shared_ptr(); // delete all instance of the team2 object
 
         // update roots team pointer
