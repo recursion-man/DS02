@@ -18,7 +18,7 @@ TEST_CASE("world_cup")
         int p1[5] = {4, 2, 3, 1, 0};
         permutation_t demi_per(p1);
 
-        for (int i = 1; i <= 100; i++)
+        for (int i = 1; i <= 1000; i++)
         {
             REQUIRE(world_cup->add_player(i, 1, demi_per, 0, 0, 0, true) == StatusType::SUCCESS);
         }
