@@ -20,10 +20,10 @@ public:
 
     Player(int playerId, int gamesPlayed, int cards, bool goalKeeper, int ability,
            const permutation_t &spirit, int games_team_played_when_added,
-           permutation_t team_spirit_when_added) : playerId(playerId),
-           gamesPlayed(gamesPlayed), cards(cards), ability(ability),
-           games_team_played_when_added(games_team_played_when_added), goalKeeper(goalKeeper),
-           player_spirit(spirit), team_spirit_when_added(team_spirit_when_added), team(nullptr){};
+           permutation_t team_spirit_when_added, Team *team = nullptr) : playerId(playerId),
+                                                                         gamesPlayed(gamesPlayed), cards(cards), ability(ability),
+                                                                         games_team_played_when_added(games_team_played_when_added), goalKeeper(goalKeeper),
+                                                                         player_spirit(spirit), team_spirit_when_added(team_spirit_when_added), team(team){};
 
     ~Player() = default;
 

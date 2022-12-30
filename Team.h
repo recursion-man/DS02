@@ -20,8 +20,8 @@ protected:
 public:
     //  C'tor
     explicit Team(int teamId) : teamId{teamId}, points{0}, num_of_players{0},
-                                                num_of_goal_keepers{0}, games_played{0}, sum_of_player_abilities{0},
-                                                team_spirit{}, root_player_node{nullptr} {};
+                                num_of_goal_keepers{0}, games_played{0}, sum_of_player_abilities{0},
+                                team_spirit{permutation_t::neutral()}, root_player_node{nullptr} {};
     virtual ~Team();
     //  getters
     int getNumOfPlayers() const;
@@ -40,7 +40,7 @@ public:
     void setNumOfPlayers(int new_num_of_players);
     void setNumOfGoalKeepers(int new_goalkeepers);
     void setPoints(int new_points);
-    virtual void setRoot(Upside_Node *);
+    void setRoot(Upside_Node *);
     void setTeamAbility(int new_ability);
 
     bool isEmpty() const;
@@ -55,18 +55,8 @@ public:
     void applyMatch(int point_to_add);
 };
 
-class TeamRank : public Team
-{
-public:
-    void setRoot(Upside_Node *new_root) override;
-    TeamRank(int id): Team(id){}
-};
-
 // operations
 bool operator<(std::shared_ptr<Team> a, std::shared_ptr<Team> b);
 bool operator>(std::shared_ptr<Team> a, std::shared_ptr<Team> b);
-
-bool operator<(std::shared_ptr<TeamRank> a, std::shared_ptr<TeamRank> b);
-bool operator>(std::shared_ptr<TeamRank> a, std::shared_ptr<TeamRank> b);
 
 #endif

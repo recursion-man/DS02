@@ -99,9 +99,9 @@ int getUpdatedGamesUntilRoot(Upside_Node *node)
 
 int getPlayerTotalGames(Upside_Node *node)
 {
-    // if (node->data->getId() == 100)
-    //     std::cout << "games_stared: " << node->data->getGamesPlayed() << " games team w''a" << node->data->getGamesTeamPlayedWhenAdded() << "node_game_to_add" << node->games_to_add << " root_Games_to_add" << node->father->games_to_add << " total games to add: " << getGamesToAdd(node) << std::endl;
-    return node->data->getGamesPlayed() - node->data->getGamesTeamPlayedWhenAdded() + getGamesToAdd(node);
+    int res = node->data->getGamesPlayed() - node->data->getGamesTeamPlayedWhenAdded() + getGamesToAdd(node);
+    find(node); // handle shrink paths
+    return res;
 }
 
 void updateGamesForPlayersOnPath(Upside_Node *node)
@@ -236,5 +236,6 @@ permutation_t getSpiritToMultiPly(Upside_Node *player_node)
 permutation_t getPlayerTotalSpirit(Upside_Node *player_node)
 {
     permutation_t res = getSpiritToMultiPly(player_node) * player_node->data->getTeamSpiritWhenAdded() * player_node->data->getPlayerSpirit();
+    find(player_node);
     return res;
 }
