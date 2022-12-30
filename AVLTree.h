@@ -57,8 +57,6 @@ int rank(Node<T> *const node)
 template <class T>
 Node<T> *selectInSubTree(Node<T> *v, int k)
 {
-    if (v == nullptr)
-        throw std::invalid_argument("caught in Select, reached null node");
     if (rank(v->left) == k - 1)
         return v;
     if (rank(v->left) > k - 1)
@@ -90,7 +88,7 @@ public:
     const T &select(int k)
     {
         if (root == nullptr)
-            throw std::invalid_argument("tree is empty");
+            throw std::invalid_argument("tree is epmty");
         return selectInSubTree(root, k)->data;
     }
 

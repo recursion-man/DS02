@@ -121,14 +121,13 @@ void Team::handleTeamBought(Team *source_team)
     this->num_of_goal_keepers += source_team->getNumOfGoalKeepers();
     this->num_of_players += source_team->getNumOfPlayers();
     this->sum_of_player_abilities += source_team->getTeamAbility();
-    this->team_spirit = this->team_spirit * source_team->getTeamSpirit();
-
     if (source_team->getRootPlayerNode() != nullptr)
     {
         source_team->getRootPlayerNode()->data->setTeam(nullptr);
         Upside_Node *new_root = union_tree(this->root_player_node, source_team->getRootPlayerNode());
         Team::setRoot(new_root);
     }
+    this->team_spirit = this->team_spirit * source_team->getTeamSpirit();
 }
 
 void Team::applyMatch(int points_to_add)

@@ -183,11 +183,16 @@ void handleUnion(Upside_Node *dest_root, Upside_Node *source_root, bool dest_roo
     source_root->father = dest_root;
     dest_root->size += source_root->size;
     source_root->isRoot = false;
+
     if (dest_root_is_buyer)
     {
         // b points to a
         // fix spirit
-        source_root->spirit_to_calculate = source_root->spirit_to_calculate * dest_root->team_updated_total_spirit;
+
+        permutation_t spirit_of_team = dest_root->data->getTeam()->getTeamSpirit();
+
+        source_root->spirit_to_calculate = dest_root->spirit_to_calculate.inv() * spirit_of_team * source_root->spirit_to_calculate;
+
         // fix games
         source_root->games_to_add -= dest_root->games_to_add;
     }
@@ -196,8 +201,10 @@ void handleUnion(Upside_Node *dest_root, Upside_Node *source_root, bool dest_roo
     {
         // a points to b
         // fix spirit
-        dest_root->spirit_to_calculate = dest_root->spirit_to_calculate * source_root->team_updated_total_spirit;
+        permutation_t spirit_of_team = source_root->data->getTeam()->getTeamSpirit();
+        dest_root->spirit_to_calculate = spirit_of_team * dest_root->spirit_to_calculate;
         source_root->spirit_to_calculate = source_root->spirit_to_calculate * dest_root->spirit_to_calculate.inv();
+
         // fix games
         source_root->games_to_add -= dest_root->games_to_add;
     }
@@ -209,10 +216,18 @@ Upside_Node *union_tree(Upside_Node *root1, Upside_Node *root2)
     {
         return root1;
     }
-
+    if (root1 == nullptr)
+    {
+        return root2;
+    }
+    if (root2 == nullptr)
+    {
+        return root1;
+    }
     if (root1->size >= root2->size)
     {
         handleUnion(root1, root2, true);
+
         return root1;
     }
     else
