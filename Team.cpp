@@ -158,6 +158,8 @@ void Team::addPlayer(Upside_Node *new_player_node)
     else
     {
         linkNodeToRoot(root_player_node, new_player_node);
+        std::cout<<  "after link" <<  "root is : " << root_player_node->data->getId() << " new node is  " <<new_player_node->data->getId()
+                 << " team is : "<< root_player_node->data->getTeam()->getTeamId()<<  std::endl;
     }
     handlePlayerAdded(new_player_node->data.get());
 }
@@ -174,6 +176,7 @@ void TeamRank::setRoot(Upside_Node *new_root)
     root_player_node = new_root;
     root_player_node->isRoot = true;
 }
+
 
 bool operator<(const std::shared_ptr<Team> a, const std::shared_ptr<Team> b)
 {

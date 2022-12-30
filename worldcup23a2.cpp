@@ -13,7 +13,7 @@ StatusType world_cup_t::add_team(int teamId)
     try
     {
         std::shared_ptr<Team> new_team_id(new Team(teamId));
-        std::shared_ptr<TeamRank> new_team_rank(new TeamRank(*new_team_id));
+        std::shared_ptr<TeamRank> new_team_rank(new TeamRank(teamId));
         teams_by_id.insertToTree(new_team_id);
         teams_by_rank.insertToTree(new_team_rank);
     }
@@ -38,7 +38,8 @@ StatusType world_cup_t::remove_team(int teamId)
     {
         std::shared_ptr<Team> target(new Team(teamId));
         std::shared_ptr<Team> team_id_to_remove = teams_by_id.findInTree(target);
-        std::shared_ptr<TeamRank> team_rank_to_remove(new TeamRank(*team_id_to_remove));
+        std::shared_ptr<TeamRank> team_rank_to_remove(new TeamRank(teamId));
+        team_rank_to_remove->setTeamAbility(team_id_to_remove->getTeamAbility());
 
         teams_by_id.removeFromTree(team_id_to_remove);
         teams_by_rank.removeFromTree(team_rank_to_remove);
@@ -68,13 +69,17 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
         std::shared_ptr<Team> target(new Team(teamId));
         std::shared_ptr<Team> team = teams_by_id.findInTree(target);
 
+        if (playerId == 3)
+            std::cout<< "root::: " << (team->getRootPlayerNode()->data->getId());
+
         // get information from the tree
         int team_prev_ability = team->getTeamAbility();
         permutation_t team_spirit_when_added = team->getTeamSpirit();
         int games_team_played_when_added = team->getGamesTeamPlayed();
 
         //find rank team
-        std::shared_ptr<TeamRank> rank_target(new TeamRank(*team));
+        std::shared_ptr<TeamRank> rank_target(new TeamRank(teamId));
+        rank_target->setTeamAbility(team_prev_ability);
         std::shared_ptr<TeamRank> rank_team = teams_by_rank.findInTree(rank_target);
 
         // create the player
@@ -88,6 +93,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
         teams_by_rank.removeFromTree(rank_team);
         rank_team->setTeamAbility(team_prev_ability + ability);
         teams_by_rank.insertToTree(rank_team);
+
     }
     catch (std::bad_alloc &e)
     {
@@ -97,6 +103,7 @@ StatusType world_cup_t::add_player(int playerId, int teamId,
     {
         return StatusType::FAILURE;
     }
+
     return StatusType::SUCCESS;
 }
 
@@ -323,6 +330,7 @@ StatusType world_cup_t::buy_team(int teamId1, int teamId2)
         std::shared_ptr<Team> target2(new Team(teamId2));
         std::shared_ptr<Team> team2 = teams_by_id.findInTree(target2);
 
+        int team1_prev_ability = team1->getTeamAbility();
         // make the purchase
         team1->handleTeamBought(team2.get());
 
@@ -333,11 +341,13 @@ StatusType world_cup_t::buy_team(int teamId1, int teamId2)
         team1->getRootPlayerNode()->data->setTeam(team1.get());
 
         // find rank team
-        std::shared_ptr<TeamRank> rank_target(new TeamRank(*team1));
+        std::shared_ptr<TeamRank> rank_target(new TeamRank(teamId1));
+        rank_target->setTeamAbility(team1_prev_ability);
         std::shared_ptr<TeamRank> rank_team = teams_by_rank.findInTree(rank_target);
 
         // remove and insert the updated team-rank
         teams_by_rank.removeFromTree(rank_team);
+        rank_team->setTeamAbility(team1->getTeamAbility());
         teams_by_rank.insertToTree(rank_team);
     }
     catch (std::bad_alloc &e)

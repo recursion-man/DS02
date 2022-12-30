@@ -59,7 +59,7 @@ class TeamRank : public Team
 {
 public:
     void setRoot(Upside_Node *new_root) override;
-    TeamRank(const Team& team): Team(team){}
+    TeamRank(int id): Team(id){}
 };
 
 // operations
