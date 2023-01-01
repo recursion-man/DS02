@@ -249,8 +249,6 @@ public:
 		{
 			if (p1.a[i] != p2.a[i])
 			{
-				std::cout << "i: " << i << " p1: " << p1.a[i] << " p2: " << p2.a[i] << std::endl;
-
 				return false;
 			}
 		}

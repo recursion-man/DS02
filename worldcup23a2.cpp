@@ -198,7 +198,7 @@ output_t<int> world_cup_t::num_played_games_for_player(int playerId)
 
 StatusType world_cup_t::add_player_cards(int playerId, int cards)
 {
-    if (playerId <= 0 || cards <= 0)
+    if (playerId <= 0 || cards < 0)
     {
         return StatusType::INVALID_INPUT;
     }
@@ -291,8 +291,15 @@ output_t<permutation_t> world_cup_t::get_partial_spirit(int playerId)
     }
     try
     {
-        permutation_t res = getPlayerTotalSpirit(hash_table[playerId]);
-        return res;
+        if (isTeamActive(hash_table[playerId]))
+        {
+            permutation_t res = getPlayerTotalSpirit(hash_table[playerId]);
+            return res;
+        }
+        else
+        {
+            return StatusType::FAILURE;
+        }
     }
     catch (std::bad_alloc &e)
     {
@@ -330,7 +337,8 @@ StatusType world_cup_t::buy_team(int teamId1, int teamId2)
         // team2.~shared_ptr(); // delete all instance of the team2 object
 
         // update roots team pointer
-        team1->getRootPlayerNode()->data->setTeam(team1.get());
+        if (team1->getRootPlayerNode() != nullptr)
+            team1->getRootPlayerNode()->data->setTeam(team1.get());
 
         // find rank team
         Pair rank_team(teamId1, team_prev_ability);
