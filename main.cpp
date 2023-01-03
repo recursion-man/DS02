@@ -479,6 +479,7 @@ TEST_CASE("world_cup")
         REQUIRE(world_cup->add_player_cards(-2, 0) == StatusType::INVALID_INPUT);
         REQUIRE(world_cup->add_player_cards(-3, 3) == StatusType::INVALID_INPUT);
         REQUIRE(world_cup->add_player_cards(1, -1) == StatusType::INVALID_INPUT);
+        REQUIRE(world_cup->add_player_cards(1, 0) == StatusType::FAILURE);
         REQUIRE(world_cup->add_player_cards(1, 2) == StatusType::FAILURE);
 
         int p1[5] = {4, 2, 3, 1, 0}, p2[5] = {0, 4, 2, 1, 3}, p3[5] = {4, 2, 3, 1, 0};
@@ -614,6 +615,9 @@ TEST_CASE("world_cup")
         REQUIRE(world_cup->get_player_cards(7).ans() == 10);
         REQUIRE(world_cup->get_player_cards(8).ans() == 10);
         REQUIRE(world_cup->get_player_cards(9).ans() == 11);
+        REQUIRE(world_cup->get_player_cards(10).ans() == 12);
+
+        REQUIRE(world_cup->add_player_cards(10, 0) == StatusType::SUCCESS);
         REQUIRE(world_cup->get_player_cards(10).ans() == 12);
 
         delete world_cup;
@@ -1010,11 +1014,36 @@ TEST_CASE("world_cup")
 
         REQUIRE(isSame(world_cup->get_partial_spirit(17).ans(), team6_spirit * team5_spirit * per12 * per15 * per16 * per17) == true);
 
+        REQUIRE(world_cup->remove_team(6) == StatusType::SUCCESS);
+
+        REQUIRE(world_cup->get_partial_spirit(1).status() == StatusType::FAILURE);
+        REQUIRE(world_cup->get_partial_spirit(2).status() == StatusType::FAILURE);
+        REQUIRE(world_cup->get_partial_spirit(3).status() == StatusType::FAILURE);
+        REQUIRE(world_cup->get_partial_spirit(4).status() == StatusType::FAILURE);
+
+        REQUIRE(world_cup->get_partial_spirit(5).status() == StatusType::FAILURE);
+        REQUIRE(world_cup->get_partial_spirit(6).status() == StatusType::FAILURE);
+        REQUIRE(world_cup->get_partial_spirit(7).status() == StatusType::FAILURE);
+        REQUIRE(world_cup->get_partial_spirit(8).status() == StatusType::FAILURE);
+        REQUIRE(world_cup->get_partial_spirit(9).status() == StatusType::FAILURE);
+        REQUIRE(world_cup->get_partial_spirit(10).status() == StatusType::FAILURE);
+        REQUIRE(world_cup->get_partial_spirit(11).status() == StatusType::FAILURE);
+        REQUIRE(world_cup->get_partial_spirit(12).status() == StatusType::FAILURE);
+        REQUIRE(world_cup->get_partial_spirit(13).status() == StatusType::FAILURE);
+        REQUIRE(world_cup->get_partial_spirit(14).status() == StatusType::FAILURE);
+        REQUIRE(world_cup->get_partial_spirit(17).status() == StatusType::FAILURE);
+        REQUIRE(world_cup->get_partial_spirit(15).status() == StatusType::FAILURE);
+        REQUIRE(world_cup->get_partial_spirit(16).status() == StatusType::FAILURE);
+
         delete world_cup;
     }
 
     SECTION("buy_team")
     {
+        world_cup_t worldCup;
+        REQUIRE(StatusType::SUCCESS == worldCup.add_team(1));
+        REQUIRE(StatusType::SUCCESS == worldCup.add_team(2));
+        REQUIRE(StatusType::SUCCESS == worldCup.buy_team(1, 2));
     }
 }
 

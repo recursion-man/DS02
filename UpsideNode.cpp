@@ -119,7 +119,7 @@ permutation_t getUpdatedSpiritUntilRoot(Upside_Node *node)
     while (!node->father->isRoot)
     {
         node = node->father;
-        new_parital_spirit = new_parital_spirit * node->spirit_to_calculate;
+        new_parital_spirit = node->spirit_to_calculate * new_parital_spirit;
     }
     return new_parital_spirit;
 }
