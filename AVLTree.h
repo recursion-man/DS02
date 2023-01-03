@@ -240,6 +240,7 @@ Node<T> *remove(Node<T> *v, T target)
         v->data = temp->data;
         v->right = remove(v->right, temp->data);
     }
+    updateRank(v);
     updateHeight(v);
     return v;
 }
