@@ -334,7 +334,7 @@ StatusType world_cup_t::buy_team(int teamId1, int teamId2)
         world_cup_t::remove_team(teamId2);
         std::shared_ptr<Team> temp(new Team(0));
         team2 = temp;
-        // team2.~shared_ptr(); // delete all instance of the team2 object
+        // delete all instance of the team2 object
 
         // update roots team pointer
         if (team1->getRootPlayerNode() != nullptr)

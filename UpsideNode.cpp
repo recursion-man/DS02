@@ -201,7 +201,7 @@ void handleUnion(Upside_Node *dest_root, Upside_Node *source_root, bool dest_roo
         // fix spirit
         permutation_t spirit_of_team = source_root->data->getTeam()->getTeamSpirit();
         dest_root->spirit_to_calculate = spirit_of_team * dest_root->spirit_to_calculate;
-        source_root->spirit_to_calculate = source_root->spirit_to_calculate * dest_root->spirit_to_calculate.inv();
+        source_root->spirit_to_calculate = dest_root->spirit_to_calculate.inv() * source_root->spirit_to_calculate;
 
         // fix games
         source_root->games_to_add -= dest_root->games_to_add;
@@ -233,7 +233,7 @@ Upside_Node *union_tree(Upside_Node *root1, Upside_Node *root2)
         handleUnion(root2, root1, false);
         return root2;
     }
-};
+}
 
 permutation_t getSpiritToMultiPly(Upside_Node *player_node)
 {

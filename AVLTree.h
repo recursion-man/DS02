@@ -196,6 +196,7 @@ Node<T> *insert(Node<T> *v, T new_data)
     {
         throw std::invalid_argument("already exists");
     }
+    updateRank(v);
     updateHeight(v);
     return v;
 }
@@ -240,6 +241,7 @@ Node<T> *remove(Node<T> *v, T target)
         v->data = temp->data;
         v->right = remove(v->right, temp->data);
     }
+    updateRank(v);
     updateHeight(v);
     return v;
 }
@@ -318,6 +320,7 @@ public:
             {
                 fix(v, this);
             }
+            updateRank(v);
             updateHeight(v);
             v = v->father;
         }
@@ -359,6 +362,7 @@ void LL(Node<T> *v, AVL_Tree<T> *tree)
 
     while (v != nullptr)
     {
+        updateRank(v);
         updateHeight<T>(v);
         v = v->father;
     }
@@ -380,6 +384,7 @@ void RR(Node<T> *v, AVL_Tree<T> *tree)
 
     while (v != nullptr)
     {
+        updateRank(v);
         updateHeight<T>(v);
         v = v->father;
     }
