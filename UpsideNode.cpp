@@ -28,8 +28,6 @@ void linkNodeToRoot(Upside_Node *root, Upside_Node *new_node)
 {
     if (root != nullptr && new_node != nullptr && root != new_node)
     {
-        std::cout<<" in  link " << "root is : " << root->data->getId() << " new node is  " <<new_node->data->getId()
-        << " team is : "<< root->data->getTeam()->getTeamId()<<  std::endl;
         new_node->father = root;
         new_node->isRoot = false;
         root->size += new_node->size;
