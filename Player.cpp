@@ -1,6 +1,4 @@
 #include "Player.h"
-#include <utility>
-
 //  getters
 
 int Player::getGamesPlayed() const

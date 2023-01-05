@@ -6,7 +6,6 @@
 
 void HashTable::expend(bool origin, const Player &player)
 {
-    // std::cout<<"expand"<<std::endl;
     auto temp = arr;
     m = ((m + 1) * 2) - 1;
     arr = new Cell[m];
@@ -14,10 +13,8 @@ void HashTable::expend(bool origin, const Player &player)
     {
         for (int i = 0; i < size; i++)
         {
-            // std::cout << i << std::endl;
             if (temp[i].isActive())
             {
-                // std::cout<< i <<" : "<< temp[i].getAddress()->data.getId()<<std::endl;
                 transfer(temp[i].getAddress());
             }
         }
@@ -33,14 +30,11 @@ void HashTable::expend(bool origin, const Player &player)
     {
         delete[] arr;
         arr = temp;
-        // std::cout<<"expand in expand "<<std::endl;
         expend(false, player);
     }
     size = m;
-    // std::cout<<"size of temp " <<sizeof(temp)<<std::endl;
     if (origin)
         delete[] temp;
-    // std::cout<<"end_expand, now "<< size<<std::endl;
 }
 
 HashTable::~HashTable()
@@ -79,11 +73,8 @@ Upside_Node *HashTable::insert(const Player &player)
     }
     catch (const Full &)
     {
-        //        std::cout<<"got 1"<<std::endl;
         expend(true, player);
         index = getIndex(player);
-        //        std::cout<<"got 2"<<std::endl;
-        //        std::cout<<"got 3"<<std::endl;
     }
     std::shared_ptr<Player> new_player(new Player(player));
     std::shared_ptr<Upside_Node> new_player_node(new Upside_Node(new_player));

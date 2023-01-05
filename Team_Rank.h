@@ -1,3 +1,5 @@
+#ifndef TEAM_RANK
+#define TEAM_RANK
 struct Team_Rank
 {
     int teamId;
@@ -10,3 +12,4 @@ struct Team_Rank
 };
 bool operator<(Team_Rank a, Team_Rank b);
 bool operator>(Team_Rank a, Team_Rank b);
+#endif // TEAM_RANK
